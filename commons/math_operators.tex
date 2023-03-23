@@ -1,0 +1,63 @@
+% !TEX root = main.tex
+\RequirePackage{amsmath}
+% Models
+\DeclareMathOperator{\LSTM}{\ensuremath{\mathsf{LSTM}}}
+\DeclareMathOperator{\BiLSTM}{\ensuremath{\mathsf{BiLSTM}}}
+\DeclareMathOperator{\Linear}{\ensuremath{\mathsf{Linear}}}
+\DeclareMathOperator{\Dropout}{\ensuremath{\mathsf{Dropout}}}
+\DeclareMathOperator{\LayerNorm}{\ensuremath{\mathsf{LayerNorm}}}
+\DeclareMathOperator{\ConvOneD}{\ensuremath{\mathsf{Conv1D}}}
+\DeclareMathOperator{\WordEmbedding}{\ensuremath{\mathsf{WordEmbedding}}}
+\DeclareMathOperator{\CharEmbedding}{\ensuremath{\mathsf{CharEmbedding}}}
+\DeclareMathOperator{\LanguageModel}{\ensuremath{\mathsf{LanguageModel}}}
+\DeclareMathOperator{\SubwordPooling}{\ensuremath{\mathsf{SubwordPooling}}}
+\DeclareMathOperator{\TreeLSTM}{\ensuremath{\mathsf{TreeLSTM}}}
+\DeclareMathOperator{\StackLSTM}{\ensuremath{\mathsf{StackLSTM}}}
+% Operators
+\DeclareMathOperator{\pop}{\ensuremath{\mathit{pop}}}
+\DeclareMathOperator{\push}{\ensuremath{\mathit{push}}}
+\DeclareMathOperator{\Top}{\ensuremath{\mathit{top}}}
+\DeclareMathOperator{\sorted}{\ensuremath{\mathit{sorted}}}
+\DeclareMathOperator{\mean}{\ensuremath{\mathit{mean}}}
+\DeclareMathOperator{\unfold}{\ensuremath{\mathit{unfold}}}
+\DeclareMathOperator{\tokenizer}{\ensuremath{\mathit{tokenize}}}
+\DeclareMathOperator{\embed}{\ensuremath{\mathit{embed}}}
+\DeclareMathOperator{\subwordpool}{\ensuremath{\mathit{subword\,pool}}}
+\DeclareMathOperator{\aggregate}{\ensuremath{\mathit{aggregate}}}
+\DeclareMathOperator{\reproject}{\ensuremath{\mathit{reproject}}}
+\DeclareMathOperator{\category}{\ensuremath{\mathit{cat}}}
+\DeclareMathOperator{\distance}{\mathit{dist}}
+\DeclareMathOperator{\similar}{sim}
+\DeclareMathOperator{\dice}{dice}
+\DeclareMathOperator{\tanimoto}{tani}
+\DeclareMathOperator{\overlap}{overlap}
+\DeclareMathOperator{\signum}{sgn}
+\DeclareMathOperator{\mitt}{mitt}
+\DeclareMathOperator{\pmi}{pmi}
+\DeclareMathOperator{\newpmi}{newpmi}
+\DeclareMathOperator{\length}{len}
+\DeclareMathOperator{\depth}{depth}
+\DeclareMathOperator{\lso}{lso}
+\DeclareMathOperator{\rel}{rel}
+\DeclareMathOperator{\sign}{sign}
+\DeclareMathOperator{\dom}{dom}
+\DeclareMathOperator{\QSA}{QSA}
+\DeclareMathOperator{\DTK}{DomTK}
+\DeclareMathOperator{\dist}{dist}
+\DeclareMathOperator{\local}{local}
+\DeclareMathOperator{\globali}{global}
+\DeclareMathOperator*{\argmax}{arg\,max}
+\DeclareMathOperator*{\argmin}{arg\,min}
+\DeclareMathOperator*{\Ext}{Ext}
+\DeclareMathOperator*{\Int}{Int}
+\newcommand{\exclamationeq}{\ensuremath{\mathrel{\overset{!}{=}}}} %% requires amsmath
+
+\DeclareMathOperator{\precision}{\ensuremath{\mathit{precision}}}
+\DeclareMathOperator{\recall}{\ensuremath{\mathit{recall}}}
+\DeclareMathOperator{\fone}{\ensuremath{\mathit{F_1}}}
+
+\newcommand{\concatSeq}[4][k]{\ensuremath{#2^{#3}_0 \oplus #2^{#4}_0 , \ldots , #2^{#3}_{#1-1} \oplus #2^{#4}_{#1-1}}}
+
+% correct bold greek letters
+\RequirePackage{amsfonts,bm}
+\renewcommand{\mathbf}[1]{\boldsymbol{\mathrm{#1}}}

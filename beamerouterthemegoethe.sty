@@ -1,0 +1,49 @@
+\mode<presentation>
+
+\define@key{beamerframe}{noframenumbering}[true]{%
+    \setbeamertemplate{footline}[none]%
+    \addtocounter{framenumber}{-1}%
+}
+
+\DeclareOptionBeamer{institute}{\def\beamer@goethe@institute{#1}}
+\ExecuteOptionsBeamer{institute={Goehte Universität Frankfurt}}
+\ProcessOptionsBeamer
+
+\setbeamertemplate{footline}
+{%
+    \leavevmode
+    \begin{beamercolorbox}[wd=.85\paperwidth,ht=2.25ex,dp=1ex,left]{section in head/foot}
+        \usebeamerfont{section in head/foot}
+        {\hspace*{0.3cm}\beamer@goethe@institute}
+    \end{beamercolorbox}%
+    \hspace*{-.01\paperwidth}%
+    \begin{beamercolorbox}[wd=.16\paperwidth,ht=2.25ex,dp=1ex,right]{date in head/foot}
+        \usebeamerfont{date in head/foot}
+        {\insertframenumber{} / \inserttotalframenumber\hspace*{0.3cm}}
+    \end{beamercolorbox}
+}
+
+\defbeamertemplate*{frametitle}{goethe}[1][left]
+{%
+    \ifbeamercolorempty[bg]{frametitle}{}{\nointerlineskip}%
+    \@tempdima=\textwidth%
+    \advance\@tempdima by\beamer@leftmargin%
+    \advance\@tempdima by\beamer@rightmargin%
+    \usebeamerfont{frametitle}%
+    \begin{beamercolorbox}[ht=2.75ex,dp=1.25ex,#1,wd=\the\@tempdima]{frametitle}%
+        \vbox{}\vskip-1ex%
+        \if@tempswa\else\csname beamer@fte#1\endcsname\fi%
+        \leftskip0.3cm\strut\insertframetitle\strut\par%
+    \end{beamercolorbox}%
+    \vskip-2pt%
+    \ifx\insertframesubtitle\@empty\else{%
+        \usebeamerfont{framesubtitle}
+        \begin{beamercolorbox}[ht=2.25ex,dp=1.15ex,#1,wd=\the\@tempdima]{framesubtitle}%
+            \leftskip0.3cm\strut\insertframesubtitle\strut\par%
+            \vskip-1ex%
+            \if@tempswa\else\vskip-.3cm\fi% set inside beamercolorbox... evil here...
+        \end{beamercolorbox}%
+    }\fi
+}
+
+\mode<all>

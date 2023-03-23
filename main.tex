@@ -1,0 +1,93 @@
+% !TeX spellcheck = en-US, de-DE
+% !TeX encoding = UTF-8 Unicode
+\documentclass[169,9pt]{beamer}
+
+\usetheme[
+    % Choose main language: german or english
+    english,
+    % Choose between biblatex and natbib
+    usebiblatex, % or: usenatbib
+    % The three following options require LuaLaTeX,
+    % which may increase compilation times substantially.
+    usepolyglossia % polyglossia replaces babel
+    uselibertine, % nolibertine % Use Linux Libertine/Biolinum as roman/sans serif font
+    usefiracode, % nofiracode % Use Fira Code as monospaced font
+    % Layout options
+    titleheight=0.5\paperheight, % the hight of the beamercolorbox containing title and subtitle
+    titledepth=0\paperheight, % the depth of the beamercolorbox containing title and subtitle
+    % centertitle, % center the title and subtitle
+    logo=images/GU-Logo-blau.pdf, % can be PDF or any image, is scaled to 
+    logowidth=0.25\paperwidth, % you may need to scale your logo to fit the title page
+    institute={Goethe Universität Frankfurt}, % mind the braces
+    % nonavigation, % disable the navigation in the footline
+]{goethe}
+
+%%%%%%%%%%%%%%%%%%%%%%%%
+% Title, Authors, etc. %
+%%%%%%%%%%%%%%%%%%%%%%%%
+% Authors and titles are wrapped in a tblr environment
+
+% Title and sub-title can contain \\
+\title{Template Title} % TODO
+\subtitle{Template Subtitle} % TODO
+
+% Authors in "middle" alignment
+% Separate multiple authors on the same line with \and
+% Use \And to put authors on a separate line
+\author{{First Author \and Second Author} \And {Author with a very long Name}} % TODO
+
+% Institute in "header" alignment, top right
+\institute{First Laboratory \\ Second Laboratory}
+
+% Date in "footer" alignment, bottom right
+\date{\today} % TODO
+
+%%%%%%%%%%%%
+% Document %
+%%%%%%%%%%%%
+\begin{document}
+
+\maketitle
+% \begin{frame}
+%     \titlepage
+% \end{frame}
+
+\begin{frame}{Frame Title}
+    Another Frame
+    \pause
+    More content
+\end{frame}
+
+\begin{frame}{Frame Title}
+    \only<2>{
+        Another Frame
+    }
+    More content
+\end{frame}
+
+\begin{frame}{Frame Title}
+    \onslide<2>{
+        Another Frame
+    }
+    More content
+\end{frame}
+
+\begin{frame}{Frame Title}
+    \framesubtitle{Frame Subtitle}
+    \begin{tblr}{colspec={cc}}
+        \visible<+(1)->{Test} & \visible<+(1)->{Test} \\
+        \visible<+(1)->{Test} & \visible<+(1)->{Test} \\
+    \end{tblr}
+\end{frame}
+
+\section{Introduction}
+\subsection{Something}
+
+% \printbibliography % TODO
+
+\appendix
+
+% \section{Appendix}
+% \label{sec:appendix}
+
+\end{document}
