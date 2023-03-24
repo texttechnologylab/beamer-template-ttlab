@@ -7,7 +7,7 @@
 \ExecuteOptionsBeamer{titledepth=0\paperheight}
 
 \DeclareOptionBeamer{logo}{\def\beamer@goethe@logo{#1}}
-\ExecuteOptionsBeamer{logo=images/GU-Logo-blau.pdf}
+\ExecuteOptionsBeamer{logo=images/TTLogo-2.pdf}
 
 \DeclareOptionBeamer{logowidth}{\def\beamer@goethe@logo@width{#1}}
 \ExecuteOptionsBeamer{logowidth=0.25\paperwidth}
@@ -20,9 +20,13 @@
 \@goethe@title@centerfalse
 \DeclareOptionBeamer{centertitle}{\@goethe@title@centertrue}
 
-\newif\if@goethe@uselogo
-\@goethe@uselogotrue
-\DeclareOptionBeamer{nologo}{\@goethe@uselogofalse}
+\newif\if@goethe@logo@use
+\@goethe@logo@usetrue
+\DeclareOptionBeamer{nologo}{\@goethe@logo@usefalse}
+
+\newif\if@goethe@logo@center
+\@goethe@logo@centerfalse
+\DeclareOptionBeamer{centerlogo}{\@goethe@logo@centertrue}
 
 \ProcessOptionsBeamer\relax
 
@@ -64,10 +68,16 @@
                                                                   & \SetCell{f}{\usebeamerfont{date}\insertdate}           \\%
         \end{tblr}%
     \end{beamercolorbox}
-    \vfill
-    \begin{beamercolorbox}[wd=1\paperwidth,left,sep=0.1ex]{date}
-        \if@goethe@uselogo\leftskip=\beamer@goethe@titlemargin\includegraphics[width=\beamer@goethe@logo@width]{\beamer@goethe@logo}\fi
-    \end{beamercolorbox}
+    \if@goethe@logo@use
+        \vskip0pt plus 1filll
+        \begin{beamercolorbox}[wd=1\paperwidth,left,sep=0.1ex]{date}
+            \if@goethe@logo@center\centering\else\leftskip=\beamer@goethe@titlemargin\fi%
+            \includegraphics[width=\beamer@goethe@logo@width]{\beamer@goethe@logo}%
+        \end{beamercolorbox}
+        \vskip0pt plus 1filll
+    \else
+        \vskip1cm plus 1filll
+    \fi
 }
 
 % Section page.
