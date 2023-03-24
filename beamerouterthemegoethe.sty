@@ -5,10 +5,6 @@
     \addtocounter{framenumber}{-1}%
 }
 
-\DeclareOptionBeamer{footlineprefix}{\def\beamer@goethe@footlineprefix{#1}}
-\ExecuteOptionsBeamer{footlineprefix=\@empty}
-\ProcessOptionsBeamer
-
 \newlength{\beamer@goethe@frametitlemargin}
 \DeclareOptionBeamer{frametitlemargin}{\def\beamer@goethe@frametitlemargin{#1}}
 \ExecuteOptionsBeamer{frametitlemargin={0.3cm}}
@@ -19,20 +15,26 @@
 
 \ProcessOptionsBeamer\relax
 
+\defbeamertemplate*{footline separator}{goethe}{~--~}
+\defbeamertemplate*{footline content}{goethe}[2]{
+    {#2}%
+    {\let\hyperlink\@secondoftwo\insertshortinstitute}%
+    {\ifx\insertshortinstitute\@empty\else{\usebeamertemplate{footline separator}}\fi}%
+    {\let\hyperlink\@secondoftwo\insertshortauthor}%
+    {\ifx\insertshortauthor\@empty\else\usebeamertemplate{footline separator}\fi}%
+    {\let\hyperlink\@secondoftwo\insertshorttitle}%
+    {\ifx\insertshortsubtitle\@empty\else\usebeamertemplate{footline separator}\fi}%
+    {\let\hyperlink\@secondoftwo\insertshortsubtitle}%
+    {#1}%
+}
+
 \setbeamertemplate{footline}
 {%
     \leavevmode
     \begin{beamercolorbox}[wd=.85\paperwidth,ht=2.25ex,dp=1ex,left]{section in head/foot}
         \usebeamerfont{section in head/foot}%
         \hspace*{\beamer@goethe@framefootermargin}%
-        {\beamer@goethe@footlineprefix}%
-        {\let\hyperlink\@secondoftwo\insertshortinstitute}%
-        {\ifx\insertshortinstitute\@empty\else{~--~}\fi}%
-        {\let\hyperlink\@secondoftwo\insertshortauthor}%
-        {\ifx\insertshortauthor\@empty\else{~--~}\fi}%
-        {\let\hyperlink\@secondoftwo\insertshorttitle}%
-        {\ifx\insertshortsubtitle\@empty\else{~--~}\fi}%
-        {\let\hyperlink\@secondoftwo\insertshortsubtitle}%
+        \usebeamertemplate{footline content}%
     \end{beamercolorbox}%
     \hspace*{-.01\paperwidth}%
     \begin{beamercolorbox}[wd=.16\paperwidth,ht=2.25ex,dp=1ex,right]{date in head/foot}

@@ -19,9 +19,9 @@
     % centertitle, % center the title and subtitle
     frametitlemargin=0.3cm, % the size of the margin left of each frame title and subtitle
     framefootermargin=0.3cm, % the size of the margins left and right in the footline
-    logo=images/TTLogo-2.pdf, % can be PDF or any image, is scaled to 
+    logo=images/TTLogo-2.pdf, % can be PDF or any image, is scaled to logowidth
     logowidth=0.4\paperwidth, % you may need to scale your logo to fit the title page
-    centerlogo, % center the logo on the title page
+    % centerlogo, % center the logo on the title page
     % nologo, % disable the logo on the title page
     footlineprefix={}, % mind the braces
     % nonavigation, % disable the navigation in the footline
@@ -46,6 +46,23 @@
 
 % Date in "footer" alignment, bottom right
 \date{\today} % TODO
+
+%%%%%%%%%%%%
+% Footline %
+%%%%%%%%%%%%
+% Uncomment and change the following templates to change the footline
+% \defbeamertemplate*{footline separator}{goethe}{~--~}
+% \defbeamertemplate*{footline content}{goethe}[2]{
+%     {#2}%
+%     {\let\hyperlink\@secondoftwo\insertshortinstitute}%
+%     {\ifx\insertshortinstitute\@empty\else{\usebeamertemplate{footline separator}}\fi}%
+%     {\let\hyperlink\@secondoftwo\insertshortauthor}%
+%     {\ifx\insertshortauthor\@empty\else\usebeamertemplate{footline separator}\fi}%
+%     {\let\hyperlink\@secondoftwo\insertshorttitle}%
+%     {\ifx\insertshortsubtitle\@empty\else\usebeamertemplate{footline separator}\fi}%
+%     {\let\hyperlink\@secondoftwo\insertshortsubtitle}%
+%     {#1}%
+% }
 
 %%%%%%%%%%%%
 % Document %
