@@ -36,6 +36,29 @@
 
 \RequirePackage{tabularray}
 \UseTblrLibrary{counter}
+
+
+\defbeamertemplate*{title table nosubtitle}{goethe}{%
+    \begin{tblr}{width=\beamer@goethe@contentwidth,colspec={A}}
+        {\usebeamerfont{title}\inserttitle} \\
+    \end{tblr}
+}
+
+\defbeamertemplate*{title table subtitle}{goethe}{%
+    \begin{tblr}{width=\beamer@goethe@contentwidth,colspec={A}}
+        {\usebeamerfont{title}\inserttitle} \\
+        {\usebeamerfont{subtitle}\usebeamercolor{subtitle}\insertsubtitle} \\
+    \end{tblr}
+}
+
+\defbeamertemplate*{title table}{goethe}{%
+    \ifx\insertsubtitle\@empty%
+        \usebeamertemplate{title table nosubtitle}%
+    \else%
+        \usebeamertemplate{title table subtitle}%
+    \fi%
+}
+
 \defbeamertemplate*{title page}{goethe}[1][]
 {%
     \vspace{-1.5\baselineskip}%
@@ -47,17 +70,7 @@
         \else%
             \NewColumnType{A}{X[l]}%
         \fi%
-        \ifx\insertsubtitle\@empty%
-            \begin{tblr}{width=\beamer@goethe@contentwidth,colspec={A}}
-                {\usebeamerfont{title}\inserttitle} \\
-            \end{tblr}
-        \else%
-            \begin{tblr}{width=\beamer@goethe@contentwidth,colspec={A}}
-                {\usebeamerfont{title}\inserttitle} \\
-                {\usebeamerfont{subtitle}\usebeamercolor{subtitle}\insertsubtitle} \\
-                % {\usebeamercolor{titlegraphic}\inserttitlegraphic} \\
-            \end{tblr}
-        \fi%
+        \usebeamertemplate{title table}%
     \end{beamercolorbox}
     \vspace{-2pt}
     \begin{beamercolorbox}[wd=1\paperwidth,left,sep=1ex]{author}
