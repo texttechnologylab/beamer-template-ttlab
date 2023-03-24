@@ -1,7 +1,7 @@
 \mode<presentation>
 
 \DeclareOptionBeamer{titleheight}{\def\beamer@goethe@title@height{#1}}
-\ExecuteOptionsBeamer{titleheight=0.5\paperheight}
+\ExecuteOptionsBeamer{titleheight=0.4\paperheight}
 
 \DeclareOptionBeamer{titledepth}{\def\beamer@goethe@title@depth{#1}}
 \ExecuteOptionsBeamer{titledepth=0\paperheight}
@@ -19,6 +19,10 @@
 \newif\if@goethe@title@center
 \@goethe@title@centerfalse
 \DeclareOptionBeamer{centertitle}{\@goethe@title@centertrue}
+
+\newif\if@goethe@uselogo
+\@goethe@uselogotrue
+\DeclareOptionBeamer{nologo}{\@goethe@uselogofalse}
 
 \ProcessOptionsBeamer\relax
 
@@ -62,7 +66,7 @@
     \end{beamercolorbox}
     \vfill
     \begin{beamercolorbox}[wd=1\paperwidth,left,sep=0.1ex]{date}
-        \if@goethe@nologo\leftskip=\beamer@goethe@titlemargin\includegraphics[width=\beamer@goethe@logo@width]{\beamer@goethe@logo}\fi
+        \if@goethe@uselogo\leftskip=\beamer@goethe@titlemargin\includegraphics[width=\beamer@goethe@logo@width]{\beamer@goethe@logo}\fi
     \end{beamercolorbox}
 }
 

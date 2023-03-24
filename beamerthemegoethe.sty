@@ -21,6 +21,10 @@
     \PassOptionsToPackage{logo={#1}}{beamerinnerthemegoethe}
 }
 
+\DeclareOptionBeamer{nologo}{%
+    \PassOptionsToPackage{nologo}{beamerinnerthemegoethe}
+}
+
 \DeclareOptionBeamer{logowidth}{%
     \PassOptionsToPackage{logowidth=#1}{beamerinnerthemegoethe}
 }
@@ -38,10 +42,6 @@
 \DeclareOptionBeamer{framefootermargin}{
     \PassOptionsToPackage{framefootermargin={#1}}{beamerouterthemegoethe}
 }
-
-\newif\if@goethe@nologo
-\@goethe@nologotrue
-\DeclareOptionBeamer{nologo}{\@goethe@nologofalse}
 
 \DeclareOptionBeamer{nonavigation}{\setbeamertemplate{navigation symbols}{}}
 
