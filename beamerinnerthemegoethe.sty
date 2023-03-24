@@ -36,6 +36,7 @@
 
 \RequirePackage{tabularray}
 \UseTblrLibrary{counter}
+\UseTblrLibrary{varwidth} % see: https://github.com/lvjr/tabularray/issues/36
 
 
 \defbeamertemplate*{title table nosubtitle}{goethe}{%
@@ -52,6 +53,12 @@
 }
 
 \defbeamertemplate*{title table}{goethe}{%
+    \SetTblrInner{leftsep={0pt}, rightsep={0pt}, rowsep={1ex}}%
+    \if@goethe@title@center%
+        \NewColumnType{A}{X[c]}%
+    \else%
+        \NewColumnType{A}{X[l]}%
+    \fi%
     \ifx\insertsubtitle\@empty%
         \usebeamertemplate{title table nosubtitle}%
     \else%
@@ -59,27 +66,25 @@
     \fi%
 }
 
+\defbeamertemplate*{author table}{goethe}{%
+    \SetTblrInner{leftsep={0pt}, abovesep={0pt}, belowsep={0pt}, rightsep={0pt}, measure=vbox}%
+    \begin{tblr}{width=\beamer@goethe@contentwidth,colspec={Xr}}%
+        \SetCell[r=2]{l}{\usebeamerfont{author}\insertauthor} & \SetCell{h}{\usebeamerfont{institute}\insertinstitute} \\%
+                                                              & \SetCell{f}{\usebeamerfont{date}\insertdate}           \\%
+    \end{tblr}%
+}
+
 \defbeamertemplate*{title page}{goethe}[1][]
 {%
     \vspace{-1.5\baselineskip}%
     \begin{beamercolorbox}[wd=1\paperwidth,ht=\beamer@goethe@title@height,dp=\beamer@goethe@title@depth,sep=1ex,left]{title}
         \leftskip=\beamer@goethe@titlemargin%
-        \SetTblrInner{leftsep={0pt}, rightsep={0pt}, rowsep={1ex}}%
-        \if@goethe@title@center%
-            \NewColumnType{A}{X[c]}%
-        \else%
-            \NewColumnType{A}{X[l]}%
-        \fi%
         \usebeamertemplate{title table}%
     \end{beamercolorbox}
     \vspace{-2pt}
     \begin{beamercolorbox}[wd=1\paperwidth,left,sep=1ex]{author}
         \leftskip=\beamer@goethe@titlemargin%
-        \SetTblrInner{leftsep={0pt}, abovesep={0pt}, belowsep={0pt}, rightsep={0pt}}%
-        \begin{tblr}{width=\beamer@goethe@contentwidth,colspec={Xr}}%
-            \SetCell[r=2]{l}{\usebeamerfont{author}\insertauthor} & \SetCell{h}{\usebeamerfont{institute}\insertinstitute} \\%
-                                                                  & \SetCell{f}{\usebeamerfont{date}\insertdate}           \\%
-        \end{tblr}%
+        \usebeamertemplate{author table}%
     \end{beamercolorbox}
     \if@goethe@logo@use
         \vskip0pt plus 1filll
