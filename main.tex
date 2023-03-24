@@ -50,19 +50,14 @@
 %%%%%%%%%%%%
 % Footline %
 %%%%%%%%%%%%
-% Uncomment and change the following templates to change the footline
-% \defbeamertemplate*{footline separator}{goethe}{~--~}
-% \defbeamertemplate*{footline content}{goethe}[2]{
-%     {#2}%
-%     {\let\hyperlink\@secondoftwo\insertshortinstitute}%
-%     {\ifx\insertshortinstitute\@empty\else{\usebeamertemplate{footline separator}}\fi}%
-%     {\let\hyperlink\@secondoftwo\insertshortauthor}%
-%     {\ifx\insertshortauthor\@empty\else\usebeamertemplate{footline separator}\fi}%
-%     {\let\hyperlink\@secondoftwo\insertshorttitle}%
-%     {\ifx\insertshortsubtitle\@empty\else\usebeamertemplate{footline separator}\fi}%
-%     {\let\hyperlink\@secondoftwo\insertshortsubtitle}%
-%     {#1}%
+% Uncomment and change the following lines to change the footline
+% \makeatletter%
+% \setbeamertemplate{footline separator}{~--~}
+% \setbeamertemplate{footline content}{%
+%     \let\hyperlink\@secondoftwo%
+%     \insertshorttitle\usebeamertemplate{footline separator}\insertshortsubtitle%
 % }
+% \makeatother%
 
 %%%%%%%%%%%%
 % Document %
