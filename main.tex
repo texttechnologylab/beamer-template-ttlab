@@ -13,12 +13,17 @@
     uselibertine, % nolibertine % Use Linux Libertine/Biolinum as roman/sans serif font
     usefiracode, % nofiracode % Use Fira Code as monospaced font
     % Layout options
-    titleheight=0.5\paperheight, % the hight of the beamercolorbox containing title and subtitle
+    titlemargin=0.1\paperwidth, % the size of margins left and right of the title
+    titleheight=0.4\paperheight, % the hight of the beamercolorbox containing title and subtitle
     titledepth=0\paperheight, % the depth of the beamercolorbox containing title and subtitle
     % centertitle, % center the title and subtitle
-    logo=images/GU-Logo-blau.pdf, % can be PDF or any image, is scaled to 
-    logowidth=0.25\paperwidth, % you may need to scale your logo to fit the title page
-    institute={Goethe Universität Frankfurt}, % mind the braces
+    frametitlemargin=0.3cm, % the size of the margin left of each frame title and subtitle
+    framefootermargin=0.3cm, % the size of the margins left and right in the footline
+    logo=images/TTLogo-2.pdf, % can be PDF or any image, is scaled to logowidth
+    logowidth=0.4\paperwidth, % you may need to scale your logo to fit the title page
+    % centerlogo, % center the logo on the title page
+    % nologo, % disable the logo on the title page
+    footlineprefix={}, % mind the braces
     % nonavigation, % disable the navigation in the footline
 ]{goethe}
 
@@ -28,19 +33,36 @@
 % Authors and titles are wrapped in a tblr environment
 
 % Title and sub-title can contain \\
-\title{Template Title} % TODO
-\subtitle{Template Subtitle} % TODO
+\title[Title]{Template Title} % TODO
+\subtitle[Subtitle]{Template Subtitle} % TODO
 
 % Authors in "middle" alignment
 % Separate multiple authors on the same line with \and
 % Use \And to put authors on a separate line
-\author{{First Author \and Second Author} \And {Author with a very long Name}} % TODO
+\author[F. Author, S. Author, A. Name]{{First Author \and Second Author} \And {Author with a very long Name}} % TODO
 
 % Institute in "header" alignment, top right
-\institute{First Laboratory \\ Second Laboratory}
+\institute[FLab, SLab]{First Laboratory \And Second Laboratory}
 
 % Date in "footer" alignment, bottom right
 \date{\today} % TODO
+
+%%%%%%%%%%%%
+% Footline %
+%%%%%%%%%%%%
+% Uncomment and change the following templates to change the footline
+% \defbeamertemplate*{footline separator}{goethe}{~--~}
+% \defbeamertemplate*{footline content}{goethe}[2]{
+%     {#2}%
+%     {\let\hyperlink\@secondoftwo\insertshortinstitute}%
+%     {\ifx\insertshortinstitute\@empty\else{\usebeamertemplate{footline separator}}\fi}%
+%     {\let\hyperlink\@secondoftwo\insertshortauthor}%
+%     {\ifx\insertshortauthor\@empty\else\usebeamertemplate{footline separator}\fi}%
+%     {\let\hyperlink\@secondoftwo\insertshorttitle}%
+%     {\ifx\insertshortsubtitle\@empty\else\usebeamertemplate{footline separator}\fi}%
+%     {\let\hyperlink\@secondoftwo\insertshortsubtitle}%
+%     {#1}%
+% }
 
 %%%%%%%%%%%%
 % Document %

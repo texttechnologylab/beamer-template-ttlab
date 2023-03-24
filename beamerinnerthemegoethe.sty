@@ -1,71 +1,107 @@
 \mode<presentation>
 
 \DeclareOptionBeamer{titleheight}{\def\beamer@goethe@title@height{#1}}
-\ExecuteOptionsBeamer{titleheight=0.5\paperheight}
+\ExecuteOptionsBeamer{titleheight=0.4\paperheight}
 
 \DeclareOptionBeamer{titledepth}{\def\beamer@goethe@title@depth{#1}}
 \ExecuteOptionsBeamer{titledepth=0\paperheight}
 
 \DeclareOptionBeamer{logo}{\def\beamer@goethe@logo{#1}}
-\ExecuteOptionsBeamer{logo=images/GU-Logo-blau.pdf}
+\ExecuteOptionsBeamer{logo=images/TTLogo-2.pdf}
 
 \DeclareOptionBeamer{logowidth}{\def\beamer@goethe@logo@width{#1}}
 \ExecuteOptionsBeamer{logowidth=0.25\paperwidth}
 
-\newlength{\beamer@goethe@margin}
-\DeclareOptionBeamer{margin}{\def\beamer@goethe@margin{#1}}
-\ExecuteOptionsBeamer{margin={0.15\paperwidth}}
+\newlength{\beamer@goethe@titlemargin}
+\DeclareOptionBeamer{titlemargin}{\def\beamer@goethe@titlemargin{#1}}
+\ExecuteOptionsBeamer{titlemargin={0.15\paperwidth}}
 
-\ProcessOptionsBeamer
+\newif\if@goethe@title@center
+\@goethe@title@centerfalse
+\DeclareOptionBeamer{centertitle}{\@goethe@title@centertrue}
+
+\newif\if@goethe@logo@use
+\@goethe@logo@usetrue
+\DeclareOptionBeamer{nologo}{\@goethe@logo@usefalse}
+
+\newif\if@goethe@logo@center
+\@goethe@logo@centerfalse
+\DeclareOptionBeamer{centerlogo}{\@goethe@logo@centertrue}
+
+\ProcessOptionsBeamer\relax
 
 \def\beamer@goethe@subtitle@depth{\dimexpr(\paperheight-\beamer@goethe@title@height+2pt)\relax}
 \def\beamer@goethe@section@height{\dimexpr(\beamer@goethe@title@height+2pt)\relax}
-\def\beamer@goethe@contentwidth{\dimexpr(\paperwidth-\beamer@goethe@margin-\beamer@goethe@margin)\relax}
+\def\beamer@goethe@contentwidth{\dimexpr(\paperwidth-\beamer@goethe@titlemargin-\beamer@goethe@titlemargin)\relax}
 
 \RequirePackage{tabularray}
 \UseTblrLibrary{counter}
+\UseTblrLibrary{varwidth} % see: https://github.com/lvjr/tabularray/issues/36
+
+
+\defbeamertemplate*{title table nosubtitle}{goethe}{%
+    \begin{tblr}{width=\beamer@goethe@contentwidth,colspec={A}}
+        {\usebeamerfont{title}\inserttitle} \\
+    \end{tblr}
+}
+
+\defbeamertemplate*{title table subtitle}{goethe}{%
+    \begin{tblr}{width=\beamer@goethe@contentwidth,colspec={A}}
+        {\usebeamerfont{title}\inserttitle} \\
+        {\usebeamerfont{subtitle}\usebeamercolor{subtitle}\insertsubtitle} \\
+    \end{tblr}
+}
+
+\defbeamertemplate*{title table}{goethe}{%
+    \SetTblrInner{leftsep={0pt}, rightsep={0pt}, rowsep={1ex}}%
+    \if@goethe@title@center%
+        \NewColumnType{A}{X[c]}%
+    \else%
+        \NewColumnType{A}{X[l]}%
+    \fi%
+    \ifx\insertsubtitle\@empty%
+        \usebeamertemplate{title table nosubtitle}%
+    \else%
+        \usebeamertemplate{title table subtitle}%
+    \fi%
+}
+
+\defbeamertemplate*{author table}{goethe}{%
+    \SetTblrInner{leftsep={0pt}, abovesep={0pt}, belowsep={0pt}, rightsep={0pt}, measure=vbox}%
+    \begin{tblr}{width=\beamer@goethe@contentwidth,colspec={Xr}}%
+        \SetCell[r=2]{l}{\usebeamerfont{author}\insertauthor} & \SetCell{h}{\usebeamerfont{institute}\insertinstitute} \\%
+                                                              & \SetCell{f}{\usebeamerfont{date}\insertdate}           \\%
+    \end{tblr}%
+}
+
 \defbeamertemplate*{title page}{goethe}[1][]
 {%
     \vspace{-1.5\baselineskip}%
     \begin{beamercolorbox}[wd=1\paperwidth,ht=\beamer@goethe@title@height,dp=\beamer@goethe@title@depth,sep=1ex,left]{title}
-        \leftskip=\beamer@goethe@margin%
-        \SetTblrInner{leftsep={0pt}, rightsep={0pt}, rowsep={1ex}}%
-        \if@goethe@title@center%
-            \NewColumnType{A}{X[c]}%
-        \else%
-            \NewColumnType{A}{X[l]}%
-        \fi%
-        \ifx\insertsubtitle\@empty%
-            \begin{tblr}{width=\beamer@goethe@contentwidth,colspec={A}}
-                {\usebeamerfont{title}\inserttitle} \\
-            \end{tblr}
-        \else%
-            \begin{tblr}{width=\beamer@goethe@contentwidth,colspec={A}}
-                {\usebeamerfont{title}\inserttitle} \\
-                {\usebeamerfont{subtitle}\usebeamercolor{subtitle}\insertsubtitle} \\
-                % {\usebeamercolor{titlegraphic}\inserttitlegraphic} \\
-            \end{tblr}
-        \fi%
+        \leftskip=\beamer@goethe@titlemargin%
+        \usebeamertemplate{title table}%
     \end{beamercolorbox}
     \vspace{-2pt}
     \begin{beamercolorbox}[wd=1\paperwidth,left,sep=1ex]{author}
-        \leftskip=\beamer@goethe@margin%
-        \SetTblrInner{leftsep={0pt}, abovesep={0pt}, belowsep={0pt}, rightsep={0pt}}%
-        \begin{tblr}{width=\beamer@goethe@contentwidth,colspec={Xr}}%
-            \SetCell[r=2]{l}{\usebeamerfont{author}\insertauthor} & \SetCell{h}{\usebeamerfont{institute}\insertinstitute} \\%
-                                                                  & \SetCell{f}{\usebeamerfont{date}\insertdate}           \\%
-        \end{tblr}%
+        \leftskip=\beamer@goethe@titlemargin%
+        \usebeamertemplate{author table}%
     \end{beamercolorbox}
-    \vfill
-    \begin{beamercolorbox}[wd=1\paperwidth,left,sep=0.1ex]{date}
-        \if@goethe@nologo\leftskip=\beamer@goethe@margin\includegraphics[width=\beamer@goethe@logo@width]{\beamer@goethe@logo}\fi
-    \end{beamercolorbox}
+    \if@goethe@logo@use
+        \vskip0pt plus 1filll
+        \begin{beamercolorbox}[wd=1\paperwidth,left,sep=0.1ex]{date}
+            \if@goethe@logo@center\centering\else\leftskip=\beamer@goethe@titlemargin\fi%
+            \includegraphics[width=\beamer@goethe@logo@width]{\beamer@goethe@logo}%
+        \end{beamercolorbox}
+        \vskip0pt plus 1filll
+    \else
+        \vskip1cm plus 1filll
+    \fi
 }
 
 % Section page.
 \defbeamertemplate*{section page}{goethe}{%
     \begin{beamercolorbox}[wd=1\paperwidth,ht=\beamer@goethe@section@height,left,sep=1ex]{sectiontitle}
-        \leftskip=\beamer@goethe@margin%
+        \leftskip=\beamer@goethe@titlemargin%
         \SetTblrInner{leftsep={0pt}, rightsep={0pt}}%
         \begin{tblr}{width=\beamer@goethe@contentwidth,colspec={X[l]}}
             {%
@@ -91,7 +127,7 @@
 % Subsection page.
 \defbeamertemplate*{subsection page}{goethe}{%
     \begin{beamercolorbox}[wd=1\paperwidth,ht=\beamer@goethe@section@height,left,sep=1ex]{sectiontitle}
-        \leftskip=\beamer@goethe@margin%
+        \leftskip=\beamer@goethe@titlemargin%
         \SetTblrInner{leftsep={0pt}, rightsep={0pt}}%
         \begin{tblr}{width=\beamer@goethe@contentwidth,colspec={X[l]}}
             {%
@@ -103,7 +139,7 @@
     \end{beamercolorbox}
     \vspace{-2pt}
     \begin{beamercolorbox}[wd=1\paperwidth,dp=\beamer@goethe@subtitle@depth,left,sep=1ex]{subsectiontitle}
-        \leftskip=\beamer@goethe@margin%
+        \leftskip=\beamer@goethe@titlemargin%
         \SetTblrInner{leftsep={0pt}, rightsep={0pt}}%
         \begin{tblr}{width=\beamer@goethe@contentwidth,colspec={X[l]}}
             {%
@@ -124,7 +160,7 @@
 \newcommand{\overviewFrame}[2]{%
     \begin{frame}[plain, noframenumbering]{}%
         \begin{beamercolorbox}[wd=1\paperwidth,ht=\beamer@goethe@section@height,left,sep=1ex]{sectiontitle}%
-            \leftskip=\beamer@goethe@margin%
+            \leftskip=\beamer@goethe@titlemargin%
             \SetTblrInner{leftsep={0pt}, rightsep={0pt}}%
             \usebeamerfont{sectiontitle}%
             \usebeamercolor{sectiontitle}%
@@ -134,7 +170,7 @@
         \end{beamercolorbox}%
         \vspace{-2pt}%
         \begin{beamercolorbox}[wd=1\paperwidth,dp=\beamer@goethe@subtitle@depth,left,sep=1ex]{subsectiontitle}%
-            \leftskip=\beamer@goethe@margin%
+            \leftskip=\beamer@goethe@titlemargin%
             \SetTblrInner{leftsep={0pt}, rightsep={0pt}}%
             \usebeamerfont{subsectiontitle}%
             \usebeamercolor{subsectiontitle}%

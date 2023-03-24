@@ -1,39 +1,57 @@
 \mode<presentation>
 
+% Layout Options %
+% Title Page
+
 \DeclareOptionBeamer{titleheight}{%
     \PassOptionsToPackage{titleheight=#1}{beamerinnerthemegoethe}
 }
+
 \DeclareOptionBeamer{titledepth}{%
     \PassOptionsToPackage{titledepth=#1}{beamerinnerthemegoethe}
 }
-\DeclareOptionBeamer{margin}{%
-    \PassOptionsToPackage{margin=#1}{beamerinnerthemegoethe}
+
+\DeclareOptionBeamer{titlemargin}{%
+    \PassOptionsToPackage{titlemargin=#1}{beamerinnerthemegoethe}
 }
 
-\newif\if@goethe@title@center
-\@goethe@title@centerfalse
-\DeclareOptionBeamer{centertitle}{\@goethe@title@centertrue}
+\DeclareOptionBeamer{centertitle}{%
+    \PassOptionsToPackage{centertitle}{beamerinnerthemegoethe}
+}
 
 \DeclareOptionBeamer{logo}{%
     \PassOptionsToPackage{logo={#1}}{beamerinnerthemegoethe}
+}
+
+\DeclareOptionBeamer{nologo}{%
+    \PassOptionsToPackage{nologo}{beamerinnerthemegoethe}
 }
 
 \DeclareOptionBeamer{logowidth}{%
     \PassOptionsToPackage{logowidth=#1}{beamerinnerthemegoethe}
 }
 
-\DeclareOptionBeamer{institute}{%
-    \PassOptionsToPackage{institute={#1}}{beamerouterthemegoethe}
+\DeclareOptionBeamer{centerlogo}{%
+    \PassOptionsToPackage{centerlogo}{beamerinnerthemegoethe}
 }
 
-\newif\if@goethe@nologo
-\@goethe@nologotrue
+% General
 
-\DeclareOptionBeamer{nologo}{\@goethe@nologofalse}
+\DeclareOptionBeamer{footlineprefix}{%
+    \PassOptionsToPackage{footlineprefix={#1}}{beamerouterthemegoethe}
+}
+
+\DeclareOptionBeamer{frametitlemargin}{
+    \PassOptionsToPackage{frametitlemargin={#1}}{beamerouterthemegoethe}
+}
+
+\DeclareOptionBeamer{framefootermargin}{
+    \PassOptionsToPackage{framefootermargin={#1}}{beamerouterthemegoethe}
+}
+
 \DeclareOptionBeamer{nonavigation}{\setbeamertemplate{navigation symbols}{}}
 
-
-%%%
+% Common Options %
 
 \newcommand{\polyglossiaLang}{english}
 \DeclareOptionBeamer{english}{
@@ -117,7 +135,7 @@
 \useoutertheme{goethe}
 \useinnertheme{goethe}
 
-\renewcommand{\And}{\\}
+\renewcommand{\And}{\texorpdfstring{\\}{ }}
 
 %Set fonts if they are installed
 % \usepackage{fontspec}
