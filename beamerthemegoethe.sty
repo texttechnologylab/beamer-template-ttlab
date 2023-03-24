@@ -1,5 +1,8 @@
 \mode<presentation>
 
+% Layout Options %
+% Title Page
+
 \DeclareOptionBeamer{titleheight}{%
     \PassOptionsToPackage{titleheight=#1}{beamerinnerthemegoethe}
 }
@@ -10,9 +13,9 @@
     \PassOptionsToPackage{titlemargin=#1}{beamerinnerthemegoethe}
 }
 
-\newif\if@goethe@title@center
-\@goethe@title@centerfalse
-\DeclareOptionBeamer{centertitle}{\@goethe@title@centertrue}
+\DeclareOptionBeamer{centertitle}{%
+    \PassOptionsToPackage{centertitle}{beamerinnerthemegoethe}
+}
 
 \DeclareOptionBeamer{logo}{%
     \PassOptionsToPackage{logo={#1}}{beamerinnerthemegoethe}
@@ -22,8 +25,10 @@
     \PassOptionsToPackage{logowidth=#1}{beamerinnerthemegoethe}
 }
 
-\DeclareOptionBeamer{institute}{%
-    \PassOptionsToPackage{institute={#1}}{beamerouterthemegoethe}
+% General
+
+\DeclareOptionBeamer{footlineprefix}{%
+    \PassOptionsToPackage{footlineprefix={#1}}{beamerouterthemegoethe}
 }
 
 \DeclareOptionBeamer{frametitlemargin}{
@@ -36,12 +41,11 @@
 
 \newif\if@goethe@nologo
 \@goethe@nologotrue
-
 \DeclareOptionBeamer{nologo}{\@goethe@nologofalse}
+
 \DeclareOptionBeamer{nonavigation}{\setbeamertemplate{navigation symbols}{}}
 
-
-%%%
+% Common Options %
 
 \newcommand{\polyglossiaLang}{english}
 \DeclareOptionBeamer{english}{
@@ -125,7 +129,7 @@
 \useoutertheme{goethe}
 \useinnertheme{goethe}
 
-\renewcommand{\And}{\\}
+\renewcommand{\And}{\texorpdfstring{\\}{ }}
 
 %Set fonts if they are installed
 % \usepackage{fontspec}

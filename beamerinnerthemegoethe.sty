@@ -16,6 +16,10 @@
 \DeclareOptionBeamer{titlemargin}{\def\beamer@goethe@titlemargin{#1}}
 \ExecuteOptionsBeamer{titlemargin={0.15\paperwidth}}
 
+\newif\if@goethe@title@center
+\@goethe@title@centerfalse
+\DeclareOptionBeamer{centertitle}{\@goethe@title@centertrue}
+
 \ProcessOptionsBeamer\relax
 
 \def\beamer@goethe@subtitle@depth{\dimexpr(\paperheight-\beamer@goethe@title@height+2pt)\relax}

@@ -5,8 +5,8 @@
     \addtocounter{framenumber}{-1}%
 }
 
-\DeclareOptionBeamer{institute}{\def\beamer@goethe@institute{#1}}
-\ExecuteOptionsBeamer{institute={Goehte Universität Frankfurt}}
+\DeclareOptionBeamer{footlineprefix}{\def\beamer@goethe@footlineprefix{#1}}
+\ExecuteOptionsBeamer{footlineprefix=\@empty}
 \ProcessOptionsBeamer
 
 \newlength{\beamer@goethe@frametitlemargin}
@@ -17,12 +17,22 @@
 \DeclareOptionBeamer{framefootermargin}{\def\beamer@goethe@framefootermargin{#1}}
 \ExecuteOptionsBeamer{framefootermargin={0.3cm}}
 
+\ProcessOptionsBeamer\relax
+
 \setbeamertemplate{footline}
 {%
     \leavevmode
     \begin{beamercolorbox}[wd=.85\paperwidth,ht=2.25ex,dp=1ex,left]{section in head/foot}
-        \usebeamerfont{section in head/foot}
-        {\hspace*{\beamer@goethe@framefootermargin}\beamer@goethe@institute}
+        \usebeamerfont{section in head/foot}%
+        \hspace*{\beamer@goethe@framefootermargin}%
+        {\beamer@goethe@footlineprefix}%
+        {\let\hyperlink\@secondoftwo\insertshortinstitute}%
+        {\ifx\insertshortinstitute\@empty\else{~--~}\fi}%
+        {\let\hyperlink\@secondoftwo\insertshortauthor}%
+        {\ifx\insertshortauthor\@empty\else{~--~}\fi}%
+        {\let\hyperlink\@secondoftwo\insertshorttitle}%
+        {\ifx\insertshortsubtitle\@empty\else{~--~}\fi}%
+        {\let\hyperlink\@secondoftwo\insertshortsubtitle}%
     \end{beamercolorbox}%
     \hspace*{-.01\paperwidth}%
     \begin{beamercolorbox}[wd=.16\paperwidth,ht=2.25ex,dp=1ex,right]{date in head/foot}
