@@ -9,17 +9,25 @@
 \ExecuteOptionsBeamer{institute={Goehte Universität Frankfurt}}
 \ProcessOptionsBeamer
 
+\newlength{\beamer@goethe@frametitlemargin}
+\DeclareOptionBeamer{frametitlemargin}{\def\beamer@goethe@frametitlemargin{#1}}
+\ExecuteOptionsBeamer{frametitlemargin={0.3cm}}
+
+\newlength{\beamer@goethe@framefootermargin}
+\DeclareOptionBeamer{framefootermargin}{\def\beamer@goethe@framefootermargin{#1}}
+\ExecuteOptionsBeamer{framefootermargin={0.3cm}}
+
 \setbeamertemplate{footline}
 {%
     \leavevmode
     \begin{beamercolorbox}[wd=.85\paperwidth,ht=2.25ex,dp=1ex,left]{section in head/foot}
         \usebeamerfont{section in head/foot}
-        {\hspace*{0.3cm}\beamer@goethe@institute}
+        {\hspace*{\beamer@goethe@framefootermargin}\beamer@goethe@institute}
     \end{beamercolorbox}%
     \hspace*{-.01\paperwidth}%
     \begin{beamercolorbox}[wd=.16\paperwidth,ht=2.25ex,dp=1ex,right]{date in head/foot}
         \usebeamerfont{date in head/foot}
-        {\insertframenumber{} / \inserttotalframenumber\hspace*{0.3cm}}
+        {\insertframenumber{} / \inserttotalframenumber\hspace*{\beamer@goethe@framefootermargin}}
     \end{beamercolorbox}
 }
 
@@ -33,13 +41,13 @@
     \begin{beamercolorbox}[ht=2.75ex,dp=1.25ex,#1,wd=\the\@tempdima]{frametitle}%
         \vbox{}\vskip-1ex%
         \if@tempswa\else\csname beamer@fte#1\endcsname\fi%
-        \leftskip0.3cm\strut\insertframetitle\strut\par%
+        \leftskip\beamer@goethe@frametitlemargin\strut\insertframetitle\strut\par%
     \end{beamercolorbox}%
     \vskip-2pt%
     \ifx\insertframesubtitle\@empty\else{%
         \usebeamerfont{framesubtitle}
         \begin{beamercolorbox}[ht=2.25ex,dp=1.15ex,#1,wd=\the\@tempdima]{framesubtitle}%
-            \leftskip0.3cm\strut\insertframesubtitle\strut\par%
+            \leftskip\beamer@goethe@frametitlemargin\strut\insertframesubtitle\strut\par%
             \vskip-1ex%
             \if@tempswa\else\vskip-.3cm\fi% set inside beamercolorbox... evil here...
         \end{beamercolorbox}%

@@ -6,8 +6,8 @@
 \DeclareOptionBeamer{titledepth}{%
     \PassOptionsToPackage{titledepth=#1}{beamerinnerthemegoethe}
 }
-\DeclareOptionBeamer{margin}{%
-    \PassOptionsToPackage{margin=#1}{beamerinnerthemegoethe}
+\DeclareOptionBeamer{titlemargin}{%
+    \PassOptionsToPackage{titlemargin=#1}{beamerinnerthemegoethe}
 }
 
 \newif\if@goethe@title@center
@@ -24,6 +24,14 @@
 
 \DeclareOptionBeamer{institute}{%
     \PassOptionsToPackage{institute={#1}}{beamerouterthemegoethe}
+}
+
+\DeclareOptionBeamer{frametitlemargin}{
+    \PassOptionsToPackage{frametitlemargin={#1}}{beamerouterthemegoethe}
+}
+
+\DeclareOptionBeamer{framefootermargin}{
+    \PassOptionsToPackage{framefootermargin={#1}}{beamerouterthemegoethe}
 }
 
 \newif\if@goethe@nologo
