@@ -67,10 +67,11 @@
     \renewcommand{\polyglossiaLang}{german}%
 }
 
+\newif\if@nolualatex\@nolualatextrue
 \newif\if@polyglossia
-\DeclareOptionBeamer{usepolyglossia}{\@polyglossiatrue}
-\DeclareOptionBeamer{nopolyglossia}{\@polyglossiafalse}
-\DeclareOptionBeamer{usebabel}{\@polyglossiafalse}
+\DeclareOptionBeamer{usepolyglossia}{\@polyglossiatrue\@nolualatexfalse}
+\DeclareOptionBeamer{nopolyglossia}{\@polyglossiafalse\@nolualatextrue}
+\DeclareOptionBeamer{usebabel}{\@polyglossiafalse\@nolualatextrue}
 
 \newif\if@biblatex
 \DeclareOptionBeamer{usebiblatex}{\@biblatextrue}
@@ -135,7 +136,7 @@
 \useoutertheme{goethe}
 \useinnertheme{goethe}
 
-\renewcommand{\And}{\texorpdfstring{\\}{ }}
+\renewcommand{\And}{\texorpdfstring{\\}{, }}
 
 %Set fonts if they are installed
 % \usepackage{fontspec}
@@ -168,19 +169,20 @@
 \addtolength\parskip{6pt}
 
 %% Fonts %%
+\if@nolualatex%
+    \RequirePackage[T1]{fontenc}
+    \RequirePackage[utf8]{inputenc}
+\fi
 
 \if@libertine%
   \RequirePackage{fontspec}
   \setromanfont[Ligatures=TeX]{Linux Libertine O} % Serifenschrift
   \setsansfont[Ligatures=TeX]{Linux Biolinum O} % serifenlose Schrift
   \setmonofont[Scale=MatchLowercase]{DejaVu Sans Mono}%
-\else%
-    \RequirePackage[T1]{fontenc}
-    \RequirePackage[utf8]{inputenc}
 \fi
 
 \if@firacode%
-  \RequirePackage{fontspec}
+    \RequirePackage{fontspec}
     \setmonofont{FiraCode-Regular.ttf}[
         Path={./fonts/},
         % Upright italic font for nice formatted minted comments
