@@ -66,11 +66,10 @@
     \renewcommand{\polyglossiaLang}{german}%
 }
 
-\newif\if@nolualatex\@nolualatextrue
 \newif\if@polyglossia
-\DeclareOptionBeamer{usepolyglossia}{\@polyglossiatrue\@nolualatexfalse}
-\DeclareOptionBeamer{nopolyglossia}{\@polyglossiafalse\@nolualatextrue}
-\DeclareOptionBeamer{usebabel}{\@polyglossiafalse\@nolualatextrue}
+\DeclareOptionBeamer{usepolyglossia}{\@polyglossiatrue}
+\DeclareOptionBeamer{nopolyglossia}{\@polyglossiafalse}
+\DeclareOptionBeamer{usebabel}{\@polyglossiafalse}
 
 \newif\if@biblatex
 \DeclareOptionBeamer{usebiblatex}{\@biblatextrue}
@@ -193,10 +192,10 @@
   \setromanfont[Ligatures=TeX]{Linux Libertine O} % Serifenschrift
   \setsansfont[Ligatures=TeX]{Linux Biolinum O} % serifenlose Schrift
   \setmonofont[Scale=MatchLowercase]{DejaVu Sans Mono}%
-\fi
+\fi%
 
 \if@firacode%
-    \RequirePackage{fontspec}
+  \RequirePackage{fontspec}
     \setmonofont{FiraCode-Regular.ttf}[
         Path={./fonts/},
         % Upright italic font for nice formatted minted comments

@@ -23,10 +23,6 @@
 \DeclareOptionBeamer{logowidth}{\def\beamer@goethe@logo@width{#1}}
 \ExecuteOptionsBeamer{logowidth=0.25\paperwidth}
 
-\newlength{\beamer@goethe@titlemargin}
-\DeclareOptionBeamer{titlemargin}{\def\beamer@goethe@titlemargin{#1}}
-\ExecuteOptionsBeamer{titlemargin={0.15\paperwidth}}
-
 \newif\if@goethe@title@center
 \@goethe@title@centerfalse
 \DeclareOptionBeamer{centertitle}{\@goethe@title@centertrue}
@@ -42,8 +38,7 @@
 \ProcessOptionsBeamer\relax
 
 \def\beamer@goethe@subtitle@depth{\dimexpr(\paperheight-\beamer@goethe@title@height+2pt)\relax}
-\def\beamer@goethe@section@height{\dimexpr(\beamer@goethe@title@height+2pt)\relax}
-\def\beamer@goethe@contentwidth{\dimexpr(\paperwidth-\beamer@goethe@titlemargin-\beamer@goethe@titlemargin)\relax}
+\def\beamer@goethe@title@width{\dimexpr(\paperwidth-\beamer@goethe@titlemargin-\beamer@goethe@titlemargin)\relax}
 
 \RequirePackage{tabularray}
 \UseTblrLibrary{counter}
@@ -51,13 +46,13 @@
 
 
 \defbeamertemplate*{title table nosubtitle}{goethe}{%
-    \begin{tblr}{width=\beamer@goethe@contentwidth,colspec={A}}
+    \begin{tblr}{width=\beamer@goethe@title@width,colspec={A}}
         {\usebeamerfont{title}\inserttitle} \\
     \end{tblr}
 }
 
 \defbeamertemplate*{title table subtitle}{goethe}{%
-    \begin{tblr}{width=\beamer@goethe@contentwidth,colspec={A}}
+    \begin{tblr}{width=\beamer@goethe@title@width,colspec={A}}
         {\usebeamerfont{title}\inserttitle} \\
         {\usebeamerfont{subtitle}\usebeamercolor{subtitle}\insertsubtitle} \\
     \end{tblr}
@@ -79,7 +74,7 @@
 
 \defbeamertemplate*{author table}{goethe}{%
     \SetTblrInner{leftsep={0pt}, abovesep={0pt}, belowsep={0pt}, rightsep={0pt}, measure=vbox}%
-    \begin{tblr}{width=\beamer@goethe@contentwidth,colspec={Xr}}%
+    \begin{tblr}{width=\beamer@goethe@title@width,colspec={Xr}}%
         \SetCell[r=2]{l}{\usebeamerfont{author}\insertauthor} & \SetCell{h}{\usebeamerfont{institute}\insertinstitute} \\%
                                                               & \SetCell{f}{\usebeamerfont{date}\insertdate}           \\%
     \end{tblr}%
