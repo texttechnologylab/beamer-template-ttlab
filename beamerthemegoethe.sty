@@ -134,6 +134,11 @@
 \useoutertheme{goethe}
 \useinnertheme{goethe}
 
+\RequirePackage{fontawesome5} % Font Awesome symbols
+\setbeamertemplate{itemize item}{\faAngleRight}
+\setbeamertemplate{itemize subitem}{\faAngleRight\hspace*{-1pt}\faAngleRight}
+\setbeamertemplate{itemize subsubitem}{\faAngleRight\hspace*{-1pt}\faAngleRight\hspace*{-1pt}\faAngleRight}
+
 \renewcommand{\And}{\texorpdfstring{\\}{ }}
 
 %Set fonts if they are installed
@@ -239,7 +244,6 @@
 % \RequirePackage{bm} % Bold math fonts
 \RequirePackage{dsfont} % \mathds{} for double stroke fonts
 \RequirePackage[lm]{sfmath} % Sans Serif maths
-\RequirePackage{fontawesome5} % Font Awesome symbols
 \RequirePackage{soulutf8} % Strikeout, underlining etc. with support for UTF-8 symbols
 
 % Graphics and colors
