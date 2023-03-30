@@ -172,16 +172,22 @@
 \addtolength\parskip{6pt}
 
 %% Fonts %%
+\RequirePackage{iftex}
+\ifPDFTeX
+    \RequirePackage[T1]{fontenc}
+    \RequirePackage[utf8]{inputenc}
+\fi
+\ifXeTeX
+    \ClassWarning{beamerthemegoethe}{Use LuaLaTeX instead of XeLaTeX}
+\fi
+
 
 \if@libertine%
   \RequirePackage{fontspec}
   \setromanfont[Ligatures=TeX]{Linux Libertine O} % Serifenschrift
   \setsansfont[Ligatures=TeX]{Linux Biolinum O} % serifenlose Schrift
   \setmonofont[Scale=MatchLowercase]{DejaVu Sans Mono}%
-\else%
-    \RequirePackage[T1]{fontenc}
-    \RequirePackage[utf8]{inputenc}
-\fi
+\fi%
 
 \if@firacode%
   \RequirePackage{fontspec}
