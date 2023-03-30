@@ -200,6 +200,13 @@
 
 %% Bibliography %%
 \if@biblatex%
+    \usepackage[
+        style=authoryear-icomp,
+        citestyle=authoryear,
+        backend=biber,
+        natbib=true,
+    ]{biblatex}
+\else%
     % From the ACL paper template
     % See: https://github.com/acl-org/acl-style-files
     \RequirePackage{natbib}
@@ -211,13 +218,6 @@
     \newcommand\newcite{\citet}	% to get "Author (Year)" with natbib
     
     \bibliographystyle{misc/acl_natbib}
-\else%
-    \usepackage[
-        style=authoryear-icomp,
-        citestyle=authoryear,
-        backend=biber,
-        natbib=true,
-    ]{biblatex}
 \fi
 
 % Layout
