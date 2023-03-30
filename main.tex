@@ -3,27 +3,34 @@
 \documentclass[169,9pt]{beamer}
 
 \usetheme[
-    % Choose main language: german or english
+    %% Language: german or english
     english,
-    % Choose between biblatex and natbib
-    usebiblatex, % or: usenatbib
-    % The three following options require LuaLaTeX,
-    % which may increase compilation times substantially.
-    usepolyglossia % polyglossia replaces babel
-    uselibertine, % nolibertine % Use Linux Libertine/Biolinum as roman/sans serif font
-    usefiracode, % nofiracode % Use Fira Code as monospaced font
-    % Layout options
+    %% Bibliography: biblatex or natbib
+    usenatbib, % or: usebiblatex
+    %% LuaLaTeX
+    % The three following options require LuaLaTeX, which may increase compilation times substantially.
+    nopolyglossia % polyglossia replaces babel
+    nolibertine, % nolibertine % Use Linux Libertine/Biolinum as roman/sans serif font
+    nofiracode, % usefiracode % Use Fira Code as monospaced font
+    %% Imports
+    usetikz, % import tikz and commonly used packages
+    %% Colors
+    usematerialcolors, % Material color default colorschemes, disable with nomaterialcolors
+    usettlabcolors, % Goethe University corporate & TTLab colors, disable with nottlabcolors
+    noalphabetcolors, % Alphabet color scheme, enable with usealphabetcolors, REQUIRES CITATION
+    nogreenarmytagecolors, % Green-Armytage color scheme, enable with usegreenarmytagecolors, REQUIRES CITATION
+    %% Layout options
     titlemargin=0.1\paperwidth, % the size of margins left and right of the title
     titleheight=0.4\paperheight, % the hight of the beamercolorbox containing title and subtitle
     titledepth=0\paperheight, % the depth of the beamercolorbox containing title and subtitle
     % centertitle, % center the title and subtitle
+    sectionheight=0.5\paperheight, % the height of the section title box section/subsection frame
     frametitlemargin=0.3cm, % the size of the margin left of each frame title and subtitle
     framefootermargin=0.3cm, % the size of the margins left and right in the footline
     logo=images/TTLogo-2.pdf, % can be PDF or any image, is scaled to logowidth
     logowidth=0.4\paperwidth, % you may need to scale your logo to fit the title page
     % centerlogo, % center the logo on the title page
     % nologo, % disable the logo on the title page
-    footlineprefix={}, % mind the braces
     % nonavigation, % disable the navigation in the footline
 ]{goethe}
 
@@ -35,13 +42,17 @@
 % Title and sub-title can contain \\
 \title[Title]{Template Title} % TODO
 \subtitle[Subtitle]{Template Subtitle} % TODO
+\title[Title]{Template Title} % TODO
+\subtitle[Subtitle]{Template Subtitle} % TODO
 
 % Authors in "middle" alignment
 % Separate multiple authors on the same line with \and
 % Use \And to put authors on a separate line
 \author[F. Author, S. Author, A. Name]{{First Author \and Second Author} \And {Author with a very long Name}} % TODO
+\author[F. Author, S. Author, A. Name]{{First Author \and Second Author} \And {Author with a very long Name}} % TODO
 
 % Institute in "header" alignment, top right
+\institute[FLab, SLab]{First Laboratory \And Second Laboratory}
 \institute[FLab, SLab]{First Laboratory \And Second Laboratory}
 
 % Date in "footer" alignment, bottom right
@@ -50,19 +61,33 @@
 %%%%%%%%%%%%
 % Footline %
 %%%%%%%%%%%%
-% Uncomment and change the following templates to change the footline
-% \defbeamertemplate*{footline separator}{goethe}{~--~}
-% \defbeamertemplate*{footline content}{goethe}[2]{
-%     {#2}%
-%     {\let\hyperlink\@secondoftwo\insertshortinstitute}%
-%     {\ifx\insertshortinstitute\@empty\else{\usebeamertemplate{footline separator}}\fi}%
-%     {\let\hyperlink\@secondoftwo\insertshortauthor}%
-%     {\ifx\insertshortauthor\@empty\else\usebeamertemplate{footline separator}\fi}%
-%     {\let\hyperlink\@secondoftwo\insertshorttitle}%
-%     {\ifx\insertshortsubtitle\@empty\else\usebeamertemplate{footline separator}\fi}%
-%     {\let\hyperlink\@secondoftwo\insertshortsubtitle}%
-%     {#1}%
+% Uncomment and change the following lines to change the footline
+% \makeatletter%
+% \setbeamertemplate{footline separator}{~--~}
+% \setbeamertemplate{footline content}{%
+%     \let\hyperlink\@secondoftwo%
+%     \insertshorttitle\usebeamertemplate{footline separator}\insertshortsubtitle%
 % }
+% \makeatother%
+
+%%%%%%%%%%%%%%%%
+% Bibliography %
+%%%%%%%%%%%%%%%%
+% When usenatbib was given add refernce a slide using:
+% \begin{frame}[allowframebreaks]{References}
+%     \bibliography{anthology,custom}
+% \end{frame}
+% Uses the bibliography style from the ACL paper template
+% See: https://github.com/acl-org/acl-style-files
+% This has the benefit that we can import the whole ACL anthology in a single .bib file.
+
+% When usebiblatex was given add the bibliography files using:
+% \addbibresource{custom.bib}
+% Note, that we cannot import the whole ACL anthology using biblatex.
+% Add a reference slide using:
+% \begin{frame}[allowframebreaks]{References}
+%     \printbibliography
+% \end{frame}
 
 %%%%%%%%%%%%
 % Document %
@@ -75,37 +100,43 @@
 % \end{frame}
 
 \begin{frame}{Frame Title}
-    Another Frame
+        \item First level
+        \begin{itemize}
+            \item<+(1)-> Second level
+            \begin{itemize}
+                \item<+(1)-> Third level
+            \end{itemize}
+        \end{itemize}
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{Frame Title}
+    First
     \pause
-    More content
+    Second
 \end{frame}
 
 \begin{frame}{Frame Title}
     \only<2>{
-        Another Frame
+        Second
     }
-    More content
+    First
 \end{frame}
 
 \begin{frame}{Frame Title}
     \onslide<2>{
-        Another Frame
+        Second
     }
-    More content
+    First
 \end{frame}
 
-\begin{frame}{Frame Title}
-    \framesubtitle{Frame Subtitle}
-    \begin{tblr}{colspec={cc}}
-        \visible<+(1)->{Test} & \visible<+(1)->{Test} \\
-        \visible<+(1)->{Test} & \visible<+(1)->{Test} \\
-    \end{tblr}
+\section{Section Title}
+% use \section*{Section Title} if you do not want a separate section slide.
+\subsection{Subsection Title}
+
+\begin{frame}[allowframebreaks]{References}
+    \bibliography{custom}
 \end{frame}
-
-\section{Introduction}
-\subsection{Something}
-
-% \printbibliography % TODO
 
 \appendix
 

@@ -6,6 +6,17 @@
 \DeclareOptionBeamer{titledepth}{\def\beamer@goethe@title@depth{#1}}
 \ExecuteOptionsBeamer{titledepth=0\paperheight}
 
+\newlength{\beamer@goethe@titlemargin}
+\DeclareOptionBeamer{titlemargin}{\def\beamer@goethe@titlemargin{#1}}
+\ExecuteOptionsBeamer{titlemargin=0.15\paperwidth}
+
+\newif\if@goethe@title@center
+\@goethe@title@centerfalse
+\DeclareOptionBeamer{centertitle}{\@goethe@title@centertrue}
+
+\DeclareOptionBeamer{sectionheight}{\def\beamer@goethe@section@height{#1}}
+\ExecuteOptionsBeamer{sectionheight=0.5\paperheight}
+
 \DeclareOptionBeamer{logo}{\def\beamer@goethe@logo{#1}}
 \ExecuteOptionsBeamer{logo=images/TTLogo-2.pdf}
 
@@ -103,7 +114,7 @@
     \begin{beamercolorbox}[wd=1\paperwidth,ht=\beamer@goethe@section@height,left,sep=1ex]{sectiontitle}
         \leftskip=\beamer@goethe@titlemargin%
         \SetTblrInner{leftsep={0pt}, rightsep={0pt}}%
-        \begin{tblr}{width=\beamer@goethe@contentwidth,colspec={X[l]}}
+        \begin{tblr}{width=\beamer@goethe@title@width,colspec={X[l]}}
             {%
                 \usebeamerfont{sectiontitle}%
                 \usebeamercolor{sectiontitle}%
@@ -129,7 +140,7 @@
     \begin{beamercolorbox}[wd=1\paperwidth,ht=\beamer@goethe@section@height,left,sep=1ex]{sectiontitle}
         \leftskip=\beamer@goethe@titlemargin%
         \SetTblrInner{leftsep={0pt}, rightsep={0pt}}%
-        \begin{tblr}{width=\beamer@goethe@contentwidth,colspec={X[l]}}
+        \begin{tblr}{width=\beamer@goethe@title@width,colspec={X[l]}}
             {%
                 \usebeamerfont{sectiontitle}%
                 \usebeamercolor{sectiontitle}%
@@ -141,7 +152,7 @@
     \begin{beamercolorbox}[wd=1\paperwidth,dp=\beamer@goethe@subtitle@depth,left,sep=1ex]{subsectiontitle}
         \leftskip=\beamer@goethe@titlemargin%
         \SetTblrInner{leftsep={0pt}, rightsep={0pt}}%
-        \begin{tblr}{width=\beamer@goethe@contentwidth,colspec={X[l]}}
+        \begin{tblr}{width=\beamer@goethe@title@width,colspec={X[l]}}
             {%
                 \usebeamerfont{subsectiontitle}%
                 \usebeamercolor{subsectiontitle}%
@@ -164,7 +175,7 @@
             \SetTblrInner{leftsep={0pt}, rightsep={0pt}}%
             \usebeamerfont{sectiontitle}%
             \usebeamercolor{sectiontitle}%
-            \begin{tblr}{width=\beamer@goethe@contentwidth,colspec={X[l]}}
+            \begin{tblr}{width=\beamer@goethe@title@width,colspec={X[l]}}
                 #1
             \end{tblr}
         \end{beamercolorbox}%
@@ -174,7 +185,7 @@
             \SetTblrInner{leftsep={0pt}, rightsep={0pt}}%
             \usebeamerfont{subsectiontitle}%
             \usebeamercolor{subsectiontitle}%
-            \begin{tblr}{width=\beamer@goethe@contentwidth,colspec={X[l]}}
+            \begin{tblr}{width=\beamer@goethe@title@width,colspec={X[l]}}
                 #2
             \end{tblr}
         \end{beamercolorbox}%

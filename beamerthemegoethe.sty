@@ -19,6 +19,10 @@
     \PassOptionsToPackage{centertitle}{beamerinnerthemegoethe}
 }
 
+\DeclareOptionBeamer{sectionheight}{%
+    \PassOptionsToPackage{sectionheight=#1}{beamerinnerthemegoethe}
+}
+
 \DeclareOptionBeamer{logo}{%
     \PassOptionsToPackage{logo={#1}}{beamerinnerthemegoethe}
 }
@@ -36,11 +40,6 @@
 }
 
 % General
-
-\DeclareOptionBeamer{footlineprefix}{%
-    \PassOptionsToPackage{footlineprefix={#1}}{beamerouterthemegoethe}
-}
-
 \DeclareOptionBeamer{frametitlemargin}{
     \PassOptionsToPackage{frametitlemargin={#1}}{beamerouterthemegoethe}
 }
@@ -67,10 +66,11 @@
     \renewcommand{\polyglossiaLang}{german}%
 }
 
+\newif\if@nolualatex\@nolualatextrue
 \newif\if@polyglossia
-\DeclareOptionBeamer{usepolyglossia}{\@polyglossiatrue}
-\DeclareOptionBeamer{nopolyglossia}{\@polyglossiafalse}
-\DeclareOptionBeamer{usebabel}{\@polyglossiafalse}
+\DeclareOptionBeamer{usepolyglossia}{\@polyglossiatrue\@nolualatexfalse}
+\DeclareOptionBeamer{nopolyglossia}{\@polyglossiafalse\@nolualatextrue}
+\DeclareOptionBeamer{usebabel}{\@polyglossiafalse\@nolualatextrue}
 
 \newif\if@biblatex
 \DeclareOptionBeamer{usebiblatex}{\@biblatextrue}
@@ -135,7 +135,17 @@
 \useoutertheme{goethe}
 \useinnertheme{goethe}
 
-\renewcommand{\And}{\texorpdfstring{\\}{ }}
+\RequirePackage{fontawesome5} % Font Awesome symbols
+\setbeamertemplate{itemize item}{\faAngleRight}
+\setbeamertemplate{itemize subitem}{\faAngleRight\hspace*{-1pt}\faAngleRight}
+\setbeamertemplate{itemize subsubitem}{\faAngleRight\hspace*{-1pt}\faAngleRight\hspace*{-1pt}\faAngleRight}
+
+\RequirePackage{fontawesome5} % Font Awesome symbols
+\setbeamertemplate{itemize item}{\faAngleRight}
+\setbeamertemplate{itemize subitem}{\faAngleRight\hspace*{-1pt}\faAngleRight}
+\setbeamertemplate{itemize subsubitem}{\faAngleRight\hspace*{-1pt}\faAngleRight\hspace*{-1pt}\faAngleRight}
+
+\renewcommand{\And}{\texorpdfstring{\\}{, }}
 
 %Set fonts if they are installed
 % \usepackage{fontspec}
@@ -168,19 +178,25 @@
 \addtolength\parskip{6pt}
 
 %% Fonts %%
+\RequirePackage{iftex}
+\ifPDFTeX
+    \RequirePackage[T1]{fontenc}
+    \RequirePackage[utf8]{inputenc}
+\fi
+\ifXeTeX
+    \ClassWarning{beamerthemegoethe}{Use LuaLaTeX instead of XeLaTeX}
+\fi
+
 
 \if@libertine%
   \RequirePackage{fontspec}
   \setromanfont[Ligatures=TeX]{Linux Libertine O} % Serifenschrift
   \setsansfont[Ligatures=TeX]{Linux Biolinum O} % serifenlose Schrift
   \setmonofont[Scale=MatchLowercase]{DejaVu Sans Mono}%
-\else%
-    \RequirePackage[T1]{fontenc}
-    \RequirePackage[utf8]{inputenc}
 \fi
 
 \if@firacode%
-  \RequirePackage{fontspec}
+    \RequirePackage{fontspec}
     \setmonofont{FiraCode-Regular.ttf}[
         Path={./fonts/},
         % Upright italic font for nice formatted minted comments
@@ -201,6 +217,13 @@
 
 %% Bibliography %%
 \if@biblatex%
+    \usepackage[
+        style=authoryear-icomp,
+        citestyle=authoryear,
+        backend=biber,
+        natbib=true,
+    ]{biblatex}
+\else%
     % From the ACL paper template
     % See: https://github.com/acl-org/acl-style-files
     \RequirePackage{natbib}
@@ -212,13 +235,6 @@
     \newcommand\newcite{\citet}	% to get "Author (Year)" with natbib
     
     \bibliographystyle{misc/acl_natbib}
-\else%
-    \usepackage[
-        style=authoryear-icomp,
-        citestyle=authoryear,
-        backend=biber,
-        natbib=true,
-    ]{biblatex}
 \fi
 
 % Layout
@@ -240,7 +256,6 @@
 % \RequirePackage{bm} % Bold math fonts
 \RequirePackage{dsfont} % \mathds{} for double stroke fonts
 \RequirePackage[lm]{sfmath} % Sans Serif maths
-\RequirePackage{fontawesome5} % Font Awesome symbols
 \RequirePackage{soulutf8} % Strikeout, underlining etc. with support for UTF-8 symbols
 
 % Graphics and colors
@@ -272,7 +287,6 @@
     % pdfsubject={},
 }
 
-\RequirePackage{enumitem}
 \RequirePackage{csquotes}
 
 % \RequirePackage{varioref}
@@ -392,32 +406,33 @@
 \if@tikz
     %% TikZ und Co. %%
     \usepackage{tikz}
-    \usetikzlibrary{babel}
-    \usetikzlibrary{arrows}
     \usetikzlibrary{arrows.meta}
+    \usetikzlibrary{arrows}
     \usetikzlibrary{automata}
-    \usetikzlibrary{positioning}
-    \usetikzlibrary{matrix}
-    \usetikzlibrary{fit}
+    \usetikzlibrary{babel}
     \usetikzlibrary{backgrounds}
-    \usetikzlibrary{shadows}
-    \usetikzlibrary{shapes.multipart}
-    \usetikzlibrary{shapes.misc}
-    \usetikzlibrary{shapes.geometric}
-    \usetikzlibrary{shapes.arrows}
-    \usetikzlibrary{shapes.symbols}
-    \usetikzlibrary{shapes.callouts}
-    \usetikzlibrary{er}
-    \usetikzlibrary{shadings}
-    \usetikzlibrary{topaths}
-    \usetikzlibrary{chains}
-    \usetikzlibrary{decorations.pathreplacing}
-    \usetikzlibrary{decorations.pathmorphing}
-    \usetikzlibrary{patterns}
-    \usetikzlibrary{patterns.meta}
     \usetikzlibrary{calc}
+    \usetikzlibrary{calendar}
+    \usetikzlibrary{chains}
+    \usetikzlibrary{decorations.pathmorphing}
+    \usetikzlibrary{decorations.pathreplacing}
+    \usetikzlibrary{er}
+    \usetikzlibrary{fit}
+    \usetikzlibrary{matrix}
     \usetikzlibrary{mindmap}
+    \usetikzlibrary{patterns.meta}
+    \usetikzlibrary{patterns}
+    \usetikzlibrary{positioning}
+    \usetikzlibrary{shadings}
+    \usetikzlibrary{shadows}
+    \usetikzlibrary{shapes.arrows}
+    \usetikzlibrary{shapes.callouts}
+    \usetikzlibrary{shapes.geometric}
+    \usetikzlibrary{shapes.misc}
+    \usetikzlibrary{shapes.multipart}
+    \usetikzlibrary{shapes.symbols}
     \usetikzlibrary{through}
+    \usetikzlibrary{topaths}
     
     \usepackage[linguistics]{forest}
     
@@ -811,6 +826,7 @@
 \if@alphabetcolors
     % From: https://rdrr.io/cran/Polychrome/
     % Citation: Carter RC, Carter EC. High-contrast sets of colors. Applied Optics, 1982; 21(16):2936–9. 
+    \AtBeginDocument{\nocite{Green_Armytage_2010_color}}
     \definecolor{alphabet-amethyst}{HTML}{AA0DFE} % #AA0DFE
     \definecolor{alphabet-blue}{HTML}{3283FE} % #3283FE
     \definecolor{alphabet-caramel}{HTML}{85660D} % #85660D
@@ -841,7 +857,8 @@
 
 \if@greenarmytagecolors
     % From: https://rdrr.io/cran/Polychrome/
-    % Green-Armytage, P. A Colour Alphabet and the Limits of Colour Coding. Colour: Design and Creativity, 2010; 10:1–23. 
+    % Citation: Green-Armytage, P. A Colour Alphabet and the Limits of Colour Coding. Colour: Design and Creativity, 2010; 10:1–23. 
+    \AtBeginDocument{\nocite{Carter_1982_High}}
     \definecolor{green-armytage-amethyst}{HTML}{F0A3FF} % #F0A3FF
     \definecolor{green-armytage-blue}{HTML}{0075DC} % #0075DC
     \definecolor{green-armytage-caramel}{HTML}{993F00} % #993F00
