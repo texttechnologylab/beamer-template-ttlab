@@ -6,7 +6,7 @@
     %% Language: german or english
     english,
     %% Bibliography: biblatex or natbib
-    usenatbib, % or: usebiblatex
+    usebiblatex, % or: usenatbib
     %% LuaLaTeX
     % The three following options require LuaLaTeX, which may increase compilation times substantially.
     nopolyglossia % polyglossia replaces babel
@@ -14,11 +14,11 @@
     nofiracode, % usefiracode % Use Fira Code as monospaced font
     %% Imports
     usetikz, % import tikz and commonly used packages
-    %% Colors
-    usematerialcolors, % Material color default colorschemes, disable with nomaterialcolors
-    usettlabcolors, % Goethe University corporate & TTLab colors, disable with nottlabcolors
-    noalphabetcolors, % Alphabet color scheme, enable with usealphabetcolors, REQUIRES CITATION
-    nogreenarmytagecolors, % Green-Armytage color scheme, enable with usegreenarmytagecolors, REQUIRES CITATION
+    %% Colors (GU corporate colors are always available)
+    usettlabcolors, % TTLab colors
+    usematerialcolors, % Material default colorscheme colors
+    % usealphabetcolors, % Alphabet color scheme, enable with usealphabetcolors, REQUIRES CITATION
+    % usegreenarmytagecolors, % Green-Armytage color scheme, enable with usegreenarmytagecolors, REQUIRES CITATION
     %% Layout options
     titlemargin=0.1\paperwidth, % the size of margins left and right of the title
     titleheight=0.4\paperheight, % the hight of the beamercolorbox containing title and subtitle
@@ -78,8 +78,9 @@
 % This has the benefit that we can import the whole ACL anthology in a single .bib file.
 
 % When usebiblatex was given add the bibliography files using:
-% \addbibresource{custom.bib}
-% Note, that we cannot import the whole ACL anthology using biblatex.
+\addbibresource{custom.bib}
+% Note, that we cannot import the whole ACL anthology using biber, as it takes forever.
+% Instead, we can fall back to the bibtex8 backend.
 % Add a reference slide using:
 % \begin{frame}[allowframebreaks]{References}
 %     \printbibliography
@@ -91,35 +92,39 @@
 \begin{document}
 
 \maketitle
-% \begin{frame}
-%     \titlepage
-% \end{frame}
 
 \section{First Section}\sectionFrame
-% use \section*{First Section} if you do not want a separate section slide.
-\subsection{First Sub Section}%\subsectionFrame
-\subsection{Second Sub Section}%\subsectionFrame
-\subsection{Third Sub Section}%\subsectionFrame
 
 \section{Second Section}\sectionFrame[show subsections]
-\subsection{First Sub Section}%\subsectionFrame
-\subsection{Second Sub Section}%\subsectionFrame
+\subsection{First Sub Section}
+\subsection{Second Sub Section}
+\subsection{Third Sub Section}
 
-\section{Third Section}%\sectionFrame
+\section{Third Section}\sectionFrame[only current section]
+\subsection{First Sub Section}
+\subsection{Second Sub Section}
+\subsection{Third Sub Section}
+
+\section{Fourth Section}
 \subsection{First Sub Section}\subsectionFrame
 \subsection{Second Sub Section}\subsectionFrame
+\subsection{Third Sub Section}\subsectionFrame
 
-\section{Fourth Section}\sectionFrame
+\section{Fifth Section}
+\subsection{First Sub Section}\subsectionFrame[only current section]
+\subsection{Second Sub Section}\subsectionFrame[only current section]
+\subsection{Third Sub Section}\subsectionFrame[only current section]
 
-\begin{frame}{Frame Title}
+
+\begin{frame}{Frame Title}{Frame Subtitle}
     \begin{itemize}
         \item First level
-        \begin{itemize}
-            \item<+(1)-> Second level
-            \begin{itemize}
-                \item<+(1)-> Third level
-            \end{itemize}
-        \end{itemize}
+              \begin{itemize}
+                  \item<+(1)-> Second level
+                      \begin{itemize}
+                          \item<+(1)-> Third level
+                      \end{itemize}
+              \end{itemize}
     \end{itemize}
 \end{frame}
 
@@ -146,7 +151,7 @@
 \end{frame}
 
 \begin{frame}[allowframebreaks]{References}
-    \bibliography{custom}
+    \printbibliography
 \end{frame}
 
 \appendix

@@ -105,24 +105,34 @@
     \fi
 }
 
+%% Table of contents 
 \defbeamertemplate*{agenda}{goethe}{%
     \hspace{\parindent}\usebeamerfont{sectiontitle}Agenda\par%
-    \usebeamertemplate{toc agenda skip}%
+    \usebeamertemplate{agenda skip in toc}%
 }
 
 \defbeamertemplate*{section page}{goethe}[1][]{%
-    \begin{beamercolorbox}[wd=1\paperwidth,left,#1]{sectiontitle}
+    \begin{beamercolorbox}[wd=1\paperwidth,left,#1]{section in toc}
         \setlength{\parindent}{\beamer@goethe@titlemargin}%
-        \usebeamercolor{sectiontitle}%
+        \usebeamercolor{section in toc}%
         \usebeamertemplate{agenda}%
         \let\hyperlink\@secondoftwo\tableofcontents[sectionstyle=show/shaded,hideallsubsections]%
         \strut%
     \end{beamercolorbox}
 }
-\defbeamertemplate{section page}{goethe subsections}[1][]{%
-    \begin{beamercolorbox}[wd=1\paperwidth,left,#1]{sectiontitle}
+\defbeamertemplate{section page}{goethe only current}[1][]{%
+    \begin{beamercolorbox}[wd=1\paperwidth,left,#1]{section in toc}
         \setlength{\parindent}{\beamer@goethe@titlemargin}%
-        \usebeamercolor{sectiontitle}%
+        \usebeamercolor{section in toc}%
+        \usebeamertemplate{agenda}%
+        \let\hyperlink\@secondoftwo\tableofcontents[sectionstyle=show/hide,subsectionstyle=show/show/hide]%
+        \strut%
+    \end{beamercolorbox}
+}
+\defbeamertemplate{section page}{goethe subsections}[1][]{%
+    \begin{beamercolorbox}[wd=1\paperwidth,left,#1]{section in toc}
+        \setlength{\parindent}{\beamer@goethe@titlemargin}%
+        \usebeamercolor{section in toc}%
         \usebeamertemplate{agenda}%
         \let\hyperlink\@secondoftwo\tableofcontents[sectionstyle=show/shaded,subsectionstyle=show/show/hide]%
         \strut%
@@ -131,23 +141,30 @@
 
 \usepackage{pgfkeys}
 \newif\ifshowsubsections
+\newif\ifonlycurrentsection
 \pgfkeys{
     /sectionFrame/.is family, /sectionFrame,
-    default/.style = {show subsections=false},
+    default/.style = {%
+        show subsections=false,%
+        only current section=false,%
+    },
     show subsections/.is if=showsubsections,
+    only current section/.is if=onlycurrentsection,
 }
 \newcommand{\sectionFrame}[1][]{%
     \begingroup%
     \pgfkeys{/sectionFrame, default, #1}%
-    \setbeamercolor*{background canvas}{parent=sectiontitle}
+    \setbeamercolor*{background canvas}{parent=section in toc}
     \setlength{\parindent}{\beamer@goethe@titlemargin}%
     \begin{frame}[c,plain,noframenumbering]{}
+        \setbeamertemplate{section page}[goethe]%
         \ifshowsubsections%
             \setbeamertemplate{section page}[goethe subsections]%
-        \else%
-            \setbeamertemplate{section page}[goethe]%
         \fi%
-        \usebeamertemplate{section page}%
+        \ifonlycurrentsection%
+            \setbeamertemplate{section page}[goethe only current]%
+        \fi%
+        \sectionpage%
     \end{frame}%
     \endgroup%
 }
@@ -155,32 +172,48 @@
 
 %% Subsection page
 \defbeamertemplate*{subsection page}{goethe}[1][]{%
-    \begin{beamercolorbox}[wd=1\paperwidth,left,#1]{sectiontitle}
+    \begin{beamercolorbox}[wd=1\paperwidth,left,#1]{section in toc}
         \setlength{\parindent}{\beamer@goethe@titlemargin}%
-        \usebeamercolor{sectiontitle}%
+        \usebeamercolor{section in toc}%
         \usebeamertemplate{agenda}%
         \let\hyperlink\@secondoftwo\tableofcontents[sectionstyle=show/shaded,subsectionstyle=show/shaded/hide]%
         \strut%
     \end{beamercolorbox}
 }
+\defbeamertemplate*{subsection page}{goethe only current}[1][]{%
+    \begin{beamercolorbox}[wd=1\paperwidth,left,#1]{section in toc}
+        \setlength{\parindent}{\beamer@goethe@titlemargin}%
+        \usebeamercolor{section in toc}%
+        \usebeamertemplate{agenda}%
+        \let\hyperlink\@secondoftwo\tableofcontents[sectionstyle=show/hide,subsectionstyle=show/shaded/hide]%
+        \strut%
+    \end{beamercolorbox}
+}
 
-\newcommand{\subsectionFrame}{%
+\pgfkeys{
+    /subsectionFrame/.is family, /subsectionFrame,
+    default/.style = {%
+        only current section=false,%
+    },
+    only current section/.is if=onlycurrentsection,
+}
+\newcommand{\subsectionFrame}[1][]{%
     \begingroup%
-    \setbeamercolor*{background canvas}{parent=sectiontitle}
+    \pgfkeys{/subsectionFrame, default, #1}%
+    \setbeamercolor*{background canvas}{parent=section in toc}
     \begin{frame}[c,plain,noframenumbering]{}
+        \setbeamertemplate{subsection page}[goethe]%
+        \ifonlycurrentsection%
+            \setbeamertemplate{subsection page}[goethe only current]%
+        \fi%
         \subsectionpage%
     \end{frame}%
     \endgroup%
 }
 \let\subsectionAgenda\subsectionFrame
 
-%% Table of contents 
-
-\setbeamertemplate{section in toc shaded}{\begin{colormixin}{60!sectiontitle.bg}\usebeamertemplate{section in toc}\end{colormixin}\unskip}
-\setbeamertemplate{subsection in toc shaded}{\begin{colormixin}{60!sectiontitle.bg}\usebeamertemplate{subsection in toc}\end{colormixin}\unskip}
-\setbeamertemplate{subsubsection in toc shaded}{\begin{colormixin}{60!sectiontitle.bg}\usebeamertemplate{subsubsection in toc}\end{colormixin}\unskip}
-
-\setbeamertemplate{sections/subsections in toc}[sections numbered]
-% \setbeamertemplate{sections/subsections in toc shaded}[default][60]
+\defbeamertemplate*{section in toc shaded}{goethe}[1][60]{\begin{colormixin}{#1!structure.bg}\usebeamertemplate{section in toc}\end{colormixin}\unskip}
+\defbeamertemplate*{subsection in toc shaded}{goethe}[1][60]{\begin{colormixin}{#1!structure.bg}\usebeamertemplate{subsection in toc}\end{colormixin}\unskip}
+\defbeamertemplate*{subsubsection in toc shaded}{goethe}[1][60]{\begin{colormixin}{#1!structure.bg}\usebeamertemplate{subsubsection in toc}\end{colormixin}\unskip}
 
 \mode<all>
