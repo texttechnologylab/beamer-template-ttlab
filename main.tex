@@ -78,7 +78,7 @@
 % This has the benefit that we can import the whole ACL anthology in a single .bib file.
 
 % When usebiblatex was given add the bibliography files using:
-% \addbibresource{custom.bib}
+\addbibresource{custom.bib}
 % Note, that we cannot import the whole ACL anthology using biber, as it takes forever.
 % Instead, we can fall back to the bibtex8 backend.
 % Add a reference slide using:
@@ -94,20 +94,27 @@
 \maketitle
 
 \section{First Section}\sectionFrame
-% use \section*{First Section} if you do not want a separate section slide.
-\subsection{First Sub Section}%\subsectionFrame
-\subsection{Second Sub Section}%\subsectionFrame
-\subsection{Third Sub Section}%\subsectionFrame
 
 \section{Second Section}\sectionFrame[show subsections]
-\subsection{First Sub Section}%\subsectionFrame
-\subsection{Second Sub Section}%\subsectionFrame
+\subsection{First Sub Section}
+\subsection{Second Sub Section}
+\subsection{Third Sub Section}
 
-\section{Third Section}%\sectionFrame
+\section{Third Section}\sectionFrame[only current section]
+\subsection{First Sub Section}
+\subsection{Second Sub Section}
+\subsection{Third Sub Section}
+
+\section{Fourth Section}
 \subsection{First Sub Section}\subsectionFrame
 \subsection{Second Sub Section}\subsectionFrame
+\subsection{Third Sub Section}\subsectionFrame
 
-\section{Fourth Section}\sectionFrame
+\section{Fifth Section}
+\subsection{First Sub Section}\subsectionFrame[only current section]
+\subsection{Second Sub Section}\subsectionFrame[only current section]
+\subsection{Third Sub Section}\subsectionFrame[only current section]
+
 
 \begin{frame}{Frame Title}{Frame Subtitle}
     \begin{itemize}
@@ -144,7 +151,7 @@
 \end{frame}
 
 \begin{frame}[allowframebreaks]{References}
-    \bibliography{custom}
+    \printbibliography
 \end{frame}
 
 \appendix
