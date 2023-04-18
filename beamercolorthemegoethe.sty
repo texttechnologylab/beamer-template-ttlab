@@ -1,3 +1,4 @@
+% !TeX root = main.tex
 \mode<presentation>
 
 \definecolor{Goethe-Blau-Web}{cmyk}{1.0,0.32,0.0,0.44}
@@ -20,14 +21,29 @@
 \setbeamercolor*{palette secondary}{fg=white,bg=Goethe-Blau}
 \setbeamercolor*{palette tertiary}{fg=Lichtblau,bg=Goethe-Blau}
 \setbeamercolor*{palette quarternary}{bg=white,fg=black}
+
 \setbeamercolor*{title}{fg=white,bg=Goethe-Blau}
 \setbeamercolor*{author}{parent=palette primary}
+
 \setbeamercolor*{frametitle}{fg=white,bg=Goethe-Blau}
 \setbeamercolor*{framesubtitle}{fg=white,bg=Goethe-Blau-Web}
-\setbeamercolor*{sectiontitle}{fg=white,bg=Goethe-Blau}
+
+\setbeamercolor*{sectiontitle}{parent=title,fg=white,bg=Goethe-Blau}
 \setbeamercolor*{subsectiontitle}{fg=white,bg=Goethe-Blau-Web}
+\setbeamercolor*{subsubsectiontitle}{parent=subsectiontitle}
+
+\setbeamercolor*{section in toc}{parent=sectiontitle,bg=Goethe-Blau}
+\setbeamercolor*{section in toc shaded}{parent=section in toc,bg=Goethe-Blau}
+
+\setbeamercolor*{subsection in toc}{parent=subsectiontitle,bg=Goethe-Blau}
+\setbeamercolor*{subsection in toc shaded}{parent=subsection in toc,bg=Goethe-Blau}
+
+\setbeamercolor*{subsubsection in toc}{parent=subsubsectiontitle,bg=Goethe-Blau}
+\setbeamercolor*{subsubsection in toc shaded}{parent=subsubsection in toc,bg=Goethe-Blau}
+
 \setbeamercolor*{alerted text}{fg=Orange}
 \setbeamercolor*{example text}{fg=Gruen}
+
 \setbeamercolor*{section in head/foot}{parent=palette secondary}
 \setbeamercolor*{date in head/foot}{parent=palette primary}
 

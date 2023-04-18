@@ -1,3 +1,4 @@
+% !TeX root = main.tex
 \mode<presentation>
 
 % Layout Options %
@@ -70,55 +71,59 @@
 \DeclareOptionBeamer{usepolyglossia}{\@polyglossiatrue}
 \DeclareOptionBeamer{nopolyglossia}{\@polyglossiafalse}
 \DeclareOptionBeamer{usebabel}{\@polyglossiafalse}
+\ExecuteOptions{usebabel}
 
 \newif\if@biblatex
 \DeclareOptionBeamer{usebiblatex}{\@biblatextrue}
 \DeclareOptionBeamer{usenatbib}{\@biblatexfalse}
+\ExecuteOptions{usebiblatex}
+
+\DeclareOptionBeamer{biblatexbackend}{\PassOptionsToPackage{backend=#1}{biblatex}}
+\ExecuteOptions{biblatexbackend=bibtex}
 
 \newif\if@cleveref
 \DeclareOptionBeamer{usecleveref}{\@clevereftrue}
 \DeclareOptionBeamer{nocleveref}{\@clevereffalse}
+\ExecuteOptions{nocleveref}
 
 \newif\if@libertine
 \DeclareOptionBeamer{uselibertine}{\@libertinetrue}
 \DeclareOptionBeamer{nolibertine}{\@libertinefalse}
+\ExecuteOptions{nolibertine}
 
 \newif\if@firacode
 \DeclareOptionBeamer{usefiracode}{\@firacodetrue}
 \DeclareOptionBeamer{nofiracode}{\@firacodefalse}
+\ExecuteOptions{nofiracode}
 
 \newif\if@minted
 \DeclareOptionBeamer{useminted}{\@mintedtrue}
 \DeclareOptionBeamer{nominted}{\@mintedfalse}
+\ExecuteOptions{nominted}
 
 \newif\if@tikz
 \DeclareOptionBeamer{usetikz}{\@tikztrue}
 \DeclareOptionBeamer{notikz}{\@tikzfalse}
+\ExecuteOptions{usetikz}
 
 \newif\if@materialcolors
 \DeclareOptionBeamer{usematerialcolors}{\@materialcolorstrue}
 \DeclareOptionBeamer{nomaterialcolors}{\@materialcolorsfalse}
+\ExecuteOptions{usematerialcolors}
 
 \newif\if@ttlabcolors
 \DeclareOptionBeamer{usettlabcolors}{\@ttlabcolorstrue}
 \DeclareOptionBeamer{nottlabcolors}{\@ttlabcolorsfalse}
+\ExecuteOptions{usettlabcolors}
 
 \newif\if@alphabetcolors
 \DeclareOptionBeamer{usealphabetcolors}{\@alphabetcolorstrue}
 \DeclareOptionBeamer{noalphabetcolors}{\@alphabetcolorsfalse}
+\ExecuteOptions{noalphabetcolors}
 
 \newif\if@greenarmytagecolors
 \DeclareOptionBeamer{usegreenarmytagecolors}{\@greenarmytagecolorstrue}
 \DeclareOptionBeamer{nogreenarmytagecolors}{\@greenarmytagecolorsfalse}
-
-\ExecuteOptions{nocleveref}
-\ExecuteOptions{nolibertine}
-\ExecuteOptions{nofiracode}
-\ExecuteOptions{nominted}
-\ExecuteOptions{usetikz}
-\ExecuteOptions{usematerialcolors}
-\ExecuteOptions{usettlabcolors}
-\ExecuteOptions{noalphabetcolors}
 \ExecuteOptions{nogreenarmytagecolors}
 
 \ProcessOptionsBeamer\relax
@@ -126,18 +131,112 @@
 \newcommand{\printsection}{\let\hyperlink\@secondoftwo\insertsection}
 \newcommand{\printsubsection}{\let\hyperlink\@secondoftwo\insertsubsection}
 
-% \setbeamertemplate{bibliography item}{\insertbiblabel}
-\setbeamertemplate{bibliography item}{}
+\def\beamer@sectionintoc#1#2#3#4#5{%
+  \ifnum\c@tocdepth>0%
+  \ifnum#4=\beamer@showpartnumber%
+  {
+  \beamer@saveanother%
+  \gdef\beamer@todo{}%
+  \beamer@slideinframe=#1\relax%
+  \expandafter\only\beamer@tocsections{\gdef\beamer@todo{%
+      \beamer@tempcount=#5\relax%
+      \advance\beamer@tempcount by\beamer@sectionadjust%
+      \ifnum\beamer@tempcount>0 
+        \ifnum\beamer@tempcount>\beamer@toclastsection
+          \def\inserttocsectionnumber{}%
+        \else
+          \edef\inserttocsectionnumber{\the\beamer@tempcount}%
+        \fi
+      \else
+        \def\inserttocsectionnumber{}%
+      \fi%
+      \def\inserttocsection{\hyperlink{Navigation#3}{#2}}%
+      \beamer@tocifnothide{\ifnum\c@section=#1\beamer@toc@cs\else\beamer@toc@os\fi}%
+      {%
+        \ifbeamer@pausesections\pause\fi%
+        \usebeamertemplate{toc section skip}%
+        {%
+          \hbox{\vbox{%
+              \def\beamer@breakhere{\\}%
+              \beamer@tocact{\ifnum\c@section=#1\beamer@toc@cs\else\beamer@toc@os\fi}{section in toc}}}%
+         \par%
+        }%
+      }%
+    }%
+  }%
+  \beamer@restoreanother%
+  }
+  \beamer@todo%
+  \fi\fi%
+}
+
+\long\def\beamer@subsectionintoc#1#2#3#4#5#6{%
+  \ifnum\c@tocdepth>1%
+  \ifnum#5=\beamer@showpartnumber%
+  {%
+    \beamer@saveanother%
+    \gdef\beamer@todo{}%
+    \beamer@slideinframe=#1\relax%
+    \expandafter\only\beamer@tocsections{\gdef\beamer@todo{%
+      \ifbeamer@pausesubsections\pause\fi%
+      \beamer@tempcount=#6%
+      \advance\beamer@tempcount by\beamer@sectionadjust%
+      \edef\inserttocsectionnumber{\the\beamer@tempcount}%
+      \def\inserttocsubsectionnumber{#2}%
+      \def\inserttocsubsection{\hyperlink{Navigation#4}{#3}}%
+      \beamer@tocifnothide{\ifnum\c@section=#1\beamer@toc@css\else\beamer@toc@oss\fi}%
+      {%
+        \usebeamertemplate{toc subsection skip}%
+        \def\beamer@breakhere{\\}%
+        \beamer@tocact{\ifnum\c@section=#1\ifnum\c@subsection=#2\beamer@toc@css\else\beamer@toc@oss\fi\else\beamer@toc@ooss\fi}{subsection in toc}%
+      }%
+    }}%
+    \beamer@restoreanother%
+  }%
+  \beamer@todo%
+  \fi\fi%
+}
+
+\long\def\beamer@subsubsectionintoc#1#2#3#4#5#6#7{%
+  \ifnum\c@tocdepth>2%
+  \ifnum#6=\beamer@showpartnumber%
+  {
+    \beamer@saveanother%
+    \gdef\beamer@todo{}%
+    \beamer@slideinframe=#1\relax%
+    \expandafter\only\beamer@tocsections{\gdef\beamer@todo{%
+      \ifbeamer@pausesubsections\pause\fi%
+      \beamer@tempcount=#7%
+      \advance\beamer@tempcount by\beamer@sectionadjust%
+      \edef\inserttocsectionnumber{\the\beamer@tempcount}%
+      \def\inserttocsubsectionnumber{#2}%
+      \def\inserttocsubsubsectionnumber{#3}%
+      \def\inserttocsubsubsection{\hyperlink{Navigation#5}{#4}}%
+      \beamer@tocifnothide{\ifnum\c@section=#1\beamer@toc@csss\else\beamer@toc@osss\fi}%
+      {%
+        \usebeamertemplate{toc subsubsection skip}%
+        \def\beamer@breakhere{\\}%
+        \beamer@tocact{\ifnum\c@section=#1\ifnum\c@subsection=#2\ifnum\c@subsubsection=#3\beamer@toc@csss\else\beamer@toc@osss\fi\else\beamer@toc@oosss\fi\else\beamer@toc@ooosss\fi}{subsubsection in toc}%
+      }%
+    }}%
+    \beamer@restoreanother%
+  }
+  \beamer@todo%
+  \fi\fi%
+}
 
 \usecolortheme{goethe}
 \usefonttheme{goethe}
 \useoutertheme{goethe}
 \useinnertheme{goethe}
 
-\RequirePackage{fontawesome5} % Font Awesome symbols
-\setbeamertemplate{itemize item}{\faAngleRight}
-\setbeamertemplate{itemize subitem}{\faAngleRight\hspace*{-1pt}\faAngleRight}
-\setbeamertemplate{itemize subsubitem}{\faAngleRight\hspace*{-1pt}\faAngleRight\hspace*{-1pt}\faAngleRight}
+% \setbeamertemplate{bibliography item}{\insertbiblabel}
+\setbeamertemplate{bibliography item}{}
+
+\setbeamertemplate{toc agenda skip}{\vskip1.5\baselineskip}
+\setbeamertemplate{toc section skip}{\vskip0.0\baselineskip}
+\setbeamertemplate{toc subsection skip}{\vskip0.0\baselineskip}
+\setbeamertemplate{toc subsubsection skip}{\vskip0.5\baselineskip}
 
 \RequirePackage{fontawesome5} % Font Awesome symbols
 \setbeamertemplate{itemize item}{\faAngleRight}
@@ -186,16 +285,15 @@
     \ClassWarning{beamerthemegoethe}{Use LuaLaTeX instead of XeLaTeX}
 \fi
 
-
 \if@libertine%
-  \RequirePackage{fontspec}
-  \setromanfont[Ligatures=TeX]{Linux Libertine O} % Serifenschrift
-  \setsansfont[Ligatures=TeX]{Linux Biolinum O} % serifenlose Schrift
-  \setmonofont[Scale=MatchLowercase]{DejaVu Sans Mono}%
+    \RequirePackage{fontspec}
+    \setromanfont[Ligatures=TeX]{Linux Libertine O} % Serifenschrift
+    \setsansfont[Ligatures=TeX]{Linux Biolinum O} % serifenlose Schrift
+    \setmonofont[Scale=MatchLowercase]{DejaVu Sans Mono}%
 \fi%
 
 \if@firacode%
-  \RequirePackage{fontspec}
+    \RequirePackage{fontspec}
     \setmonofont{FiraCode-Regular.ttf}[
         Path={./fonts/},
         % Upright italic font for nice formatted minted comments
@@ -214,14 +312,62 @@
     ]
 \fi
 
+\RequirePackage{relsize}
+
 %% Bibliography %%
 \if@biblatex%
     \usepackage[
         style=authoryear-icomp,
         citestyle=authoryear,
-        backend=biber,
         natbib=true,
     ]{biblatex}
+    \DefineBibliographyStrings{german}{%
+        andothers = {et\addabbrvspace al\adddot}
+    }
+    \DefineBibliographyStrings{ngerman}{%
+        andothers = {et\addabbrvspace al\adddot}
+    }
+    \DefineBibliographyStrings{english}{%
+        andothers = {et\addabbrvspace al\adddot}
+    }
+    \DeclareDelimFormat[coloncite]{postnotedelim}{\addcolon}
+    \DeclareFieldFormat{postnote}{#1}
+
+    \newbibmacro*{coloncite:postnote}{%
+        \iffieldundef{postnote}
+        {\ifbool{cbx:parens}
+            {\bibcloseparen}
+            {}}
+        {\ifbool{cbx:parens}
+            {\setunit{\printdelim[coloncite]{postnotedelim}}}
+            {\setunit{\printdelim{extpostnotedelim}\bibopenparen}}%
+        \printfield[coloncite]{postnote}\bibcloseparen}}
+
+    \DeclareCiteCommand{\coloncite}
+    {\boolfalse{cbx:parens}}
+    {\usebibmacro{citeindex}%
+    \iffirstcitekey
+    {\setcounter{textcitetotal}{1}}
+    {\stepcounter{textcitetotal}%
+        \textcitedelim}%
+    \usebibmacro{textcite}}
+    {\ifbool{cbx:parens}
+        {\bibcloseparen\global\boolfalse{cbx:parens}}
+        {}}
+    {\usebibmacro{coloncite:postnote}}
+
+    \newbibmacro*{coloncitep:postnote}{%
+        \iffieldundef{postnote}
+        {}
+        {\setunit{\printdelim[coloncite]{postnotedelim}}%
+            \printfield[coloncite]{postnote}}}
+
+    \DeclareCiteCommand{\coloncitep}[\mkbibparens]
+    {\usebibmacro{prenote}}
+    {\usebibmacro{citeindex}%
+        \usebibmacro{cite}}
+    {\multicitedelim}
+    {\usebibmacro{coloncitep:postnote}}
 \else%
     % From the ACL paper template
     % See: https://github.com/acl-org/acl-style-files
@@ -232,7 +378,7 @@
     \renewcommand\cite{\citep}	% to get "(Author Year)" with natbib    
     \newcommand\shortcite{\citeyearpar}% to get "(Year)" with natbib    
     \newcommand\newcite{\citet}	% to get "Author (Year)" with natbib
-    
+
     \bibliographystyle{misc/acl_natbib}
 \fi
 
@@ -335,18 +481,18 @@
 \if@minted
     \RequirePackage[newfloat=true]{minted}
     \RequirePackage{mdframed}
-    
+
     \AtBeginEnvironment{snugshade*}{\vspace{-\FrameSep}}
     \AfterEndEnvironment{snugshade*}{\vspace{-\FrameSep}}
-    
+
     \AtBeginEnvironment{minted}{\renewcommand{\fcolorbox}[4][]{#4}}
-    
+
     % Add frames above and below the minted environment
     %%begin novalidate
     \BeforeBeginEnvironment{minted}{\begin{mdframed}[rightline=false,leftline=false,linewidth=0.6pt]}
-    \AfterEndEnvironment{minted}{\end{mdframed}}
+            \AfterEndEnvironment{minted}{\end{mdframed}}
     %%end novalidate
-    
+
     \setminted{fontsize=\footnotesize,mathescape,autogobble,breaklines,tabsize=4}
     \newminted{cypher}{fontsize=\footnotesize,mathescape,linenos,autogobble,texcomments=true,breaklines}
     \newminted{python}{fontsize=\footnotesize,mathescape,linenos,autogobble,python3,escapeinside=||}
@@ -422,6 +568,7 @@
     \usetikzlibrary{patterns.meta}
     \usetikzlibrary{patterns}
     \usetikzlibrary{positioning}
+    \usetikzlibrary{scopes}
     \usetikzlibrary{shadings}
     \usetikzlibrary{shadows}
     \usetikzlibrary{shapes.arrows}
@@ -432,9 +579,9 @@
     \usetikzlibrary{shapes.symbols}
     \usetikzlibrary{through}
     \usetikzlibrary{topaths}
-    
+
     \usepackage[linguistics]{forest}
-    
+
     \usepackage{pgf,pgfplots,etoolbox}
     \pgfplotsset{compat=newest}
 \fi
@@ -703,20 +850,20 @@
 \if@ttlabcolors
     %% Color definitions of the new GU corporate identity http://www.muk.uni-frankfurt.de/52945514/farben
     \definecolorset{cmyk}{GU-}{}{%
-      Goethe-Blau,1,0.2,0,0.4;%
-      Hellgrau,0.04,0.04,0.05,0.02;%
-      Sandgrau,0.12,0.09,0.13,0;%
-      Dunkelgrau,0.25,0.25,0.3,0.75;%
-      Purple,0.08,1,0.3,0.36;%
-      Emo-Rot,0.04,1,0.8,0.07;%
-      Senfgelb,0.01,0.25,1,0.05;%
-      Gruen,0.62,0.4,0.87,0.09;%
-      Magenta,0.08,0.86,0.12,0.12;%
-      Orange,0,0.7,1,0.04;%
-      Sonnengelb,0,0.12,0.95,0;%
-      Helles-Gruen,0.4,0.17,0.81,0.07;%
-      Lichtblau,0.8,0,0.06,0.04}
-    
+        Goethe-Blau,1,0.2,0,0.4;%
+        Hellgrau,0.04,0.04,0.05,0.02;%
+        Sandgrau,0.12,0.09,0.13,0;%
+        Dunkelgrau,0.25,0.25,0.3,0.75;%
+        Purple,0.08,1,0.3,0.36;%
+        Emo-Rot,0.04,1,0.8,0.07;%
+        Senfgelb,0.01,0.25,1,0.05;%
+        Gruen,0.62,0.4,0.87,0.09;%
+        Magenta,0.08,0.86,0.12,0.12;%
+        Orange,0,0.7,1,0.04;%
+        Sonnengelb,0,0.12,0.95,0;%
+        Helles-Gruen,0.4,0.17,0.81,0.07;%
+        Lichtblau,0.8,0,0.06,0.04}
+
     %% HuCompute.org colors:
     \definecolor{HUDarkBlue}{RGB}{16,82,132}
     \definecolor{HULightBlue}{RGB}{55,140,195} %% #378cc3
@@ -770,7 +917,7 @@
     \colorlet{SeminarHellGrau}{SeminarGrau!35!white}
     \colorlet{SeminarSehrHellGrau}{SeminarGrau!15!white}
     \colorlet{SeminarSehrSehrHellGrau}{SeminarGrau!5!white}
-    
+
     \colorlet{SeminarBlauGruen}{SeminarBlau!50!SeminarGruen}
     \colorlet{SeminarGruenBlau}{SeminarBlau!50!SeminarGruen}
     \colorlet{SeminarMix}{SeminarBlau!50!SeminarGruen}
@@ -818,7 +965,7 @@
     \colorlet{SeminarHellGruenGrau}{SeminarGrauGruen!25!white}
     \colorlet{SeminarHellGrauOrange}{SeminarGrauOrange!25!white}
     \colorlet{SeminarHellOrangeGrau}{SeminarGrauOrange!25!white}
-    
+
     \definecolor{DarkRed}{HTML}{b94a48}
 \fi
 

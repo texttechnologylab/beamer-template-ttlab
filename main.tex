@@ -95,6 +95,22 @@
 %     \titlepage
 % \end{frame}
 
+\section{First Section}\sectionFrame
+% use \section*{First Section} if you do not want a separate section slide.
+\subsection{First Sub Section}%\subsectionFrame
+\subsection{Second Sub Section}%\subsectionFrame
+\subsection{Third Sub Section}%\subsectionFrame
+
+\section{Second Section}\sectionFrame[show subsections]
+\subsection{First Sub Section}%\subsectionFrame
+\subsection{Second Sub Section}%\subsectionFrame
+
+\section{Third Section}%\sectionFrame
+\subsection{First Sub Section}\subsectionFrame
+\subsection{Second Sub Section}\subsectionFrame
+
+\section{Fourth Section}\sectionFrame
+
 \begin{frame}{Frame Title}
     \begin{itemize}
         \item First level
@@ -113,6 +129,7 @@
     Second
 \end{frame}
 
+
 \begin{frame}{Frame Title}
     \only<2>{
         Second
@@ -120,16 +137,13 @@
     First
 \end{frame}
 
+
 \begin{frame}{Frame Title}
     \onslide<2>{
         Second
     }
     First
 \end{frame}
-
-\section{Section Title}
-% use \section*{Section Title} if you do not want a separate section slide.
-\subsection{Subsection Title}
 
 \begin{frame}[allowframebreaks]{References}
     \bibliography{custom}
