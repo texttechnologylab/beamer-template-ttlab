@@ -1,3 +1,4 @@
+% !TeX root = main.tex
 \mode<presentation>
 
 \define@key{beamerframe}{noframenumbering}[true]{%
@@ -43,6 +44,37 @@
     \end{beamercolorbox}
 }
 
+\newlength{\beamer@goethe@frametitle@ht}
+\def\beamer@goethe@frametitle@ht{2.75ex}%
+\define@key{beamerframe}{frametitleheight}{%
+    \def\beamer@goethe@frametitle@ht{#1}%
+}%
+
+\newlength{\beamer@goethe@frametitle@dp}
+\def\beamer@goethe@frametitle@dp{1.15ex}%
+\define@key{beamerframe}{frametitledepth}{%
+    \def\beamer@goethe@frametitle@dp{#1}%
+}%
+
+\newlength{\beamer@goethe@framesubtitle@ht}
+\def\beamer@goethe@framesubtitle@ht{2.25ex}%
+\define@key{beamerframe}{framesubtitleheight}{%
+    \def\beamer@goethe@framesubtitle@ht{#1}%
+}%
+
+\newlength{\beamer@goethe@framesubtitle@dp}
+\def\beamer@goethe@framesubtitle@dp{1.15ex}%
+\define@key{beamerframe}{framesubtitledepth}{%
+    \def\beamer@goethe@framesubtitle@dp{#1}%
+}%
+
+\apptocmd{\beamer@reseteecodes}{%
+    \def\beamer@goethe@frametitle@ht{2.75ex}%
+    \def\beamer@goethe@frametitle@dp{1.15ex}%
+    \def\beamer@goethe@framesubtitle@ht{2.25ex}%
+    \def\beamer@goethe@framesubtitle@dp{1.15ex}%
+}{}{}%
+
 \defbeamertemplate*{frametitle}{goethe}[1][left]
 {%
     \ifbeamercolorempty[bg]{frametitle}{}{\nointerlineskip}%
@@ -50,15 +82,25 @@
     \advance\@tempdima by\beamer@leftmargin%
     \advance\@tempdima by\beamer@rightmargin%
     \usebeamerfont{frametitle}%
-    \begin{beamercolorbox}[ht=2.75ex,dp=1.25ex,#1,wd=\the\@tempdima]{frametitle}%
+    \begin{beamercolorbox}[%
+        ht=\beamer@goethe@frametitle@ht,%
+        dp=\beamer@goethe@frametitle@dp,%
+        #1,%
+        wd=\the\@tempdima%
+    ]{frametitle}%
         \vbox{}\vskip-1ex%
         \if@tempswa\else\csname beamer@fte#1\endcsname\fi%
         \leftskip\beamer@goethe@frametitlemargin\strut\insertframetitle\strut\par%
     \end{beamercolorbox}%
     \vskip-2pt%
     \ifx\insertframesubtitle\@empty\else{%
-        \usebeamerfont{framesubtitle}
-        \begin{beamercolorbox}[ht=2.25ex,dp=1.15ex,#1,wd=\the\@tempdima]{framesubtitle}%
+        \usebeamerfont{frame subtitle}
+        \begin{beamercolorbox}[%
+            ht=\beamer@goethe@framesubtitle@ht,%
+            dp=\beamer@goethe@framesubtitle@dp,%
+            #1,%
+            wd=\the\@tempdima%
+        ]{framesubtitle}%
             \leftskip\beamer@goethe@frametitlemargin\strut\insertframesubtitle\strut\par%
             \vskip-1ex%
             \if@tempswa\else\vskip-.3cm\fi% set inside beamercolorbox... evil here...

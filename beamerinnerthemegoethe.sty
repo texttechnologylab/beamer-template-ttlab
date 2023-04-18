@@ -1,3 +1,4 @@
+% !TeX root = main.tex
 \mode<presentation>
 
 \DeclareOptionBeamer{titleheight}{\def\beamer@goethe@title@height{#1}}
@@ -53,31 +54,31 @@
 
 \defbeamertemplate*{title table subtitle}{goethe}{%
     \begin{tblr}{width=\beamer@goethe@title@width,colspec={A}}
-        {\usebeamerfont{title}\inserttitle} \\
+        {\usebeamerfont{title}\inserttitle}                                \\
         {\usebeamerfont{subtitle}\usebeamercolor{subtitle}\insertsubtitle} \\
     \end{tblr}
 }
 
 \defbeamertemplate*{title table}{goethe}{%
     \SetTblrInner{leftsep={0pt}, rightsep={0pt}, rowsep={1ex}}%
-    \if@goethe@title@center%
-        \NewColumnType{A}{X[c]}%
-    \else%
-        \NewColumnType{A}{X[l]}%
-    \fi%
-    \ifx\insertsubtitle\@empty%
-        \usebeamertemplate{title table nosubtitle}%
-    \else%
-        \usebeamertemplate{title table subtitle}%
-    \fi%
+\if@goethe@title@center%
+    \NewColumnType{A}{X[c]}%
+\else%
+    \NewColumnType{A}{X[l]}%
+\fi%
+\ifx\insertsubtitle\@empty%
+    \usebeamertemplate{title table nosubtitle}%
+\else%
+    \usebeamertemplate{title table subtitle}%
+\fi%
 }
 
 \defbeamertemplate*{author table}{goethe}{%
     \SetTblrInner{leftsep={0pt}, abovesep={0pt}, belowsep={0pt}, rightsep={0pt}, measure=vbox}%
-    \begin{tblr}{width=\beamer@goethe@title@width,colspec={Xr}}%
-        \SetCell[r=2]{l}{\usebeamerfont{author}\insertauthor} & \SetCell{h}{\usebeamerfont{institute}\insertinstitute} \\%
-                                                              & \SetCell{f}{\usebeamerfont{date}\insertdate}           \\%
-    \end{tblr}%
+\begin{tblr}{width=\beamer@goethe@title@width,colspec={Xr}}%
+    \SetCell[r=2]{l}{\usebeamerfont{author}\insertauthor} & \SetCell{h}{\usebeamerfont{institute}\insertinstitute} \\%
+                                                          & \SetCell{f}{\usebeamerfont{date}\insertdate}           \\%
+\end{tblr}%
 }
 
 \defbeamertemplate*{title page}{goethe}[1][]
@@ -104,87 +105,82 @@
     \fi
 }
 
-% Section page.
-\defbeamertemplate*{section page}{goethe}{%
-    \begin{beamercolorbox}[wd=1\paperwidth,ht=\beamer@goethe@section@height,left,sep=1ex]{sectiontitle}
-        \leftskip=\beamer@goethe@titlemargin%
-        \SetTblrInner{leftsep={0pt}, rightsep={0pt}}%
-        \begin{tblr}{width=\beamer@goethe@title@width,colspec={X[l]}}
-            {%
-                \usebeamerfont{sectiontitle}%
-                \usebeamercolor{sectiontitle}%
-                \let\hyperlink\@secondoftwo\insertsection%
-            } \\
-        \end{tblr}
-    \end{beamercolorbox}
-    \vspace{-2pt}
-    \begin{beamercolorbox}[wd=1\paperwidth,ht=\beamer@goethe@subtitle@depth]{sectiontitle}
+\defbeamertemplate*{agenda}{goethe}{%
+    \hspace{\parindent}\usebeamerfont{sectiontitle}Agenda\par%
+    \usebeamertemplate{toc agenda skip}%
+}
+
+\defbeamertemplate*{section page}{goethe}[1][]{%
+    \begin{beamercolorbox}[wd=1\paperwidth,left,#1]{sectiontitle}
+        \setlength{\parindent}{\beamer@goethe@titlemargin}%
         \usebeamercolor{sectiontitle}%
+        \usebeamertemplate{agenda}%
+        \let\hyperlink\@secondoftwo\tableofcontents[sectionstyle=show/shaded,hideallsubsections]%
+        \strut%
+    \end{beamercolorbox}
+}
+\defbeamertemplate{section page}{goethe subsections}[1][]{%
+    \begin{beamercolorbox}[wd=1\paperwidth,left,#1]{sectiontitle}
+        \setlength{\parindent}{\beamer@goethe@titlemargin}%
+        \usebeamercolor{sectiontitle}%
+        \usebeamertemplate{agenda}%
+        \let\hyperlink\@secondoftwo\tableofcontents[sectionstyle=show/shaded,subsectionstyle=show/show/hide]%
         \strut%
     \end{beamercolorbox}
 }
 
-\AtBeginSection[]{%
-    \begin{frame}[plain, noframenumbering]{}
-        \sectionpage
-    \end{frame}%
+\usepackage{pgfkeys}
+\newif\ifshowsubsections
+\pgfkeys{
+    /sectionFrame/.is family, /sectionFrame,
+    default/.style = {show subsections=false},
+    show subsections/.is if=showsubsections,
 }
+\newcommand{\sectionFrame}[1][]{%
+    \begingroup%
+    \pgfkeys{/sectionFrame, default, #1}%
+    \setbeamercolor*{background canvas}{parent=sectiontitle}
+    \setlength{\parindent}{\beamer@goethe@titlemargin}%
+    \begin{frame}[c,plain,noframenumbering]{}
+        \ifshowsubsections%
+            \setbeamertemplate{section page}[goethe subsections]%
+        \else%
+            \setbeamertemplate{section page}[goethe]%
+        \fi%
+        \usebeamertemplate{section page}%
+    \end{frame}%
+    \endgroup%
+}
+\let\sectionAgenda\sectionFrame
 
-% Subsection page.
-\defbeamertemplate*{subsection page}{goethe}{%
-    \begin{beamercolorbox}[wd=1\paperwidth,ht=\beamer@goethe@section@height,left,sep=1ex]{sectiontitle}
-        \leftskip=\beamer@goethe@titlemargin%
-        \SetTblrInner{leftsep={0pt}, rightsep={0pt}}%
-        \begin{tblr}{width=\beamer@goethe@title@width,colspec={X[l]}}
-            {%
-                \usebeamerfont{sectiontitle}%
-                \usebeamercolor{sectiontitle}%
-                \let\hyperlink\@secondoftwo\insertsection%
-            } \\
-        \end{tblr}
+%% Subsection page
+\defbeamertemplate*{subsection page}{goethe}[1][]{%
+    \begin{beamercolorbox}[wd=1\paperwidth,left,#1]{sectiontitle}
+        \setlength{\parindent}{\beamer@goethe@titlemargin}%
+        \usebeamercolor{sectiontitle}%
+        \usebeamertemplate{agenda}%
+        \let\hyperlink\@secondoftwo\tableofcontents[sectionstyle=show/shaded,subsectionstyle=show/shaded/hide]%
+        \strut%
     \end{beamercolorbox}
-    \vspace{-2pt}
-    \begin{beamercolorbox}[wd=1\paperwidth,dp=\beamer@goethe@subtitle@depth,left,sep=1ex]{subsectiontitle}
-        \leftskip=\beamer@goethe@titlemargin%
-        \SetTblrInner{leftsep={0pt}, rightsep={0pt}}%
-        \begin{tblr}{width=\beamer@goethe@title@width,colspec={X[l]}}
-            {%
-                \usebeamerfont{subsectiontitle}%
-                \usebeamercolor{subsectiontitle}%
-                \let\hyperlink\@secondoftwo\insertsubsection%
-            } \\
-        \end{tblr}
-    \end{beamercolorbox}
 }
 
-\AtBeginSubsection[]{%
-    \begin{frame}[plain, noframenumbering]{}
-        \subsectionpage
+\newcommand{\subsectionFrame}{%
+    \begingroup%
+    \setbeamercolor*{background canvas}{parent=sectiontitle}
+    \begin{frame}[c,plain,noframenumbering]{}
+        \subsectionpage%
     \end{frame}%
+    \endgroup%
 }
+\let\subsectionAgenda\subsectionFrame
 
-\newcommand{\overviewFrame}[2]{%
-    \begin{frame}[plain, noframenumbering]{}%
-        \begin{beamercolorbox}[wd=1\paperwidth,ht=\beamer@goethe@section@height,left,sep=1ex]{sectiontitle}%
-            \leftskip=\beamer@goethe@titlemargin%
-            \SetTblrInner{leftsep={0pt}, rightsep={0pt}}%
-            \usebeamerfont{sectiontitle}%
-            \usebeamercolor{sectiontitle}%
-            \begin{tblr}{width=\beamer@goethe@title@width,colspec={X[l]}}
-                #1
-            \end{tblr}
-        \end{beamercolorbox}%
-        \vspace{-2pt}%
-        \begin{beamercolorbox}[wd=1\paperwidth,dp=\beamer@goethe@subtitle@depth,left,sep=1ex]{subsectiontitle}%
-            \leftskip=\beamer@goethe@titlemargin%
-            \SetTblrInner{leftsep={0pt}, rightsep={0pt}}%
-            \usebeamerfont{subsectiontitle}%
-            \usebeamercolor{subsectiontitle}%
-            \begin{tblr}{width=\beamer@goethe@title@width,colspec={X[l]}}
-                #2
-            \end{tblr}
-        \end{beamercolorbox}%
-    \end{frame}%
-}
+%% Table of contents 
+
+\setbeamertemplate{section in toc shaded}{\begin{colormixin}{60!sectiontitle.bg}\usebeamertemplate{section in toc}\end{colormixin}\unskip}
+\setbeamertemplate{subsection in toc shaded}{\begin{colormixin}{60!sectiontitle.bg}\usebeamertemplate{subsection in toc}\end{colormixin}\unskip}
+\setbeamertemplate{subsubsection in toc shaded}{\begin{colormixin}{60!sectiontitle.bg}\usebeamertemplate{subsubsection in toc}\end{colormixin}\unskip}
+
+\setbeamertemplate{sections/subsections in toc}[sections numbered]
+% \setbeamertemplate{sections/subsections in toc shaded}[default][60]
 
 \mode<all>
