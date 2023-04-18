@@ -3,22 +3,28 @@
 \documentclass[169,9pt]{beamer}
 
 \usetheme[
-    %% Language: german or english
-    english,
-    %% Bibliography: biblatex or natbib
-    usebiblatex, % or: usenatbib
+    %% Language, passed to babel/polyglossia
+    english, % or (n)german
+    localization=babel, % or polyglossia or none
+    biblatexbackend=bibtex8, % or biber or bibtex (7-bit)
+    %
+    %% Imports
+    tikz, % import tikz and commonly used packages
+    % minted, % import minted and set-up associated environments
+    % cleveref, % import cleveref and set-up some names
+    %
     %% LuaLaTeX
     % The three following options require LuaLaTeX, which may increase compilation times substantially.
-    nopolyglossia % polyglossia replaces babel
-    nolibertine, % nolibertine % Use Linux Libertine/Biolinum as roman/sans serif font
-    nofiracode, % usefiracode % Use Fira Code as monospaced font
-    %% Imports
-    usetikz, % import tikz and commonly used packages
+    % localization=polyglossia, % This replaces babel
+    % libertine, % Use Linux Libertine/Biolinum as roman/sans serif font
+    % firacode, % Use Fira Code as monospaced font
+    %
     %% Colors (GU corporate colors are always available)
-    usettlabcolors, % TTLab colors
-    usematerialcolors, % Material default colorscheme colors
-    % usealphabetcolors, % Alphabet color scheme, enable with usealphabetcolors, REQUIRES CITATION
-    % usegreenarmytagecolors, % Green-Armytage color scheme, enable with usegreenarmytagecolors, REQUIRES CITATION
+    ttlabcolors, % TTLab colors
+    % materialcolors, % Material default colorscheme colors
+    % alphabetcolors, % Alphabet color scheme, REQUIRES CITATION
+    % greenarmytagecolors, % Green-Armytage color scheme, REQUIRES CITATION
+    %
     %% Layout options
     titlemargin=0.1\paperwidth, % the size of margins left and right of the title
     titleheight=0.4\paperheight, % the hight of the beamercolorbox containing title and subtitle
@@ -69,22 +75,10 @@
 %%%%%%%%%%%%%%%%
 % Bibliography %
 %%%%%%%%%%%%%%%%
-% When usenatbib was given add refernce a slide using:
-% \begin{frame}[allowframebreaks]{References}
-%     \bibliography{anthology,custom}
-% \end{frame}
-% Uses the bibliography style from the ACL paper template
-% See: https://github.com/acl-org/acl-style-files
-% This has the benefit that we can import the whole ACL anthology in a single .bib file.
-
-% When usebiblatex was given add the bibliography files using:
+% Note, that we cannot import the whole ACL anthology using biber, as it takes forever to run.
+% Instead, we can fall back to the bibtex8 backend by passing biblatexbackend=bibtex8 as an.
+% Add the bibliography files using:
 \addbibresource{custom.bib}
-% Note, that we cannot import the whole ACL anthology using biber, as it takes forever.
-% Instead, we can fall back to the bibtex8 backend.
-% Add a reference slide using:
-% \begin{frame}[allowframebreaks]{References}
-%     \printbibliography
-% \end{frame}
 
 %%%%%%%%%%%%
 % Document %
@@ -150,6 +144,7 @@
     First
 \end{frame}
 
+% Do NOT use allowframebreaks anywhere else! Use counters instead
 \begin{frame}[allowframebreaks]{References}
     \printbibliography
 \end{frame}
