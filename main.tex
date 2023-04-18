@@ -6,7 +6,7 @@
     %% Language: german or english
     english,
     %% Bibliography: biblatex or natbib
-    usenatbib, % or: usebiblatex
+    usebiblatex, % or: usenatbib
     %% LuaLaTeX
     % The three following options require LuaLaTeX, which may increase compilation times substantially.
     nopolyglossia % polyglossia replaces babel
@@ -79,7 +79,8 @@
 
 % When usebiblatex was given add the bibliography files using:
 % \addbibresource{custom.bib}
-% Note, that we cannot import the whole ACL anthology using biblatex.
+% Note, that we cannot import the whole ACL anthology using biber, as it takes forever.
+% Instead, we can fall back to the bibtex8 backend.
 % Add a reference slide using:
 % \begin{frame}[allowframebreaks]{References}
 %     \printbibliography
@@ -91,9 +92,6 @@
 \begin{document}
 
 \maketitle
-% \begin{frame}
-%     \titlepage
-% \end{frame}
 
 \section{First Section}\sectionFrame
 % use \section*{First Section} if you do not want a separate section slide.
