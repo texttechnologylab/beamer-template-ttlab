@@ -45,7 +45,6 @@
 \UseTblrLibrary{counter}
 \UseTblrLibrary{varwidth} % see: https://github.com/lvjr/tabularray/issues/36
 
-
 \defbeamertemplate*{title table nosubtitle}{goethe}{%
     \begin{tblr}{width=\beamer@goethe@title@width,colspec={A}}
         {\usebeamerfont{title}\inserttitle} \\
@@ -106,37 +105,155 @@
 }
 
 %% Table of contents 
-\defbeamertemplate*{agenda}{goethe}{%
-    \hspace{\parindent}\usebeamerfont{sectiontitle}Agenda\par%
-    \usebeamertemplate{agenda skip in toc}%
+
+\def\beamer@sectionintoc#1#2#3#4#5{%
+    \ifnum\c@tocdepth>0%
+        \ifnum#4=\beamer@showpartnumber%
+            {
+                \beamer@saveanother%
+                \gdef\beamer@todo{}%
+                \beamer@slideinframe=#1\relax%
+                \expandafter\only\beamer@tocsections{\gdef\beamer@todo{%
+                        \beamer@tempcount=#5\relax%
+                        \advance\beamer@tempcount by\beamer@sectionadjust%
+                        \ifnum\beamer@tempcount>0
+                            \ifnum\beamer@tempcount>\beamer@toclastsection
+                                \def\inserttocsectionnumber{}%
+                            \else
+                                \edef\inserttocsectionnumber{\the\beamer@tempcount}%
+                            \fi
+                        \else
+                            \def\inserttocsectionnumber{}%
+                        \fi%
+                        \def\inserttocsection{\hyperlink{Navigation#3}{#2}}%
+                        \beamer@tocifnothide{\ifnum\c@section=#1\beamer@toc@cs\else\beamer@toc@os\fi}%
+                        {%
+                            \ifbeamer@pausesections\pause\fi%
+                            \usebeamertemplate{section skip in toc}%
+                            {%
+                                \hbox{\vbox{%
+                                        \def\beamer@breakhere{\\}%
+                                        \beamer@tocact{\ifnum\c@section=#1\beamer@toc@cs\else\beamer@toc@os\fi}{section in toc}}}%
+                                \par%
+                            }%
+                        }%
+                    }%
+                }%
+                \beamer@restoreanother%
+            }
+            \beamer@todo%
+        \fi\fi%
 }
 
+\long\def\beamer@subsectionintoc#1#2#3#4#5#6{%
+    \ifnum\c@tocdepth>1%
+        \ifnum#5=\beamer@showpartnumber%
+            {%
+                \beamer@saveanother%
+                \gdef\beamer@todo{}%
+                \beamer@slideinframe=#1\relax%
+                \expandafter\only\beamer@tocsections{\gdef\beamer@todo{%
+                        \ifbeamer@pausesubsections\pause\fi%
+                        \beamer@tempcount=#6%
+                        \advance\beamer@tempcount by\beamer@sectionadjust%
+                        \edef\inserttocsectionnumber{\the\beamer@tempcount}%
+                        \def\inserttocsubsectionnumber{#2}%
+                        \def\inserttocsubsection{\hyperlink{Navigation#4}{#3}}%
+                        \beamer@tocifnothide{\ifnum\c@section=#1\beamer@toc@css\else\beamer@toc@oss\fi}%
+                        {%
+                            \usebeamertemplate{subsection skip in toc}%
+                            \def\beamer@breakhere{\\}%
+                            \beamer@tocact{\ifnum\c@section=#1\ifnum\c@subsection=#2\beamer@toc@css\else\beamer@toc@oss\fi\else\beamer@toc@ooss\fi}{subsection in toc}%
+                        }%
+                    }}%
+                \beamer@restoreanother%
+            }%
+            \beamer@todo%
+        \fi\fi%
+}
+
+\long\def\beamer@subsubsectionintoc#1#2#3#4#5#6#7{%
+    \ifnum\c@tocdepth>2%
+        \ifnum#6=\beamer@showpartnumber%
+            {
+                \beamer@saveanother%
+                \gdef\beamer@todo{}%
+                \beamer@slideinframe=#1\relax%
+                \expandafter\only\beamer@tocsections{\gdef\beamer@todo{%
+                        \ifbeamer@pausesubsections\pause\fi%
+                        \beamer@tempcount=#7%
+                        \advance\beamer@tempcount by\beamer@sectionadjust%
+                        \edef\inserttocsectionnumber{\the\beamer@tempcount}%
+                        \def\inserttocsubsectionnumber{#2}%
+                        \def\inserttocsubsubsectionnumber{#3}%
+                        \def\inserttocsubsubsection{\hyperlink{Navigation#5}{#4}}%
+                        \beamer@tocifnothide{\ifnum\c@section=#1\beamer@toc@csss\else\beamer@toc@osss\fi}%
+                        {%
+                            \usebeamertemplate{subsubsection skip in toc}%
+                            \def\beamer@breakhere{\\}%
+                            \beamer@tocact{\ifnum\c@section=#1\ifnum\c@subsection=#2\ifnum\c@subsubsection=#3\beamer@toc@csss\else\beamer@toc@osss\fi\else\beamer@toc@oosss\fi\else\beamer@toc@ooosss\fi}{subsubsection in toc}%
+                        }%
+                    }}%
+                \beamer@restoreanother%
+            }
+            \beamer@todo%
+        \fi\fi%
+}
+
+\defbeamertemplate*{agenda title}{goethe}{Agenda}
+
+\defbeamertemplate*{agenda pad in toc}{goethe}{\vskip1.0\baselineskip}
+\defbeamertemplate*{agenda skip in toc}{goethe}{\vskip1.5\baselineskip}
+\defbeamertemplate*{agenda height in toc}{goethe}{0.2\paperheight}
+
+\defbeamertemplate*{section skip in toc}{goethe}{\setlength{\parskip}{8pt plus 2pt}}
+\defbeamertemplate*{subsection skip in toc}{goethe}{\setlength{\parskip}{2pt plus 1pt}}
+\defbeamertemplate*{subsubsection skip in toc}{goethe}{\setlength{\parskip}{0pt plus 1pt}}
+
 \defbeamertemplate*{section page}{goethe}[1][]{%
+    \begin{beamercolorbox}[wd=1\paperwidth,ht=8ex,dp=3ex,left,#1]{agenda in toc}
+        \setlength{\parindent}{\beamer@goethe@titlemargin}%
+        \usebeamercolor{agenda in toc}\usebeamerfont{agenda in toc}%
+        \leftskip=\parindent%
+        \usebeamertemplate{agenda title}%
+    \end{beamercolorbox}
+    \usebeamertemplate{agenda skip in toc}%
     \begin{beamercolorbox}[wd=1\paperwidth,left,#1]{section in toc}
         \setlength{\parindent}{\beamer@goethe@titlemargin}%
         \usebeamercolor{section in toc}%
-        \usebeamertemplate{agenda}%
         \let\hyperlink\@secondoftwo\tableofcontents[sectionstyle=show/shaded,hideallsubsections]%
-        \strut%
     \end{beamercolorbox}
+    \vskip1cm plus 1filll
 }
 \defbeamertemplate{section page}{goethe only current}[1][]{%
+    \begin{beamercolorbox}[wd=1\paperwidth,ht=8ex,dp=3ex,left,#1]{agenda in toc}
+        \setlength{\parindent}{\beamer@goethe@titlemargin}%
+        \usebeamercolor{agenda in toc}\usebeamerfont{agenda in toc}%
+        \leftskip=\parindent%
+        \usebeamertemplate{agenda title}%
+    \end{beamercolorbox}
+    \usebeamertemplate{agenda skip in toc}%
     \begin{beamercolorbox}[wd=1\paperwidth,left,#1]{section in toc}
         \setlength{\parindent}{\beamer@goethe@titlemargin}%
         \usebeamercolor{section in toc}%
-        \usebeamertemplate{agenda}%
         \let\hyperlink\@secondoftwo\tableofcontents[sectionstyle=show/hide,subsectionstyle=show/show/hide]%
-        \strut%
     \end{beamercolorbox}
+    \vskip1cm plus 1filll
 }
 \defbeamertemplate{section page}{goethe subsections}[1][]{%
+    \begin{beamercolorbox}[wd=1\paperwidth,ht=8ex,dp=3ex,left,#1]{agenda in toc}
+        \setlength{\parindent}{\beamer@goethe@titlemargin}%
+        \usebeamercolor{agenda in toc}\usebeamerfont{agenda in toc}%
+        \leftskip=\parindent%
+        \usebeamertemplate{agenda title}%
+    \end{beamercolorbox}
+    \usebeamertemplate{agenda skip in toc}%
     \begin{beamercolorbox}[wd=1\paperwidth,left,#1]{section in toc}
         \setlength{\parindent}{\beamer@goethe@titlemargin}%
         \usebeamercolor{section in toc}%
-        \usebeamertemplate{agenda}%
         \let\hyperlink\@secondoftwo\tableofcontents[sectionstyle=show/shaded,subsectionstyle=show/show/hide]%
-        \strut%
     \end{beamercolorbox}
+    \vskip1cm plus 1filll
 }
 
 \usepackage{pgfkeys}
@@ -145,9 +262,9 @@
 \pgfkeys{
     /sectionFrame/.is family, /sectionFrame,
     default/.style = {%
-        show subsections=false,%
-        only current section=false,%
-    },
+            show subsections=false,%
+            only current section=false,%
+        },
     show subsections/.is if=showsubsections,
     only current section/.is if=onlycurrentsection,
 }
@@ -172,29 +289,41 @@
 
 %% Subsection page
 \defbeamertemplate*{subsection page}{goethe}[1][]{%
+    \begin{beamercolorbox}[wd=1\paperwidth,ht=8ex,dp=3ex,left,#1]{agenda in toc}
+        \setlength{\parindent}{\beamer@goethe@titlemargin}%
+        \usebeamercolor{agenda in toc}\usebeamerfont{agenda in toc}%
+        \leftskip=\parindent%
+        \usebeamertemplate{agenda title}%
+    \end{beamercolorbox}
+    \usebeamertemplate{agenda skip in toc}%
     \begin{beamercolorbox}[wd=1\paperwidth,left,#1]{section in toc}
         \setlength{\parindent}{\beamer@goethe@titlemargin}%
         \usebeamercolor{section in toc}%
-        \usebeamertemplate{agenda}%
         \let\hyperlink\@secondoftwo\tableofcontents[sectionstyle=show/shaded,subsectionstyle=show/shaded/hide]%
-        \strut%
     \end{beamercolorbox}
+    \vskip1cm plus 1filll
 }
 \defbeamertemplate*{subsection page}{goethe only current}[1][]{%
+    \begin{beamercolorbox}[wd=1\paperwidth,ht=8ex,dp=3ex,left,#1]{agenda in toc}
+        \setlength{\parindent}{\beamer@goethe@titlemargin}%
+        \usebeamercolor{agenda in toc}\usebeamerfont{agenda in toc}%
+        \leftskip=\parindent%
+        \usebeamertemplate{agenda title}%
+    \end{beamercolorbox}
+    \usebeamertemplate{agenda skip in toc}%
     \begin{beamercolorbox}[wd=1\paperwidth,left,#1]{section in toc}
         \setlength{\parindent}{\beamer@goethe@titlemargin}%
         \usebeamercolor{section in toc}%
-        \usebeamertemplate{agenda}%
         \let\hyperlink\@secondoftwo\tableofcontents[sectionstyle=show/hide,subsectionstyle=show/shaded/hide]%
-        \strut%
     \end{beamercolorbox}
+    \vskip1cm plus 1filll
 }
 
 \pgfkeys{
     /subsectionFrame/.is family, /subsectionFrame,
     default/.style = {%
-        only current section=false,%
-    },
+            only current section=false,%
+        },
     only current section/.is if=onlycurrentsection,
 }
 \newcommand{\subsectionFrame}[1][]{%

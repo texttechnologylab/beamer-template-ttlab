@@ -1,5 +1,5 @@
 % !TeX root = main.tex
-\DeclareOptionBeamer{usematerialcolors}{%
+\DeclareOptionBeamer{materialcolors}{%
     % 2014 Material Design color palettes
     % Adapted for LaTeX by Manuel Stoeckel
     % Source: https://material.io/design/color/the-color-system.html#tools-for-picking-colors
@@ -259,7 +259,7 @@
     \definecolor{bluegray800}{HTML}{37474f} % #37474f
     \definecolor{bluegray900}{HTML}{263238} % #263238
 }
-\DeclareOptionBeamer{usettlabcolors}{%
+\DeclareOptionBeamer{ttlabcolors}{%
     %% HuCompute.org colors:
     \definecolor{HUDarkBlue}{RGB}{16,82,132}
     \definecolor{HULightBlue}{RGB}{55,140,195} %% #378cc3
@@ -364,7 +364,7 @@
 
     \definecolor{DarkRed}{HTML}{b94a48}
 }
-\DeclareOptionBeamer{usealphabetcolors}{%
+\DeclareOptionBeamer{alphabetcolors}{%
     % From: https://rdrr.io/cran/Polychrome/
     % Citation: Carter RC, Carter EC. High-contrast sets of colors. Applied Optics, 1982; 21(16):2936–9. 
     \AtBeginDocument{\nocite{Green_Armytage_2010_color}}
@@ -395,7 +395,7 @@
     \definecolor{alphabet-yellow}{HTML}{FBE426} % #FBE426
     \definecolor{alphabet-zinnia}{HTML}{FA0087} % #FA0087
 }
-\DeclareOptionBeamer{usegreenarmytagecolors}{%
+\DeclareOptionBeamer{greenarmytagecolors}{%
     % From: https://rdrr.io/cran/Polychrome/
     % Citation: Green-Armytage, P. A Colour Alphabet and the Limits of Colour Coding. Colour: Design and Creativity, 2010; 10:1–23. 
     \AtBeginDocument{\nocite{Carter_1982_High}}
@@ -464,7 +464,7 @@
     Lichtblau,0.8,0,0.06,0.04%
 }
 
-\setbeamercolor*{structure}{fg=white,bg=Goethe-Blau}
+\setbeamercolor*{structure}{fg=Goethe-Blau,bg=Goethe-Blau}
 \setbeamercolor*{palette primary}{fg=white,bg=Goethe-Blau}
 \setbeamercolor*{palette secondary}{fg=white,bg=Goethe-Blau-Web}
 \setbeamercolor*{palette tertiary}{fg=white,bg=Goethe-Lichtblau}
@@ -480,13 +480,15 @@
 \setbeamercolor*{subsectiontitle}{parent=palette secondary}
 \setbeamercolor*{subsubsectiontitle}{parent=palette tertiary}
 
+\setbeamercolor*{agenda in toc}{parent=palette secondary}
+
 \setbeamercolor*{section in toc}{parent=palette primary}
 \setbeamercolor*{section in toc shaded}{parent=section in toc}
 
-\setbeamercolor*{subsection in toc}{parent=palette secondary}
+\setbeamercolor*{subsection in toc}{parent=palette primary}
 \setbeamercolor*{subsection in toc shaded}{parent=subsection in toc}
 
-\setbeamercolor*{subsubsection in toc}{parent=subpalette secondary}
+\setbeamercolor*{subsubsection in toc}{parent=subpalette primary}
 \setbeamercolor*{subsubsection in toc shaded}{parent=subsubsection in toc}
 
 \setbeamercolor*{alerted text}{fg=Goethe-Orange}
