@@ -108,7 +108,7 @@
       \beamer@tocifnothide{\ifnum\c@section=#1\beamer@toc@cs\else\beamer@toc@os\fi}%
       {%
         \ifbeamer@pausesections\pause\fi%
-        \usebeamertemplate{toc section skip}%
+        \usebeamertemplate{section skip in toc}%
         {%
           \hbox{\vbox{%
               \def\beamer@breakhere{\\}%
@@ -140,7 +140,7 @@
       \def\inserttocsubsection{\hyperlink{Navigation#4}{#3}}%
       \beamer@tocifnothide{\ifnum\c@section=#1\beamer@toc@css\else\beamer@toc@oss\fi}%
       {%
-        \usebeamertemplate{toc subsection skip}%
+        \usebeamertemplate{subsection skip in toc}%
         \def\beamer@breakhere{\\}%
         \beamer@tocact{\ifnum\c@section=#1\ifnum\c@subsection=#2\beamer@toc@css\else\beamer@toc@oss\fi\else\beamer@toc@ooss\fi}{subsection in toc}%
       }%
@@ -168,7 +168,7 @@
       \def\inserttocsubsubsection{\hyperlink{Navigation#5}{#4}}%
       \beamer@tocifnothide{\ifnum\c@section=#1\beamer@toc@csss\else\beamer@toc@osss\fi}%
       {%
-        \usebeamertemplate{toc subsubsection skip}%
+        \usebeamertemplate{subsubsection skip in toc}%
         \def\beamer@breakhere{\\}%
         \beamer@tocact{\ifnum\c@section=#1\ifnum\c@subsection=#2\ifnum\c@subsubsection=#3\beamer@toc@csss\else\beamer@toc@osss\fi\else\beamer@toc@oosss\fi\else\beamer@toc@ooosss\fi}{subsubsection in toc}%
       }%
@@ -187,10 +187,13 @@
 % \setbeamertemplate{bibliography item}{\insertbiblabel}
 \setbeamertemplate{bibliography item}{}
 
-\setbeamertemplate{toc agenda skip}{\vskip1.5\baselineskip}
-\setbeamertemplate{toc section skip}{\vskip0.0\baselineskip}
-\setbeamertemplate{toc subsection skip}{\vskip0.0\baselineskip}
-\setbeamertemplate{toc subsubsection skip}{\vskip0.5\baselineskip}
+\setbeamertemplate{agenda skip in toc}{\vskip1.0\baselineskip}
+\setbeamertemplate{section skip in toc}{\vskip0.0\baselineskip}
+\setbeamertemplate{subsection skip in toc}{\vskip0.0\baselineskip}
+\setbeamertemplate{subsubsection skip in toc}{\vskip0.0\baselineskip}
+
+\setbeamertemplate{sections/subsections in toc}[sections numbered]
+\setbeamertemplate{sections/subsections in toc shaded}[goethe][60]
 
 \RequirePackage{fontawesome5} % Font Awesome symbols
 \setbeamertemplate{itemize item}{\faAngleRight}
