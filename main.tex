@@ -14,11 +14,11 @@
     nofiracode, % usefiracode % Use Fira Code as monospaced font
     %% Imports
     usetikz, % import tikz and commonly used packages
-    %% Colors
-    usematerialcolors, % Material color default colorschemes, disable with nomaterialcolors
-    usettlabcolors, % Goethe University corporate & TTLab colors, disable with nottlabcolors
-    noalphabetcolors, % Alphabet color scheme, enable with usealphabetcolors, REQUIRES CITATION
-    nogreenarmytagecolors, % Green-Armytage color scheme, enable with usegreenarmytagecolors, REQUIRES CITATION
+    %% Colors (GU corporate colors are always available)
+    usettlabcolors, % TTLab colors
+    usematerialcolors, % Material default colorscheme colors
+    % usealphabetcolors, % Alphabet color scheme, enable with usealphabetcolors, REQUIRES CITATION
+    % usegreenarmytagecolors, % Green-Armytage color scheme, enable with usegreenarmytagecolors, REQUIRES CITATION
     %% Layout options
     titlemargin=0.1\paperwidth, % the size of margins left and right of the title
     titleheight=0.4\paperheight, % the hight of the beamercolorbox containing title and subtitle
@@ -111,15 +111,15 @@
 
 \section{Fourth Section}\sectionFrame
 
-\begin{frame}{Frame Title}
+\begin{frame}{Frame Title}{Frame Subtitle}
     \begin{itemize}
         \item First level
-        \begin{itemize}
-            \item<+(1)-> Second level
-            \begin{itemize}
-                \item<+(1)-> Third level
-            \end{itemize}
-        \end{itemize}
+              \begin{itemize}
+                  \item<+(1)-> Second level
+                      \begin{itemize}
+                          \item<+(1)-> Third level
+                      \end{itemize}
+              \end{itemize}
     \end{itemize}
 \end{frame}
 
