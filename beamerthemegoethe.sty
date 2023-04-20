@@ -166,9 +166,9 @@
 \usepackage{beamerimportsgoethe}
 
 \RequirePackage{fontawesome5} % Font Awesome symbols
-\setbeamertemplate{itemize item}{\faAngleRight}
-\setbeamertemplate{itemize subitem}{\faAngleRight\hspace*{-1pt}\faAngleRight}
-\setbeamertemplate{itemize subsubitem}{\faAngleRight\hspace*{-1pt}\faAngleRight\hspace*{-1pt}\faAngleRight}
+\setbeamertemplate{itemize item}{\adjustbox{max width=\labelwidth}{\faAngleRight}}
+\setbeamertemplate{itemize subitem}{\adjustbox{max width=\labelwidth}{\faAngleRight\hspace*{-1pt}\faAngleRight}}
+\setbeamertemplate{itemize subsubitem}{\adjustbox{max width=\labelwidth}{\faAngleRight\hspace*{-1pt}\faAngleRight\hspace*{-1pt}\faAngleRight}}
 
 % \setbeamertemplate{bibliography item}{\insertbiblabel}
 \setbeamertemplate{bibliography item}{}

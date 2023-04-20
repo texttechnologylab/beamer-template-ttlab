@@ -1,6 +1,6 @@
 % !TeX spellcheck = en-US, de-DE
 % !TeX encoding = UTF-8 Unicode
-\documentclass[169,9pt]{beamer}
+\documentclass[169,8pt]{beamer}
 
 \usetheme[
     %% Language, passed to babel/polyglossia
@@ -90,68 +90,85 @@
 \section{First Section}\sectionFrame
 
 \section{Second Section}\sectionFrame[show subsections]
-\subsection{First Sub Section}
-\subsection{Second Sub Section}
-\subsection{Third Sub Section}
+    \subsection{First Sub Section}
+    \subsection{Second Sub Section}
+    \subsection{Third Sub Section}
 
 \section{Third Section}\sectionFrame[only current section]
-\subsection{First Sub Section}
-\subsection{Second Sub Section}
-\subsection{Third Sub Section}
+    \subsection{First Sub Section}
+    \subsection{Second Sub Section}
+    \subsection{Third Sub Section}
 
 \section{Fourth Section}
-\subsection{First Sub Section}\subsectionFrame
-\subsection{Second Sub Section}\subsectionFrame
-\subsection{Third Sub Section}\subsectionFrame
+    \subsection{First Sub Section}\subsectionFrame
+    \subsection{Second Sub Section}\subsectionFrame
+    \subsection{Third Sub Section}\subsectionFrame
 
 \section{Fifth Section}
-\subsection{First Sub Section}\subsectionFrame[only current section]
-\subsection{Second Sub Section}\subsectionFrame[only current section]
-\subsection{Third Sub Section}\subsectionFrame[only current section]
+    \subsection{1. Sub Section}\subsectionFrame[only current section]
+    \subsection{2. Sub Section}\subsectionFrame[only current section]
+    \subsection{3. Sub Section}\subsectionFrame[only current section]
+    \subsection{4. Sub Section}\subsectionFrame[only current section]
+    \subsection{5. Sub Section}\subsectionFrame[only current section]
+    \subsection{6. Sub Section}\subsectionFrame[only current section]
+    \subsection{7. Sub Section}\subsectionFrame[only current section]
+    \subsection{8. Sub Section}\subsectionFrame[only current section]
+    \subsection{9. Sub Section}\subsectionFrame[only current section]
+    \subsection{10. Sub Section}\subsectionFrame[only current section]
+    \subsection{11. Sub Section}\subsectionFrame[only current section]
+    \subsection{12. Sub Section}\subsectionFrame[only current section]
+    \subsection{13. Sub Section}\subsectionFrame[only current section]
+    \subsection{14. Sub Section}\subsectionFrame[only current section]
+
+        \begin{frame}{Frame Title}{Frame Subtitle}
+            \begin{tcolorbox}[left=0mm,right=0mm,boxsep=0mm,sharp corners]
+                % \setlength{\labelwidth}{5em}
+                \setlength{\leftmargini}{\labelwidth}
+                % \setlength{\leftmarginii}{0pt}
+                % \setlength{\leftmarginiii}{0pt}]
+                \begin{itemize}
+                    \item First level
+                    \begin{itemize}
+                        \item<+(1)-> Second level
+                            \begin{itemize}
+                                \item<+(1)-> Third level
+                            \end{itemize}
+                    \end{itemize}
+                    \item[\adjustbox{max width=\labelwidth}{\faLongArrowAltRight}] ABC
+                \end{itemize}
+            \end{tcolorbox}
+        \end{frame}
+
+        \begin{frame}{Frame Title}
+            First
+            \pause
+            Second
+        \end{frame}
 
 
-\begin{frame}{Frame Title}{Frame Subtitle}
-    \begin{itemize}
-        \item First level
-              \begin{itemize}
-                  \item<+(1)-> Second level
-                      \begin{itemize}
-                          \item<+(1)-> Third level
-                      \end{itemize}
-              \end{itemize}
-    \end{itemize}
-\end{frame}
-
-\begin{frame}{Frame Title}
-    First
-    \pause
-    Second
-\end{frame}
+        \begin{frame}{Frame Title}
+            \only<2>{
+                Second
+            }
+            First
+        \end{frame}
 
 
-\begin{frame}{Frame Title}
-    \only<2>{
-        Second
-    }
-    First
-\end{frame}
+        \begin{frame}{Frame Title}
+            \onslide<2>{
+                Second
+            }
+            First
+        \end{frame}
 
-
-\begin{frame}{Frame Title}
-    \onslide<2>{
-        Second
-    }
-    First
-\end{frame}
-
-% Do NOT use allowframebreaks anywhere else! Use counters instead
-\begin{frame}[allowframebreaks]{References}
-    \printbibliography
-\end{frame}
+        % Do NOT use allowframebreaks anywhere else! Use counters instead
+        \begin{frame}[allowframebreaks]{References}
+            \printbibliography
+        \end{frame}
 
 \appendix
 
-% \section{Appendix}
-% \label{sec:appendix}
+    % \section{Appendix}
+    % \label{sec:appendix}
 
 \end{document}
