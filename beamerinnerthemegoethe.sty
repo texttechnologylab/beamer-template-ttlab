@@ -100,7 +100,7 @@
         \end{beamercolorbox}
         \vskip0pt plus 1filll
     \else
-        \vskip1cm plus 1filll
+        \vskip1cm plus 1filll%
     \fi
 }
 
@@ -201,56 +201,65 @@
 }
 
 \defbeamertemplate*{agenda title}{goethe}{Agenda\strut}
-\defbeamertemplate*{agenda skip in toc}{goethe}{\vskip0.5\baselineskip}
+\newlength{\agendaskip}\setlength{\agendaskip}{0.5\baselineskip}
+\defbeamertemplate*{agenda skip in toc}{goethe}{\vskip\agendaskip}
+\newlength{\agendaht}\setlength{\agendaht}{3\baselineskip}
+\newlength{\agendadp}\setlength{\agendadp}{1\baselineskip}
 
 \defbeamertemplate*{section skip in toc}{goethe}{\setlength{\parskip}{8pt plus 2pt}}
 \defbeamertemplate*{subsection skip in toc}{goethe}{\setlength{\parskip}{2pt plus 1pt}}
 \defbeamertemplate*{subsubsection skip in toc}{goethe}{\setlength{\parskip}{0pt plus 1pt}}
 
 \defbeamertemplate*{section page}{goethe}[1][]{%
-    \begin{beamercolorbox}[wd=1\paperwidth,ht=3\baselineskip,dp=1\baselineskip,left,#1]{agenda in toc}
+    \begin{beamercolorbox}[wd=1\paperwidth,ht=\agendaht,dp=\agendadp,left,#1]{agenda in toc}
         \setlength{\parindent}{\beamer@goethe@titlemargin}%
         \usebeamercolor{agenda in toc}\usebeamerfont{agenda in toc}%
         \leftskip=\parindent%
         \usebeamertemplate{agenda title}%
     \end{beamercolorbox}
     \usebeamertemplate{agenda skip in toc}%
-    \begin{beamercolorbox}[wd=1\paperwidth,left,#1]{section in toc}
-        \setlength{\parindent}{\beamer@goethe@titlemargin}%
-        \usebeamercolor{section in toc}%
-        \let\hyperlink\@secondoftwo\tableofcontents[sectionstyle=show/shaded,hideallsubsections]%
-    \end{beamercolorbox}
-    \vskip1cm plus 1filll
+    \begin{adjustbox}{max height=\dimexpr\paperheight-2\baselineskip-\agendaht-\agendadp-\agendaskip}%
+        \begin{beamercolorbox}[wd=1\paperwidth,left,#1]{section in toc}
+            \setlength{\parindent}{\beamer@goethe@titlemargin}%
+            \usebeamercolor{section in toc}%
+            \let\hyperlink\@secondoftwo\tableofcontents[sectionstyle=show/shaded,hideallsubsections]%
+        \end{beamercolorbox}%
+    \end{adjustbox}%
+    \vskip1cm plus 1filll%
 }
 \defbeamertemplate{section page}{goethe only current}[1][]{%
-    \begin{beamercolorbox}[wd=1\paperwidth,ht=3\baselineskip,dp=1\baselineskip,left,#1]{agenda in toc}
+    \begin{beamercolorbox}[wd=1\paperwidth,ht=\agendaht,dp=\agendadp,left,#1]{agenda in toc}
         \setlength{\parindent}{\beamer@goethe@titlemargin}%
         \usebeamercolor{agenda in toc}\usebeamerfont{agenda in toc}%
         \leftskip=\parindent%
         \usebeamertemplate{agenda title}%
     \end{beamercolorbox}
     \usebeamertemplate{agenda skip in toc}%
-    \begin{beamercolorbox}[wd=1\paperwidth,left,#1]{section in toc}
-        \setlength{\parindent}{\beamer@goethe@titlemargin}%
-        \usebeamercolor{section in toc}%
-        \let\hyperlink\@secondoftwo\tableofcontents[sectionstyle=show/hide,subsectionstyle=show/show/hide]%
-    \end{beamercolorbox}
-    \vskip1cm plus 1filll
+    \begin{adjustbox}{max height=\dimexpr\paperheight-2\baselineskip-\agendaht-\agendadp-\agendaskip}%
+        \begin{beamercolorbox}[wd=1\paperwidth,left,#1]{section in toc}
+            \setlength{\parindent}{\beamer@goethe@titlemargin}%
+            \usebeamercolor{section in toc}%
+            \let\hyperlink\@secondoftwo\tableofcontents[sectionstyle=show/hide,subsectionstyle=show/show/hide]%
+        \end{beamercolorbox}%
+    \end{adjustbox}%
+    \vskip1cm plus 1filll%
 }
 \defbeamertemplate{section page}{goethe subsections}[1][]{%
-    \begin{beamercolorbox}[wd=1\paperwidth,ht=3\baselineskip,dp=1\baselineskip,left,#1]{agenda in toc}
+    \begin{beamercolorbox}[wd=1\paperwidth,ht=\agendaht,dp=\agendadp,left,#1]{agenda in toc}
         \setlength{\parindent}{\beamer@goethe@titlemargin}%
         \usebeamercolor{agenda in toc}\usebeamerfont{agenda in toc}%
         \leftskip=\parindent%
         \usebeamertemplate{agenda title}%
     \end{beamercolorbox}
     \usebeamertemplate{agenda skip in toc}%
-    \begin{beamercolorbox}[wd=1\paperwidth,left,#1]{section in toc}
-        \setlength{\parindent}{\beamer@goethe@titlemargin}%
-        \usebeamercolor{section in toc}%
-        \let\hyperlink\@secondoftwo\tableofcontents[sectionstyle=show/shaded,subsectionstyle=show/show/hide]%
-    \end{beamercolorbox}
-    \vskip1cm plus 1filll
+    \begin{adjustbox}{max height=\dimexpr\paperheight-2\baselineskip-\agendaht-\agendadp-\agendaskip}%
+        \begin{beamercolorbox}[wd=1\paperwidth,left,#1]{section in toc}
+            \setlength{\parindent}{\beamer@goethe@titlemargin}%
+            \usebeamercolor{section in toc}%
+            \let\hyperlink\@secondoftwo\tableofcontents[sectionstyle=show/shaded,subsectionstyle=show/show/hide]%
+        \end{beamercolorbox}%
+    \end{adjustbox}%
+    \vskip1cm plus 1filll%
 }
 
 \usepackage{pgfkeys}
@@ -286,34 +295,38 @@
 
 %% Subsection page
 \defbeamertemplate*{subsection page}{goethe}[1][]{%
-    \begin{beamercolorbox}[wd=1\paperwidth,ht=3\baselineskip,dp=1\baselineskip,left,#1]{agenda in toc}
+    \begin{beamercolorbox}[wd=1\paperwidth,ht=\agendaht,dp=\agendadp,left,#1]{agenda in toc}
         \setlength{\parindent}{\beamer@goethe@titlemargin}%
         \usebeamercolor{agenda in toc}\usebeamerfont{agenda in toc}%
         \leftskip=\parindent%
         \usebeamertemplate{agenda title}%
     \end{beamercolorbox}
     \usebeamertemplate{agenda skip in toc}%
-    \begin{beamercolorbox}[wd=1\paperwidth,left,#1]{section in toc}
-        \setlength{\parindent}{\beamer@goethe@titlemargin}%
-        \usebeamercolor{section in toc}%
-        \let\hyperlink\@secondoftwo\tableofcontents[sectionstyle=show/shaded,subsectionstyle=show/shaded/hide]%
-    \end{beamercolorbox}
-    \vskip1cm plus 1filll
+    \begin{adjustbox}{max height=\dimexpr\paperheight-2\baselineskip-\agendaht-\agendadp-\agendaskip}%
+        \begin{beamercolorbox}[wd=1\paperwidth,left,#1]{section in toc}
+            \setlength{\parindent}{\beamer@goethe@titlemargin}%
+            \usebeamercolor{section in toc}%
+            \let\hyperlink\@secondoftwo\tableofcontents[sectionstyle=show/shaded,subsectionstyle=show/shaded/hide]%
+        \end{beamercolorbox}%
+    \end{adjustbox}%
+    \vskip1cm plus 1filll%
 }
 \defbeamertemplate*{subsection page}{goethe only current}[1][]{%
-    \begin{beamercolorbox}[wd=1\paperwidth,ht=3\baselineskip,dp=1\baselineskip,left,#1]{agenda in toc}
+    \begin{beamercolorbox}[wd=1\paperwidth,ht=\agendaht,dp=\agendadp,left,#1]{agenda in toc}%
         \setlength{\parindent}{\beamer@goethe@titlemargin}%
         \usebeamercolor{agenda in toc}\usebeamerfont{agenda in toc}%
         \leftskip=\parindent%
         \usebeamertemplate{agenda title}%
     \end{beamercolorbox}
     \usebeamertemplate{agenda skip in toc}%
-    \begin{beamercolorbox}[wd=1\paperwidth,left,#1]{section in toc}
-        \setlength{\parindent}{\beamer@goethe@titlemargin}%
-        \usebeamercolor{section in toc}%
-        \let\hyperlink\@secondoftwo\tableofcontents[sectionstyle=show/hide,subsectionstyle=show/shaded/hide]%
-    \end{beamercolorbox}
-    \vskip1cm plus 1filll
+    \begin{adjustbox}{max height=\dimexpr\paperheight-2\baselineskip-\agendaht-\agendadp-\agendaskip}%
+        \begin{beamercolorbox}[wd=1\paperwidth,left,#1]{section in toc}%
+            \setlength{\parindent}{\beamer@goethe@titlemargin}%
+            \usebeamercolor{section in toc}%
+            \let\hyperlink\@secondoftwo\tableofcontents[sectionstyle=show/hide,subsectionstyle=show/shaded/hide]%
+        \end{beamercolorbox}%
+    \end{adjustbox}
+    \vskip1cm plus 1filll%
 }
 
 \pgfkeys{
