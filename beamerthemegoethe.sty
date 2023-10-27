@@ -6,9 +6,16 @@
 \ifPDFTeX
     \RequirePackage[T1]{fontenc}
     \RequirePackage[utf8]{inputenc}
-\fi
-\ifXeTeX
-    \ClassWarning{beamerthemegoethe}{Use LuaLaTeX instead of XeLaTeX}
+    \RequirePackage{libertine}
+\else
+    \ifXeTeX
+        \ClassWarning{beamerthemegoethe}{Use LuaLaTeX instead of XeLaTeX}
+    \fi
+    \RequireLuaTeX
+    \RequirePackage{fontspec}
+    \setromanfont[Ligatures=TeX]{Linux Libertine O} % Serifenschrift
+    \setsansfont[Ligatures=TeX]{Linux Biolinum O} % serifenlose Schrift
+    \setmonofont[Scale=MatchLowercase]{DejaVu Sans Mono}%
 \fi
 
 %% Layout Options 
@@ -70,13 +77,6 @@
 
 \DeclareOptionBeamer{biblatexbackend}{\PassOptionsToPackage{backend=#1}{biblatex}}
 % \ExecuteOptionsBeamer{biblatexbackend=bibtex}
-
-\DeclareOptionBeamer{libertine}{
-    \RequirePackage{fontspec}
-    \setromanfont[Ligatures=TeX]{Linux Libertine O} % Serifenschrift
-    \setsansfont[Ligatures=TeX]{Linux Biolinum O} % serifenlose Schrift
-    \setmonofont[Scale=MatchLowercase]{DejaVu Sans Mono}%
-}
 
 \DeclareOptionBeamer{firacode}{
     \RequirePackage{fontspec}
