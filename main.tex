@@ -10,7 +10,7 @@
     %
     %% Imports
     tikz, % import tikz and commonly used packages
-    % minted, % import minted and set-up associated environments
+    minted, % import minted and set-up associated environments
     % cleveref, % import cleveref and set-up some names
     %
     %% LuaLaTeX
@@ -87,24 +87,81 @@
 
 \maketitle
 
-\section{First Section}\sectionFrame
+\section{Features}\sectionFrame
 
-\section{Second Section}\sectionFrame[show subsections]
+    \begin{frame}{Lists}{Different Levels and Show Only At/From Slide}
+        % \setlength{\labelwidth}{5em}
+        \setlength{\leftmargini}{\labelwidth}
+        % \setlength{\leftmarginii}{0pt}
+        % \setlength{\leftmarginiii}{0pt}]
+        \begin{itemize}
+            \item First level
+            \begin{itemize}
+                \item<+(1)-> Second level
+                \begin{itemize}
+                    \item<+(1)-> Third level
+                \end{itemize}
+            \end{itemize}
+            \item[\adjustbox{max width=\labelwidth}{\faLongArrowAltRight}] ABC
+        \end{itemize}
+    \end{frame}
+
+    \begin{frame}{Tables with Caption Above}
+        \begin{table}
+            \centering
+            \caption{Table caption above.}
+            \begin{tabular}{c|c}
+                A & B \\\hline
+                C & D \\
+            \end{tabular}
+            \label{tab:1}
+        \end{table}
+
+        \begin{figure}
+            \centering
+            \tcbox{Figures inside \texttt{tcolorbox}}
+            \caption{Figure caption below}
+            \label{fig:1}
+        \end{figure}
+    \end{frame}
+
+    \include{misc/listings}
+
+    \begin{frame}{\texttt{pause}, \texttt{only} \& \texttt{onslide}}
+        First
+        \pause
+        Second
+    \end{frame}
+
+    \begin{frame}{Frame Title}
+        \only<2>{
+            Second
+        }
+        First
+    \end{frame}
+
+    \begin{frame}{Frame Title}
+        \onslide<2>{
+            Second
+        }
+        First
+    \end{frame}
+\section{Show My Subsections}
     \subsection{First Sub Section}
     \subsection{Second Sub Section}
     \subsection{Third Sub Section}
 
-\section{Third Section}\sectionFrame[only current section]
-    \subsection{First Sub Section}
-    \subsection{Second Sub Section}
-    \subsection{Third Sub Section}
-
-\section{Fourth Section}
+\section{Show All My Subsections}\sectionFrame[show subsections]
     \subsection{First Sub Section}\subsectionFrame
     \subsection{Second Sub Section}\subsectionFrame
     \subsection{Third Sub Section}\subsectionFrame
 
-\section{Fifth Section}
+\section{Show Only My Subsections}\sectionFrame[only current section]
+    \subsection{First Sub Section}
+    \subsection{Second Sub Section}
+    \subsection{Third Sub Section}
+
+\section{Many Subsections, Highlight Each One}
     \subsection{1. Sub Section}\subsectionFrame[only current section]
     \subsection{2. Sub Section}\subsectionFrame[only current section]
     \subsection{3. Sub Section}\subsectionFrame[only current section]
@@ -119,47 +176,6 @@
     \subsection{12. Sub Section}\subsectionFrame[only current section]
     \subsection{13. Sub Section}\subsectionFrame[only current section]
     \subsection{14. Sub Section}\subsectionFrame[only current section]
-
-        \begin{frame}{Frame Title}{Frame Subtitle}
-            \begin{tcolorbox}[left=0mm,right=0mm,boxsep=0mm,sharp corners]
-                % \setlength{\labelwidth}{5em}
-                \setlength{\leftmargini}{\labelwidth}
-                % \setlength{\leftmarginii}{0pt}
-                % \setlength{\leftmarginiii}{0pt}]
-                \begin{itemize}
-                    \item First level
-                    \begin{itemize}
-                        \item<+(1)-> Second level
-                            \begin{itemize}
-                                \item<+(1)-> Third level
-                            \end{itemize}
-                    \end{itemize}
-                    \item[\adjustbox{max width=\labelwidth}{\faLongArrowAltRight}] ABC
-                \end{itemize}
-            \end{tcolorbox}
-        \end{frame}
-
-        \begin{frame}{Frame Title}
-            First
-            \pause
-            Second
-        \end{frame}
-
-
-        \begin{frame}{Frame Title}
-            \only<2>{
-                Second
-            }
-            First
-        \end{frame}
-
-
-        \begin{frame}{Frame Title}
-            \onslide<2>{
-                Second
-            }
-            First
-        \end{frame}
 
         % Do NOT use allowframebreaks anywhere else! Use counters instead
         \begin{frame}[allowframebreaks]{References}

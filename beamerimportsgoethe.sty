@@ -162,28 +162,80 @@
 \RequirePackage{newfloat}
 \RequirePackage{ltxcmds}
 \ltx@ifpackageloaded{minted}{
-    \SetupFloatingEnvironment{listing}{name=Listing}
+    \setminted{
+        fontsize=\footnotesize,
+        linenos,    % number lines
+        autogobble, % autmatically remove indents for better readability
+        breaklines, % break long lines
+        mathescape, % allow math mode in code
+    }
 
-    \AtBeginEnvironment{snugshade*}{\vspace{-\FrameSep}}
-    \AfterEndEnvironment{snugshade*}{\vspace{-\FrameSep}}
+    % % Use novalidate to silence overleaf's syntax check
+    % %%begin novalidate
+    % \BeforeBeginEnvironment{minted}{%
+    %     \begin{mdframed}[rightline=false,leftline=false,linewidth=0.6pt]%
+    % }
+    % \AfterEndEnvironment{minted}{\end{mdframed}}
+    % %%end novalidate
 
-    \AtBeginEnvironment{minted}{\renewcommand{\fcolorbox}[4][]{#4}}
+    % Define a tcolorbox environment for code
+    \newtcblisting{tcbMinted}[2][]{
+        enhanced,
+        sharp corners,
+        colback=red!5!white,
+        colframe=red!75!black,
+        left=5mm, top=1mm, bottom=1mm,
+        leftrule=0pt,
+        rightrule=0pt,
+        overlay={%
+            \begin{tcbclipinterior}\fill[red!20!white] (frame.south west) rectangle ([xshift=5mm]frame.north west);\end{tcbclipinterior}%
+        },
+        minted options={numbersep=3mm},
+        minted language=#2,
+        listing only,
+        #1
+    }
 
-    % Add frames above and below the minted environment
-    %%begin novalidate
-    \BeforeBeginEnvironment{minted}{\begin{mdframed}[rightline=false,leftline=false,linewidth=0.6pt]}
-            \AfterEndEnvironment{minted}{\end{mdframed}}
-    %%end novalidate
+    \newtcbinputlisting{\inputmintedTcbRed}[3][]{
+        enhanced,
+        sharp corners,
+        colback=red!5!white,
+        colframe=red!75!black,
+        left=5mm, top=1mm, bottom=1mm,
+        leftrule=0pt, rightrule=0pt,
+        overlay={%
+            \begin{tcbclipinterior}\fill[red!20!white] (frame.south west) rectangle ([xshift=5mm]frame.north west);\end{tcbclipinterior}%
+        },
+        minted options={numbersep=3mm},
+        minted language={#2},
+        listing file={#3},
+        listing only,
+        #1
+    }
+
+    \SetupFloatingEnvironment{listing}{
+        name=Listing,
+        listname=List of Listings,
+        placement=!h,
+        within=section,
+    }
 }{
+    \RequirePackage{tcolorbox}
+    
     \DeclareFloatingEnvironment[
         name=Listing,
-        placement=h,
-        within=section
+        listname=List of Listings,
+        placement=!h,
+        within=section,
     ]{listing}
 }
-\captionsetup[listing]{position=top,skip=-8pt}
+
+% Load subcaption and setup captions
+\RequirePackage{caption}
+\RequirePackage{subcaption}
+\captionsetup[listing]{position=top} %,skip=0pt
 \floatname{listing}{Listing}
-\AtEndEnvironment{listing}{\vspace{-14pt}}
+% \AtEndEnvironment{listing}{\vspace{-14pt}}
 
 \DeclareFloatingEnvironment[
     name=Algorithm,
@@ -191,9 +243,9 @@
     placement=h,
     within=section
 ]{algorithm}
-\captionsetup[algorithm]{position=top,skip=-8pt}
+\captionsetup[algorithm]{position=top} %,skip=0pt
 \floatname{algorithm}{Algorithm}
-\AtEndEnvironment{algorithm}{\vspace{-14pt}}
+% \AtEndEnvironment{algorithm}{\vspace{-14pt}}
 
 \DeclareFloatingEnvironment[
     name=Query,
@@ -201,8 +253,8 @@
     placement=h,
     within=section
 ]{query}
-\captionsetup[query]{position=top,skip=-8pt}
+\captionsetup[query]{position=top} %,skip=0pt
 \floatname{query}{Query}
-\AtEndEnvironment{query}{\vspace{-14pt}}
+% \AtEndEnvironment{query}{\vspace{-14pt}}
 
 \providecommand{\listofqueries}{\listof{query}{\listofqueriescaption}}

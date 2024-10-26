@@ -7,6 +7,7 @@
     \RequirePackage[T1]{fontenc}
     \RequirePackage[utf8]{inputenc}
     \RequirePackage{libertine}
+    \RequirePackage{inconsolata}
 \else
     \ifXeTeX
         \ClassWarning{beamerthemegoethe}{Use LuaLaTeX instead of XeLaTeX}
@@ -100,12 +101,10 @@
 
 \DeclareOptionBeamer{minted}{
     \RequirePackage[newfloat=true]{minted}
+    \RequirePackage{tcolorbox}
     \RequirePackage{mdframed}
-
-    \setminted{fontsize=\footnotesize,mathescape,autogobble,breaklines,tabsize=4}
-    \newminted{cypher}{fontsize=\footnotesize,mathescape,linenos,autogobble,texcomments=true,breaklines}
-    \newminted{python}{fontsize=\footnotesize,mathescape,linenos,autogobble,python3,escapeinside=||}
-    \newminted[longpythoncode]{python}{fontsize=\footnotesize,mathescape,linenos,autogobble,python3,escapeinside=||,frame=lines}
+    \tcbuselibrary{minted}
+    \tcbuselibrary{skins}
 }
 
 \DeclareOptionBeamer{tikz}{
