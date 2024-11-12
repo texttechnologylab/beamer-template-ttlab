@@ -24,10 +24,6 @@
 \DeclareOptionBeamer{logowidth}{\def\beamer@goethe@logo@width{#1}}
 \ExecuteOptionsBeamer{logowidth=0.25\paperwidth}
 
-\newif\if@goethe@title@center
-\@goethe@title@centerfalse
-\DeclareOptionBeamer{centertitle}{\@goethe@title@centertrue}
-
 \newif\if@goethe@logo@use
 \@goethe@logo@usetrue
 \DeclareOptionBeamer{nologo}{\@goethe@logo@usefalse}
@@ -36,7 +32,9 @@
 \@goethe@logo@centerfalse
 \DeclareOptionBeamer{centerlogo}{\@goethe@logo@centertrue}
 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \ProcessOptionsBeamer\relax
+%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \def\beamer@goethe@subtitle@depth{\dimexpr(\paperheight-\beamer@goethe@title@height+2pt)\relax}
 \def\beamer@goethe@title@width{\dimexpr(\paperwidth-\beamer@goethe@titlemargin-\beamer@goethe@titlemargin)\relax}
@@ -60,24 +58,28 @@
 
 \defbeamertemplate*{title table}{goethe}{%
     \SetTblrInner{leftsep={0pt}, rightsep={0pt}, rowsep={1ex}}%
-\if@goethe@title@center%
-    \NewColumnType{A}{X[c]}%
-\else%
-    \NewColumnType{A}{X[l]}%
-\fi%
-\ifx\insertsubtitle\@empty%
-    \usebeamertemplate{title table nosubtitle}%
-\else%
-    \usebeamertemplate{title table subtitle}%
-\fi%
+    \if@goethe@title@center%
+        \NewColumnType{A}{X[c]}%
+    \else%
+        \NewColumnType{A}{X[l]}%
+    \fi%
+    \ifx\insertsubtitle\@empty%
+        \usebeamertemplate{title table nosubtitle}%
+    \else%
+        \usebeamertemplate{title table subtitle}%
+    \fi%
 }
 
-\defbeamertemplate*{author table}{goethe}{%
+\defbeamertemplate*{author table on title page}{goethe}{%
     \SetTblrInner{leftsep={0pt}, abovesep={0pt}, belowsep={0pt}, rightsep={0pt}, measure=vbox}%
 \begin{tblr}{width=\beamer@goethe@title@width,colspec={Xr}}%
     \SetCell[r=2]{l}{\usebeamerfont{author}\insertauthor} & \SetCell{h}{\usebeamerfont{institute}\insertinstitute} \\%
                                                           & \SetCell{f}{\usebeamerfont{date}\insertdate}           \\%
 \end{tblr}%
+}
+
+\defbeamertemplate*{logo on title page}{goethe}{%
+    \includegraphics[width=\beamer@goethe@logo@width]{\beamer@goethe@logo}%
 }
 
 \defbeamertemplate*{title page}{goethe}[1][]
@@ -90,13 +92,13 @@
     \vspace{-2pt}
     \begin{beamercolorbox}[wd=1\paperwidth,left,sep=1ex]{author}
         \leftskip=\beamer@goethe@titlemargin%
-        \usebeamertemplate{author table}%
+        \usebeamertemplate{author table on title page}%
     \end{beamercolorbox}
     \if@goethe@logo@use
         \vskip0pt plus 1filll
-        \begin{beamercolorbox}[wd=1\paperwidth,left,sep=0.1ex]{date}
+        \begin{beamercolorbox}[wd=1\paperwidth,left,sep=0.1ex]{logo on title page}
             \if@goethe@logo@center\centering\else\leftskip=\beamer@goethe@titlemargin\fi%
-            \includegraphics[width=\beamer@goethe@logo@width]{\beamer@goethe@logo}%
+            \usebeamertemplate{logo on title page}
         \end{beamercolorbox}
         \vskip0pt plus 1filll
     \else
@@ -104,7 +106,13 @@
     \fi
 }
 
-%% Table of contents 
+%% Table of Contents 
+%% Sections, Sub-Sections and Sub-Sub-Sections
+
+% Paragraph skip for entries in TOC
+\defbeamertemplate*{section skip in toc}{goethe}{\setlength{\parskip}{8pt plus 2pt}}
+\defbeamertemplate*{subsection skip in toc}{goethe}{\setlength{\parskip}{2pt plus 1pt}}
+\defbeamertemplate*{subsubsection skip in toc}{goethe}{\setlength{\parskip}{0pt plus 1pt}}
 
 \def\beamer@sectionintoc#1#2#3#4#5{%
     \ifnum\c@tocdepth>0%
@@ -200,23 +208,29 @@
         \fi\fi%
 }
 
-\defbeamertemplate*{agenda title}{goethe}{Agenda\strut}
-\newlength{\agendaskip}\setlength{\agendaskip}{0.5\baselineskip}
-\defbeamertemplate*{agenda skip in toc}{goethe}{\vskip\agendaskip}
-\newlength{\agendaht}\setlength{\agendaht}{3\baselineskip}
-\newlength{\agendadp}\setlength{\agendadp}{1\baselineskip}
+%% Agenda Frame Styling
+% Agenda title
+\defbeamertemplate*{agenda title}{goethe}{Agenda}
 
-\defbeamertemplate*{section skip in toc}{goethe}{\setlength{\parskip}{8pt plus 2pt}}
-\defbeamertemplate*{subsection skip in toc}{goethe}{\setlength{\parskip}{2pt plus 1pt}}
-\defbeamertemplate*{subsubsection skip in toc}{goethe}{\setlength{\parskip}{0pt plus 1pt}}
-
-\defbeamertemplate*{section page}{goethe}[1][]{%
-    \begin{beamercolorbox}[wd=1\paperwidth,ht=\agendaht,dp=\agendadp,left,#1]{agenda in toc}
+\defbeamertemplate*{agenda in toc}{goethe}{%
+    \begin{beamercolorbox}[wd=1\paperwidth,ht=\agendaht,dp=\agendadp,left]{agenda in toc}
         \setlength{\parindent}{\beamer@goethe@titlemargin}%
         \usebeamercolor{agenda in toc}\usebeamerfont{agenda in toc}%
         \leftskip=\parindent%
         \usebeamertemplate{agenda title}%
     \end{beamercolorbox}
+}
+
+% Skip after agenda title
+\newlength{\agendaskip}\setlength{\agendaskip}{0.5\baselineskip}
+\defbeamertemplate*{agenda skip in toc}{goethe}{\vskip\agendaskip}
+
+% Agend title height & depth
+\newlength{\agendaht}\setlength{\agendaht}{3\baselineskip}
+\newlength{\agendadp}\setlength{\agendadp}{1\baselineskip}
+
+\defbeamertemplate*{section page}{goethe}[1][]{%
+    \usebeamertemplate{agenda in toc}%
     \usebeamertemplate{agenda skip in toc}%
     \begin{adjustbox}{max height=\dimexpr\paperheight-2\baselineskip-\agendaht-\agendadp-\agendaskip}%
         \begin{beamercolorbox}[wd=1\paperwidth,left,#1]{section in toc}
@@ -228,12 +242,7 @@
     \vskip1cm plus 1filll%
 }
 \defbeamertemplate{section page}{goethe only current}[1][]{%
-    \begin{beamercolorbox}[wd=1\paperwidth,ht=\agendaht,dp=\agendadp,left,#1]{agenda in toc}
-        \setlength{\parindent}{\beamer@goethe@titlemargin}%
-        \usebeamercolor{agenda in toc}\usebeamerfont{agenda in toc}%
-        \leftskip=\parindent%
-        \usebeamertemplate{agenda title}%
-    \end{beamercolorbox}
+    \usebeamertemplate{agenda in toc}%
     \usebeamertemplate{agenda skip in toc}%
     \begin{adjustbox}{max height=\dimexpr\paperheight-2\baselineskip-\agendaht-\agendadp-\agendaskip}%
         \begin{beamercolorbox}[wd=1\paperwidth,left,#1]{section in toc}
@@ -245,12 +254,7 @@
     \vskip1cm plus 1filll%
 }
 \defbeamertemplate{section page}{goethe subsections}[1][]{%
-    \begin{beamercolorbox}[wd=1\paperwidth,ht=\agendaht,dp=\agendadp,left,#1]{agenda in toc}
-        \setlength{\parindent}{\beamer@goethe@titlemargin}%
-        \usebeamercolor{agenda in toc}\usebeamerfont{agenda in toc}%
-        \leftskip=\parindent%
-        \usebeamertemplate{agenda title}%
-    \end{beamercolorbox}
+    \usebeamertemplate{agenda in toc}%
     \usebeamertemplate{agenda skip in toc}%
     \begin{adjustbox}{max height=\dimexpr\paperheight-2\baselineskip-\agendaht-\agendadp-\agendaskip}%
         \begin{beamercolorbox}[wd=1\paperwidth,left,#1]{section in toc}
@@ -295,12 +299,7 @@
 
 %% Subsection page
 \defbeamertemplate*{subsection page}{goethe}[1][]{%
-    \begin{beamercolorbox}[wd=1\paperwidth,ht=\agendaht,dp=\agendadp,left,#1]{agenda in toc}
-        \setlength{\parindent}{\beamer@goethe@titlemargin}%
-        \usebeamercolor{agenda in toc}\usebeamerfont{agenda in toc}%
-        \leftskip=\parindent%
-        \usebeamertemplate{agenda title}%
-    \end{beamercolorbox}
+    \usebeamertemplate{agenda in toc}%
     \usebeamertemplate{agenda skip in toc}%
     \begin{adjustbox}{max height=\dimexpr\paperheight-2\baselineskip-\agendaht-\agendadp-\agendaskip}%
         \begin{beamercolorbox}[wd=1\paperwidth,left,#1]{section in toc}
@@ -312,12 +311,7 @@
     \vskip1cm plus 1filll%
 }
 \defbeamertemplate*{subsection page}{goethe only current}[1][]{%
-    \begin{beamercolorbox}[wd=1\paperwidth,ht=\agendaht,dp=\agendadp,left,#1]{agenda in toc}%
-        \setlength{\parindent}{\beamer@goethe@titlemargin}%
-        \usebeamercolor{agenda in toc}\usebeamerfont{agenda in toc}%
-        \leftskip=\parindent%
-        \usebeamertemplate{agenda title}%
-    \end{beamercolorbox}
+    \usebeamertemplate{agenda in toc}%
     \usebeamertemplate{agenda skip in toc}%
     \begin{adjustbox}{max height=\dimexpr\paperheight-2\baselineskip-\agendaht-\agendadp-\agendaskip}%
         \begin{beamercolorbox}[wd=1\paperwidth,left,#1]{section in toc}%

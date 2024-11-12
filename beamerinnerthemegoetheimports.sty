@@ -1,15 +1,80 @@
-\NeedsTeXFormat{LaTeX2e}
-\ProvidesPackage{beamerimportsgoethe}[2023/04/18 Miscellaneous imports and settings for the TTLab LaTeX beamer template]
+% !TeX root = main.tex
+\mode<presentation>
 
-%% Settings
-% 3 levels of section nestings
-\setcounter{secnumdepth}{3}
-% but only show two in the table of contents
-\setcounter{tocdepth}{2}
+\DeclareOptionBeamer{tikz}{
+    %% TikZ und Co. %%
+    \RequirePackage{tikz}
+    \usetikzlibrary{arrows.meta}
+    \usetikzlibrary{arrows}
+    \usetikzlibrary{automata}
+    \usetikzlibrary{babel}
+    \usetikzlibrary{backgrounds}
+    \usetikzlibrary{calc}
+    \usetikzlibrary{calendar}
+    \usetikzlibrary{chains}
+    \usetikzlibrary{decorations.pathmorphing}
+    \usetikzlibrary{decorations.pathreplacing}
+    \usetikzlibrary{er}
+    \usetikzlibrary{fit}
+    \usetikzlibrary{matrix}
+    \usetikzlibrary{mindmap}
+    \usetikzlibrary{patterns.meta}
+    \usetikzlibrary{patterns}
+    \usetikzlibrary{positioning}
+    \usetikzlibrary{scopes}
+    \usetikzlibrary{shadings}
+    \usetikzlibrary{shadows}
+    \usetikzlibrary{shapes.arrows}
+    \usetikzlibrary{shapes.callouts}
+    \usetikzlibrary{shapes.geometric}
+    \usetikzlibrary{shapes.misc}
+    \usetikzlibrary{shapes.multipart}
+    \usetikzlibrary{shapes.symbols}
+    \usetikzlibrary{through}
+    \usetikzlibrary{topaths}
 
-% No paragraph indent
-\setlength\parindent{0pt}
-\addtolength\parskip{6pt}
+    \RequirePackage[linguistics]{forest}
+
+    \RequirePackage{pgf,pgfplots,etoolbox}
+    \pgfplotsset{compat=newest}
+}
+
+\DeclareOptionBeamer{cleveref}{
+    \RequirePackage[nameinlink, noabbrev]{cleveref}
+    \crefname{part}{part}{parts}
+    \Crefname{part}{Part}{Parts}
+    \crefname{chapter}{chapter}{chapters}
+    \Crefname{chapter}{Chapter}{Chapters}
+    \crefname{section}{section}{sections}
+    \Crefname{section}{Section}{Sections}
+    \crefname{table}{table}{tables}
+    \Crefname{table}{Table}{Tables}
+    \crefname{figure}{figure}{figures}
+    \Crefname{figure}{Figure}{Figures}
+    \crefname{listing}{listing}{listings}
+    \Crefname{listing}{Listing}{Listings}
+    \crefname{algorithm}{algorithm}{algorithms}
+    \Crefname{algorithm}{Algorithm}{Algorithms}
+    \crefname{query}{query}{queries}
+    \Crefname{query}{Query}{Queries}
+    \crefname{appendix}{appendix}{appendices}
+    \Crefname{appendix}{Appendix}{Appendices}
+}
+
+\DeclareOptionBeamer{linkref}{
+    \ExecuteOptionsBeamer{cleveref}
+    \RequirePackage{linkref}
+}
+
+\DeclareOptionBeamer{minted}{
+    \RequirePackage[newfloat=true]{minted}
+    \RequirePackage{mdframed}
+    \RequirePackage{tcolorbox}
+    \tcbuselibrary{minted}
+    \tcbuselibrary{skins}
+}
+
+\ProcessOptionsBeamer\relax
 
 % Layout
 \RequirePackage{scrhack}
@@ -31,7 +96,7 @@
 % \RequirePackage{bm} % Bold math fonts
 \RequirePackage{dsfont} % \mathds{} for double stroke fonts
 \RequirePackage[lm]{sfmath} % Sans Serif maths
-\RequirePackage{soulutf8} % Strikeout, underlining etc. with support for UTF-8 symbols
+\RequirePackage{soul} % Strikeout, underlining etc.
 
 % Graphics and colors
 \RequirePackage{graphicx}
@@ -118,7 +183,6 @@
     urlcolor=blue,
     % pdfsubject={},
 }
-
 \RequirePackage{csquotes}
 
 
@@ -157,10 +221,11 @@
 \DeclareMathOperator{\recall}{\ensuremath{\mathit{recall}}}
 \DeclareMathOperator{\fone}{\ensuremath{\mathit{F_1}}}
 
-%% Environments
+%% Conditionals
+\RequirePackage{ltxcmds}
+
 % Custom float environments using newfloat
 \RequirePackage{newfloat}
-\RequirePackage{ltxcmds}
 \ltx@ifpackageloaded{minted}{
     \setminted{
         fontsize=\footnotesize,
@@ -169,14 +234,6 @@
         breaklines, % break long lines
         mathescape, % allow math mode in code
     }
-
-    % % Use novalidate to silence overleaf's syntax check
-    % %%begin novalidate
-    % \BeforeBeginEnvironment{minted}{%
-    %     \begin{mdframed}[rightline=false,leftline=false,linewidth=0.6pt]%
-    % }
-    % \AfterEndEnvironment{minted}{\end{mdframed}}
-    % %%end novalidate
 
     % Define a tcolorbox environment for code
     \newtcblisting{tcbMinted}[2][]{
@@ -217,16 +274,12 @@
         name=Listing,
         listname=List of Listings,
         placement=!h,
-        within=section,
     }
 }{
-    \RequirePackage{tcolorbox}
-    
     \DeclareFloatingEnvironment[
         name=Listing,
         listname=List of Listings,
         placement=!h,
-        within=section,
     ]{listing}
 }
 
@@ -241,7 +294,6 @@
     name=Algorithm,
     listname={List of Algorithms},
     placement=h,
-    within=section
 ]{algorithm}
 \captionsetup[algorithm]{position=top} %,skip=0pt
 \floatname{algorithm}{Algorithm}
@@ -251,10 +303,11 @@
     name=Query,
     listname={List of Queries},
     placement=h,
-    within=section
 ]{query}
 \captionsetup[query]{position=top} %,skip=0pt
 \floatname{query}{Query}
 % \AtEndEnvironment{query}{\vspace{-14pt}}
 
 \providecommand{\listofqueries}{\listof{query}{\listofqueriescaption}}
+
+\mode<all>

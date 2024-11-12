@@ -1,6 +1,24 @@
 % !TeX root = main.tex
 \mode<presentation>
 
+% Font & Input Encoding
+\RequirePackage{iftex}
+\ifPDFTeX
+    \RequirePackage[T1]{fontenc}
+    \RequirePackage[utf8]{inputenc}
+    \RequirePackage{libertine}
+    \RequirePackage{inconsolata}
+\else
+    \ifXeTeX
+        \ClassWarning{beamerthemegoethe}{Use LuaLaTeX instead of XeLaTeX}
+    \fi
+    \RequireLuaTeX
+    \RequirePackage{fontspec}
+    \setromanfont[Ligatures=TeX]{Linux Libertine O} % Serifenschrift
+    \setsansfont[Ligatures=TeX]{Linux Biolinum O} % serifenlose Schrift
+    \setmonofont[Scale=MatchLowercase]{inconsolata}%
+\fi
+
 \setbeamerfont{title}{series=\bfseries,size=\huge}
 \setbeamerfont{subtitle}{series=\mdseries\Large}
 \setbeamerfont{shorttitle}{series=\mdseries}

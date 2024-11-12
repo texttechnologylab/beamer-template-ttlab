@@ -1,24 +1,6 @@
 % !TeX root = main.tex
 \mode<presentation>
 
-% Font & Input Encoding
-\RequirePackage{iftex}
-\ifPDFTeX
-    \RequirePackage[T1]{fontenc}
-    \RequirePackage[utf8]{inputenc}
-    \RequirePackage{libertine}
-    \RequirePackage{inconsolata}
-\else
-    \ifXeTeX
-        \ClassWarning{beamerthemegoethe}{Use LuaLaTeX instead of XeLaTeX}
-    \fi
-    \RequireLuaTeX
-    \RequirePackage{fontspec}
-    \setromanfont[Ligatures=TeX]{Linux Libertine O} % Serifenschrift
-    \setsansfont[Ligatures=TeX]{Linux Biolinum O} % serifenlose Schrift
-    \setmonofont[Scale=MatchLowercase]{DejaVu Sans Mono}%
-\fi
-
 %% Layout Options 
 % Outer Theme Options
 \DeclareOptionBeamer{frametitlemargin}{\PassOptionsToPackage{frametitlemargin={#1}}{beamerouterthemegoethe}}
@@ -79,90 +61,24 @@
 \DeclareOptionBeamer{biblatexbackend}{\PassOptionsToPackage{backend=#1}{biblatex}}
 % \ExecuteOptionsBeamer{biblatexbackend=bibtex}
 
-\DeclareOptionBeamer{firacode}{
-    \RequirePackage{fontspec}
-    \setmonofont{FiraCode-Regular.ttf}[
-        Path={./fonts/},
-        % Upright italic font for nice formatted minted comments
-        ItalicFont={FiraCode-Light.ttf},
-        BoldFont={FiraCode-SemiBold.ttf},
-        % Fake slant in bold+italic
-        BoldItalicFont={FiraCode-SemiBold.ttf},
-        BoldItalicFeatures={FakeSlant=0.2},
-        % Scale monofont by lowercase in regard to main roman font
-        Scale=MatchLowercase,
-        % Enable ligatures
-        Ligatures=TeX,
-        Contextuals={Alternate},
-        % Enable tradtional & and @, and thin backlash \\
-        StylisticSet={3,5,6}
-    ]
-}
+\DeclareOptionBeamer{minted}{\PassOptionsToPackage{minted}{beamerinnerthemegoetheimports}}
 
-\DeclareOptionBeamer{minted}{
-    \RequirePackage[newfloat=true]{minted}
-    \RequirePackage{tcolorbox}
-    \RequirePackage{mdframed}
-    \tcbuselibrary{minted}
-    \tcbuselibrary{skins}
-}
+\DeclareOptionBeamer{tikz}{\PassOptionsToPackage{tikz}{beamerinnerthemegoetheimports}}
 
-\DeclareOptionBeamer{tikz}{
-    %% TikZ und Co. %%
-    \RequirePackage{tikz}
-    \usetikzlibrary{arrows.meta}
-    \usetikzlibrary{arrows}
-    \usetikzlibrary{automata}
-    \usetikzlibrary{babel}
-    \usetikzlibrary{backgrounds}
-    \usetikzlibrary{calc}
-    \usetikzlibrary{calendar}
-    \usetikzlibrary{chains}
-    \usetikzlibrary{decorations.pathmorphing}
-    \usetikzlibrary{decorations.pathreplacing}
-    \usetikzlibrary{er}
-    \usetikzlibrary{fit}
-    \usetikzlibrary{matrix}
-    \usetikzlibrary{mindmap}
-    \usetikzlibrary{patterns.meta}
-    \usetikzlibrary{patterns}
-    \usetikzlibrary{positioning}
-    \usetikzlibrary{scopes}
-    \usetikzlibrary{shadings}
-    \usetikzlibrary{shadows}
-    \usetikzlibrary{shapes.arrows}
-    \usetikzlibrary{shapes.callouts}
-    \usetikzlibrary{shapes.geometric}
-    \usetikzlibrary{shapes.misc}
-    \usetikzlibrary{shapes.multipart}
-    \usetikzlibrary{shapes.symbols}
-    \usetikzlibrary{through}
-    \usetikzlibrary{topaths}
+\DeclareOptionBeamer{cleveref}{\PassOptionsToPackage{cleveref}{beamerinnerthemegoetheimports}}
 
-    \RequirePackage[linguistics]{forest}
+\DeclareOptionBeamer{linkref}{\PassOptionsToPackage{linkref}{beamerinnerthemegoetheimports}}
 
-    \RequirePackage{pgf,pgfplots,etoolbox}
-    \pgfplotsset{compat=newest}
-}
-
-\DeclareOptionBeamer{cleveref}{
-    \RequirePackage[nameinlink, noabbrev]{cleveref}
-    \crefname{listing}{listing}{listings}
-    \Crefname{listing}{Listing}{Listings}
-    \crefname{algorithm}{algorithm}{algorithms}
-    \Crefname{algorithm}{Algorithm}{Algorithms}
-    \crefname{query}{query}{queries}
-    \Crefname{query}{Query}{Queries}
-}
-
+%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \ProcessOptionsBeamer\relax
+%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \usecolortheme{goethe}
 \usefonttheme{goethe}
 \useoutertheme{goethe}
-\useinnertheme{goethe}
+\useinnertheme{goethe,goetheimports}
 
-\usepackage{beamerimportsgoethe}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \RequirePackage{fontawesome5} % Font Awesome symbols
 \setbeamertemplate{itemize item}{\adjustbox{max width=\labelwidth}{\faAngleRight}}
@@ -175,6 +91,12 @@
 \setbeamertemplate{sections/subsections in toc}[sections numbered]
 \setbeamertemplate{sections/subsections in toc shaded}[goethe][60]
 
+\setbeamertemplate{caption}[numbered]
+
 \renewcommand{\And}{\texorpdfstring{\\}{, }}
+
+% No paragraph indent
+\setlength\parindent{0pt}
+\addtolength\parskip{6pt}
 
 \mode<all>
