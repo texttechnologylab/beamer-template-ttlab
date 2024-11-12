@@ -33,7 +33,7 @@
     sectionheight=0.5\paperheight, % the height of the section title box section/subsection frame
     frametitlemargin=0.3cm, % the size of the margin left of each frame title and subtitle
     framefootermargin=0.3cm, % the size of the margins left and right in the footline
-    logo=images/TTLogo-2.pdf, % can be PDF or any image, is scaled to logowidth
+    logo=images/logo-ttlab.pdf, % can be PDF or any image, is scaled to logowidth
     logowidth=0.4\paperwidth, % you may need to scale your logo to fit the title page
     % centerlogo, % center the logo on the title page
     % nologo, % disable the logo on the title page
@@ -65,13 +65,20 @@
 % Customization %
 %%%%%%%%%%%%%%%%%
 %% Uncomment and change the following lines to change the footline
-% \makeatletter%
+% \makeatletter
 % \setbeamertemplate{footline separator}{~--~}
 % \setbeamertemplate{footline content}{%
 %     \let\hyperlink\@secondoftwo%
 %     \insertshorttitle\usebeamertemplate{footline separator}\insertshortsubtitle%
 % }
-% \makeatother%
+% \makeatother
+
+%% Or, change the logo on the title page:
+% \makeatletter
+% \setbeamertemplate{logo on title page}{%
+%    \includegraphics[width=\beamer@goethe@logo@width]{\beamer@goethe@logo} %
+% }
+% \makeatother
 
 %%%%%%%%%%%%%%%%
 % Bibliography %
@@ -79,7 +86,7 @@
 % Note, that we cannot import the whole ACL anthology using biber, as it takes forever to run.
 % Instead, we can fall back to the bibtex8 backend by passing biblatexbackend=bibtex8 as an.
 % Add the bibliography files using:
-\addbibresource{colors.bib}
+\addbibresource{theme/colors.bib}
 % \addbibresource{references.bib}
 
 %%%%%%%%%%%%
@@ -131,7 +138,7 @@
         \end{figure}
     \end{frame}
 
-    \include{misc/listings}
+    \include{theme/misc/listings}
 
     \begin{frame}{\texttt{pause}, \texttt{only} \& \texttt{onslide}}
         First
